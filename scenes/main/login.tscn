@@ -1,0 +1,170 @@
+[gd_scene load_steps=11 format=3 uid="uid://b1ooenkkh4paq"]
+
+[ext_resource type="Texture2D" uid="uid://51si0qrucy28" path="res://assets/images/menu-bg.png" id="1_7qxmb"]
+[ext_resource type="Script" uid="uid://cu1csbrrlgg4d" path="res://scripts/login/login.gd" id="1_12s85"]
+[ext_resource type="FontFile" uid="uid://ykf1mhpohd8q" path="res://assets/fonts/Lovelo Black.otf" id="2_6ohee"]
+[ext_resource type="PackedScene" uid="uid://d00fefnqdimrg" path="res://components/InputField.tscn" id="2_s8msf"]
+[ext_resource type="Texture2D" uid="uid://w4l0fe5bl263" path="res://assets/images/lock.png" id="4_s8msf"]
+[ext_resource type="Texture2D" uid="uid://c0s6y44brf20c" path="res://assets/images/user.png" id="6_lq6j6"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s8msf"]
+texture = ExtResource("1_7qxmb")
+modulate_color = Color(0.881762, 0.838645, 0.811946, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_12s85"]
+bg_color = Color(0.941176, 0.945098, 0.941176, 1)
+border_width_left = 24
+border_width_top = 24
+border_width_right = 24
+border_width_bottom = 24
+border_color = Color(0.886275, 0.721569, 0.0313726, 1)
+corner_radius_top_left = 52
+corner_radius_top_right = 52
+corner_radius_bottom_right = 52
+corner_radius_bottom_left = 52
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lq6j6"]
+bg_color = Color(0.886275, 0.721569, 0.0313726, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 41
+corner_radius_top_right = 41
+corner_radius_bottom_right = 41
+corner_radius_bottom_left = 41
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eaq3q"]
+bg_color = Color(0, 0.501961, 0, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+shadow_color = Color(0.168627, 0.580392, 0.168627, 1)
+shadow_size = 5
+shadow_offset = Vector2(5, 2)
+
+[node name="Login" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_12s85")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_s8msf")
+
+[node name="LoginContainer" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -287.0
+offset_top = -274.0
+offset_right = 320.0
+offset_bottom = 279.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_12s85")
+
+[node name="LoginLabel" type="Label" parent="LoginContainer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -111.5
+offset_top = -25.0
+offset_right = 111.5
+offset_bottom = 55.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_6ohee")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_lq6j6")
+text = "Login"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoginBtnContainer" type="VBoxContainer" parent="LoginContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -102.5
+offset_top = -187.0
+offset_right = 96.5
+offset_bottom = -125.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Button" type="Button" parent="LoginContainer/LoginBtnContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_6ohee")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/hover = SubResource("StyleBoxFlat_eaq3q")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_eaq3q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_eaq3q")
+text = "Login"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LoginContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -240.5
+offset_top = -78.0
+offset_right = 240.5
+offset_bottom = -38.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[color=black]Don’t have an account?[/color] [color=blue]Click here[/color] [color=red][url=signup]Sign Up[/url][/color]"
+horizontal_alignment = 1
+
+[node name="Username" parent="." instance=ExtResource("2_s8msf")]
+layout_mode = 1
+offset_left = 431.0
+offset_top = 211.0
+offset_right = -385.0
+offset_bottom = -379.0
+
+[node name="TextureRect" type="TextureRect" parent="Username"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 13.0
+offset_right = 48.0
+offset_bottom = 42.0
+texture = ExtResource("6_lq6j6")
+expand_mode = 2
+
+[node name="Password" parent="." instance=ExtResource("2_s8msf")]
+layout_mode = 1
+offset_left = 432.0
+offset_top = 317.0
+offset_right = -384.0
+offset_bottom = -273.0
+
+[node name="TextureRect" type="TextureRect" parent="Password"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 13.0
+offset_right = 48.0
+offset_bottom = 42.0
+texture = ExtResource("4_s8msf")
+expand_mode = 2
