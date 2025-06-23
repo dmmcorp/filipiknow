@@ -1,36 +1,34 @@
-[gd_scene load_steps=5 format=3 uid="uid://d00fefnqdimrg"]
+[gd_scene load_steps=4 format=3 uid="uid://d00fefnqdimrg"]
 
 [ext_resource type="Script" uid="uid://5dtexirvsf3h" path="res://scripts/login/input_field.gd" id="1_r40e4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8uiwc"]
-bg_color = Color(0.698039, 0.576471, 0.356863, 1)
+bg_color = Color(0.851382, 0.732824, 0.523383, 1)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
 border_width_bottom = 4
-border_color = Color(0.263716, 0.247571, 0.207219, 1)
+border_color = Color(0.34033, 0.320735, 0.271755, 1)
 corner_radius_top_left = 14
 corner_radius_top_right = 14
 corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ojm6v"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r40e4"]
-bg_color = Color(0.698039, 0.576471, 0.356863, 1)
+bg_color = Color(0.85098, 0.733333, 0.521569, 1)
 
 [node name="InputField" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 414.0
-offset_top = 273.0
-offset_right = -402.0
-offset_bottom = -317.0
+offset_left = 2.0
+offset_top = 5.0
+offset_right = -814.0
+offset_bottom = -585.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
 script = ExtResource("1_r40e4")
 
 [node name="Panel" type="Panel" parent="."]
@@ -67,9 +65,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 6.0
 theme_override_colors/caret_color = Color(0.443137, 0.419608, 0.360784, 1)
+theme_override_colors/font_placeholder_color = Color(0.443137, 0.419608, 0.360784, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
 theme_override_colors/font_color = Color(0.443137, 0.419608, 0.360784, 1)
 theme_override_font_sizes/font_size = 20
-theme_override_styles/focus = SubResource("StyleBoxFlat_ojm6v")
+theme_override_styles/focus = SubResource("StyleBoxFlat_r40e4")
 theme_override_styles/normal = SubResource("StyleBoxFlat_r40e4")
 caret_blink = true

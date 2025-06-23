@@ -64,7 +64,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_ht2v2")
 
-[node name="SignupContainer" type="Panel" parent="."]
+[node name="LoginContainer" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -79,7 +79,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_cwikc")
 
-[node name="LoginLabel" type="Label" parent="SignupContainer"]
+[node name="LoginLabel" type="Label" parent="LoginContainer"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -96,7 +96,7 @@ text = "SignUp"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LoginBtnContainer" type="VBoxContainer" parent="SignupContainer"]
+[node name="LoginBtnContainer" type="VBoxContainer" parent="LoginContainer"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -110,7 +110,7 @@ offset_bottom = -125.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Button" type="Button" parent="SignupContainer/LoginBtnContainer"]
+[node name="Button" type="Button" parent="LoginContainer/LoginBtnContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("2_jqkw8")
@@ -120,7 +120,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_0i42t")
 theme_override_styles/normal = SubResource("StyleBoxFlat_0i42t")
 text = "Signup"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="SignupContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="LoginContainer"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -138,14 +138,14 @@ bbcode_enabled = true
 text = "[color=black]Already have an account?[/color] [color=blue]Click here[/color] [color=red][url=signup]Login[/url][/color]"
 horizontal_alignment = 1
 
-[node name="Firstname" parent="SignupContainer" instance=ExtResource("3_28klx")]
+[node name="Firstname" parent="LoginContainer" instance=ExtResource("3_28klx")]
 layout_mode = 1
 offset_left = 54.0
 offset_top = 69.0
 offset_right = -795.0
 offset_bottom = -437.0
 
-[node name="TextureRect" type="TextureRect" parent="SignupContainer/Firstname"]
+[node name="TextureRect" type="TextureRect" parent="LoginContainer/Firstname"]
 layout_mode = 0
 offset_left = 12.0
 offset_top = 11.0
@@ -154,21 +154,21 @@ offset_bottom = 36.0
 texture = ExtResource("4_7me0i")
 expand_mode = 2
 
-[node name="Lastname" parent="SignupContainer" instance=ExtResource("3_28klx")]
+[node name="Lastname" parent="LoginContainer" instance=ExtResource("3_28klx")]
 layout_mode = 1
 offset_left = 297.0
 offset_top = 70.0
 offset_right = -554.0
 offset_bottom = -437.0
 
-[node name="Password" parent="SignupContainer" instance=ExtResource("3_28klx")]
+[node name="Password" parent="LoginContainer" instance=ExtResource("3_28klx")]
 layout_mode = 1
 offset_left = 554.0
 offset_top = 70.0
 offset_right = -53.0
 offset_bottom = -437.0
 
-[node name="TextureRect" type="TextureRect" parent="SignupContainer/Password"]
+[node name="TextureRect" type="TextureRect" parent="LoginContainer/Password"]
 layout_mode = 0
 offset_left = 12.0
 offset_top = 11.0
@@ -177,14 +177,14 @@ offset_bottom = 36.0
 texture = ExtResource("5_vrk3p")
 expand_mode = 2
 
-[node name="Email" parent="SignupContainer" instance=ExtResource("3_28klx")]
+[node name="Email" parent="LoginContainer" instance=ExtResource("3_28klx")]
 layout_mode = 1
 offset_left = 54.0
 offset_top = 143.0
 offset_right = -553.0
 offset_bottom = -364.0
 
-[node name="TextureRect" type="TextureRect" parent="SignupContainer/Email"]
+[node name="TextureRect" type="TextureRect" parent="LoginContainer/Email"]
 layout_mode = 0
 offset_left = 12.0
 offset_top = 11.0
@@ -193,21 +193,14 @@ offset_bottom = 36.0
 texture = ExtResource("4_7me0i")
 expand_mode = 2
 
-[node name="LRN" parent="SignupContainer" instance=ExtResource("3_28klx")]
+[node name="LRN" parent="LoginContainer" instance=ExtResource("3_28klx")]
 layout_mode = 1
 offset_left = 553.0
 offset_top = 143.0
 offset_right = -54.0
 offset_bottom = -364.0
 
-[node name="Section" parent="SignupContainer" instance=ExtResource("3_28klx")]
-layout_mode = 1
-offset_left = 553.0
-offset_top = 219.0
-offset_right = -54.0
-offset_bottom = -288.0
-
-[node name="GradeLevel" parent="SignupContainer" instance=ExtResource("7_28klx")]
+[node name="GradeLevel" parent="LoginContainer" instance=ExtResource("7_28klx")]
 layout_mode = 2
 anchors_preset = 0
 anchor_right = 0.0
@@ -215,4 +208,14 @@ anchor_bottom = 0.0
 offset_left = 55.0
 offset_top = 220.0
 offset_right = 518.0
+offset_bottom = 266.0
+
+[node name="Section" parent="LoginContainer" instance=ExtResource("7_28klx")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 553.0
+offset_top = 220.0
+offset_right = 1016.0
 offset_bottom = 266.0

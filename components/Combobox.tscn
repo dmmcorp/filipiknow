@@ -1,0 +1,72 @@
+[gd_scene load_steps=4 format=3 uid="uid://exadjcdug6ee"]
+
+[ext_resource type="Script" uid="uid://bnbjrinmks838" path="res://scripts/signup/combobox.gd" id="1_uotp4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fiuef"]
+bg_color = Color(0.85098, 0.733333, 0.521569, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.443137, 0.419608, 0.360784, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nu2x0"]
+bg_color = Color(0.85098, 0.733333, 0.521569, 0)
+
+[node name="Combobox" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -837.0
+offset_bottom = -585.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uotp4")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fiuef")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 6.0
+theme_override_colors/font_hover_pressed_color = Color(0.34033, 0.320735, 0.271755, 1)
+theme_override_colors/font_hover_color = Color(0.34033, 0.320735, 0.271755, 1)
+theme_override_colors/icon_normal_color = Color(0.443137, 0.419608, 0.360784, 1)
+theme_override_colors/font_color = Color(0.34033, 0.320735, 0.271755, 1)
+theme_override_colors/font_focus_color = Color(0.34033, 0.320735, 0.271755, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxFlat_nu2x0")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_nu2x0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nu2x0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_nu2x0")
+theme_override_styles/normal = SubResource("StyleBoxFlat_nu2x0")
+alignment = 1
+
+[connection signal="item_selected" from="Panel/MarginContainer/HBoxContainer/OptionButton" to="." method="_on_option_button_item_selected"]
