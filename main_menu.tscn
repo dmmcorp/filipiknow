@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://cssx70xt002xh"]
+
+[ext_resource type="Texture2D" uid="uid://51si0qrucy28" path="res://assets/images/menu-bg.png" id="1_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://cbukq1jk846ls" path="res://assets/images/Filipiknow.png" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://cxpp5gwncxa7r" path="res://components/Button.tscn" id="3_h2yge"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1bvp3"]
+texture = ExtResource("1_0xm2m")
+modulate_color = Color(0.881762, 0.838645, 0.811946, 1)
+
+[sub_resource type="Theme" id="Theme_lquwl"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_1bvp3")
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -263.111
+offset_top = -201.0
+offset_right = 263.111
+offset_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_lquwl")
+texture = ExtResource("2_0xm2m")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Button" parent="Panel" instance=ExtResource("3_h2yge")]
+layout_mode = 1
+offset_left = 502.0
+offset_top = 422.0
+offset_right = -88.0
+offset_bottom = 43.0
+scale = Vector2(0.265235, 0.271846)
