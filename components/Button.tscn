@@ -3,27 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://b4kw1kpkpqqbv" path="res://assets/images/Play-Button.png" id="1_enq51"]
 [ext_resource type="Texture2D" uid="uid://dj2gbia81sh24" path="res://assets/images/Play-hover.png" id="2_kbt1k"]
 
-[node name="Button" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -590.0
-offset_bottom = -379.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.236817, 0.16729)
-
-[node name="TextureButton" type="TextureButton" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="TextureButton" type="TextureButton"]
+custom_minimum_size = Vector2(100, 50)
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("1_enq51")
-texture_pressed = ExtResource("1_enq51")
 texture_hover = ExtResource("2_kbt1k")
 ignore_texture_size = true
 stretch_mode = 0

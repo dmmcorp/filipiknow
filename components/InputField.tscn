@@ -72,3 +72,6 @@ theme_override_font_sizes/font_size = 20
 theme_override_styles/focus = SubResource("StyleBoxFlat_r40e4")
 theme_override_styles/normal = SubResource("StyleBoxFlat_r40e4")
 caret_blink = true
+
+[connection signal="text_changed" from="Panel/MarginContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_submitted" from="Panel/MarginContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]

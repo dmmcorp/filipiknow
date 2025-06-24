@@ -1,14 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://cssx70xt002xh"]
+[gd_scene load_steps=8 format=3 uid="uid://cssx70xt002xh"]
 
-[ext_resource type="Texture2D" uid="uid://51si0qrucy28" path="res://assets/images/menu-bg.png" id="1_0xm2m"]
-[ext_resource type="Texture2D" uid="uid://cbukq1jk846ls" path="res://assets/images/Filipiknow.png" id="2_0xm2m"]
-[ext_resource type="PackedScene" uid="uid://cxpp5gwncxa7r" path="res://components/Button.tscn" id="3_h2yge"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1bvp3"]
-texture = ExtResource("1_0xm2m")
-modulate_color = Color(0.881762, 0.838645, 0.811946, 1)
-
-[sub_resource type="Theme" id="Theme_lquwl"]
+[ext_resource type="Theme" uid="uid://d000yir3fpqb2" path="res://theme/panel_theme.tres" id="1_06t4h"]
+[ext_resource type="Script" uid="uid://du758thfaj5m8" path="res://main_menu.gd" id="1_jix8l"]
+[ext_resource type="Texture2D" uid="uid://cbukq1jk846ls" path="res://assets/images/Filipiknow.png" id="2_fu7sn"]
+[ext_resource type="Texture2D" uid="uid://b4kw1kpkpqqbv" path="res://assets/images/Play-Button.png" id="4_qe12f"]
+[ext_resource type="Texture2D" uid="uid://dj2gbia81sh24" path="res://assets/images/Play-hover.png" id="5_8qtwp"]
+[ext_resource type="Texture2D" uid="uid://imcuhufmrryr" path="res://assets/images/quit-button.png" id="5_nlkkf"]
+[ext_resource type="Texture2D" uid="uid://c08464yjlefuw" path="res://assets/images/quit-hover.png" id="6_qe12f"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -17,6 +15,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_jix8l")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -25,30 +24,42 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_1bvp3")
+theme = ExtResource("1_06t4h")
 
-[node name="TextureRect" type="TextureRect" parent="Panel"]
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -263.111
-offset_top = -201.0
-offset_right = 263.111
-offset_bottom = 95.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_lquwl")
-texture = ExtResource("2_0xm2m")
-expand_mode = 3
-stretch_mode = 4
 
-[node name="Button" parent="Panel" instance=ExtResource("3_h2yge")]
-layout_mode = 1
-offset_left = 502.0
-offset_top = 422.0
-offset_right = -88.0
-offset_bottom = 43.0
-scale = Vector2(0.265235, 0.271846)
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(600, 500)
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 300)
+layout_mode = 2
+texture = ExtResource("2_fu7sn")
+expand_mode = 2
+
+[node name="Play_Button" type="TextureButton" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 100)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("4_qe12f")
+texture_hover = ExtResource("5_8qtwp")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Quit_Button" type="TextureButton" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 100)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("5_nlkkf")
+texture_hover = ExtResource("6_qe12f")
+ignore_texture_size = true
+stretch_mode = 5

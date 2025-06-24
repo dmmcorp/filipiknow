@@ -1,15 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://b1ooenkkh4paq"]
+[gd_scene load_steps=10 format=3 uid="uid://b1ooenkkh4paq"]
 
-[ext_resource type="Texture2D" uid="uid://51si0qrucy28" path="res://assets/images/menu-bg.png" id="1_7qxmb"]
 [ext_resource type="Script" uid="uid://cu1csbrrlgg4d" path="res://scripts/login/login.gd" id="1_12s85"]
 [ext_resource type="FontFile" uid="uid://ykf1mhpohd8q" path="res://assets/fonts/Lovelo Black.otf" id="2_6ohee"]
+[ext_resource type="Theme" uid="uid://d000yir3fpqb2" path="res://theme/panel_theme.tres" id="2_lq6j6"]
 [ext_resource type="PackedScene" uid="uid://d00fefnqdimrg" path="res://components/InputField.tscn" id="2_s8msf"]
 [ext_resource type="Texture2D" uid="uid://w4l0fe5bl263" path="res://assets/images/lock.png" id="4_s8msf"]
 [ext_resource type="Texture2D" uid="uid://c0s6y44brf20c" path="res://assets/images/user.png" id="6_lq6j6"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s8msf"]
-texture = ExtResource("1_7qxmb")
-modulate_color = Color(0.881762, 0.838645, 0.811946, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_12s85"]
 bg_color = Color(0.941176, 0.945098, 0.941176, 1)
@@ -61,24 +57,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_s8msf")
+theme = ExtResource("2_lq6j6")
 
-[node name="LoginContainer" type="Panel" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -287.0
-offset_top = -274.0
-offset_right = 320.0
-offset_bottom = 279.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="LoginContainer" type="Panel" parent="CenterContainer"]
+custom_minimum_size = Vector2(600, 520)
+layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_12s85")
 
-[node name="LoginLabel" type="Label" parent="LoginContainer"]
+[node name="LoginLabel" type="Label" parent="CenterContainer/LoginContainer"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -95,21 +89,57 @@ text = "Login"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LoginBtnContainer" type="VBoxContainer" parent="LoginContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/LoginContainer"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -102.5
-offset_top = -187.0
-offset_right = 96.5
-offset_bottom = -125.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+theme_override_constants/margin_left = 70
+theme_override_constants/margin_top = 70
+theme_override_constants/margin_right = 70
+theme_override_constants/margin_bottom = 40
 
-[node name="Button" type="Button" parent="LoginContainer/LoginBtnContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/LoginContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 60
+alignment = 2
+
+[node name="Email" parent="CenterContainer/LoginContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_s8msf")]
+custom_minimum_size = Vector2(10, 60)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/LoginContainer/MarginContainer/VBoxContainer/Email"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 0
+offset_left = 17.0
+offset_top = 13.0
+offset_right = 51.0
+offset_bottom = 46.0
+texture = ExtResource("6_lq6j6")
+
+[node name="Password" parent="CenterContainer/LoginContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_s8msf")]
+custom_minimum_size = Vector2(10, 60)
+layout_mode = 2
+size_flags_horizontal = 1
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/LoginContainer/MarginContainer/VBoxContainer/Password"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 0
+offset_left = 17.0
+offset_top = 14.0
+offset_right = 50.0
+offset_bottom = 44.0
+texture = ExtResource("4_s8msf")
+
+[node name="LoginBtnContainer" type="VBoxContainer" parent="CenterContainer/LoginContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="Button" type="Button" parent="CenterContainer/LoginContainer/MarginContainer/VBoxContainer/LoginBtnContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("2_6ohee")
@@ -119,52 +149,12 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_eaq3q")
 theme_override_styles/normal = SubResource("StyleBoxFlat_eaq3q")
 text = "Login"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LoginContainer"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -240.5
-offset_top = -78.0
-offset_right = 240.5
-offset_bottom = -38.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer/LoginContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[color=black]Don’t have an account?[/color] [color=blue]Click here[/color] [color=red][url=signup]Sign Up[/url][/color]"
 horizontal_alignment = 1
 
-[node name="Username" parent="." instance=ExtResource("2_s8msf")]
-layout_mode = 1
-offset_left = 431.0
-offset_top = 211.0
-offset_right = -385.0
-offset_bottom = -379.0
-
-[node name="TextureRect" type="TextureRect" parent="Username"]
-layout_mode = 0
-offset_left = 19.0
-offset_top = 13.0
-offset_right = 48.0
-offset_bottom = 42.0
-texture = ExtResource("6_lq6j6")
-expand_mode = 2
-
-[node name="Password" parent="." instance=ExtResource("2_s8msf")]
-layout_mode = 1
-offset_left = 432.0
-offset_top = 317.0
-offset_right = -384.0
-offset_bottom = -273.0
-
-[node name="TextureRect" type="TextureRect" parent="Password"]
-layout_mode = 0
-offset_left = 19.0
-offset_top = 13.0
-offset_right = 48.0
-offset_bottom = 42.0
-texture = ExtResource("4_s8msf")
-expand_mode = 2
+[connection signal="meta_clicked" from="CenterContainer/LoginContainer/MarginContainer/VBoxContainer/RichTextLabel" to="." method="_on_rich_text_label_meta_clicked"]
