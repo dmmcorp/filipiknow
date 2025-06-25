@@ -1,0 +1,83 @@
+[gd_scene load_steps=10 format=3 uid="uid://cjdrk1f7jnnke"]
+
+[ext_resource type="Theme" uid="uid://d000yir3fpqb2" path="res://theme/panel_theme.tres" id="1_5jayq"]
+[ext_resource type="Texture2D" uid="uid://51si0qrucy28" path="res://assets/images/menu-bg.png" id="2_1hnnh"]
+[ext_resource type="Script" uid="uid://dtrvlt4x2jo0o" path="res://scripts/novel_select/novel_select.gd" id="2_sviti"]
+[ext_resource type="Theme" uid="uid://1t6hcp42xdxm" path="res://theme/panel_container_theme.tres" id="4_y3s3u"]
+[ext_resource type="Texture2D" uid="uid://bd4ealorca511" path="res://assets/images/settings-icon.png" id="5_dk8rd"]
+[ext_resource type="Texture2D" uid="uid://bx3eo7v3itfba" path="res://assets/images/settings-hover.png" id="6_sviti"]
+[ext_resource type="PackedScene" uid="uid://yiv8kheagrkk" path="res://scenes/ui/novel_select/codex_icon_button.tscn" id="7_vtj0o"]
+[ext_resource type="PackedScene" uid="uid://lhs2uwuvbk1g" path="res://scenes/ui/novel_select/play_icon_button.tscn" id="8_y3s3u"]
+[ext_resource type="PackedScene" uid="uid://crma7psgxv3p0" path="res://scenes/ui/novel_select/novel_option.tscn" id="9_y3s3u"]
+
+[node name="NovelSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_5jayq")
+script = ExtResource("2_sviti")
+
+[node name="BG" type="TextureRect" parent="."]
+modulate = Color(0.703808, 0.703808, 0.703808, 1)
+light_mask = 0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_1hnnh")
+expand_mode = 1
+
+[node name="NovelOptions" parent="." instance=ExtResource("9_y3s3u")]
+layout_mode = 1
+
+[node name="Settings" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -97.0
+offset_top = 29.0
+offset_right = -27.0
+offset_bottom = 99.0
+grow_horizontal = 0
+theme = ExtResource("4_y3s3u")
+theme_type_variation = &"no_bg"
+
+[node name="TextureButton" type="TextureButton" parent="Settings"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("5_dk8rd")
+texture_pressed = ExtResource("5_dk8rd")
+texture_hover = ExtResource("6_sviti")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="CodexIconButton" parent="." instance=ExtResource("7_vtj0o")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 0.0
+grow_vertical = 0
+
+[node name="PlayIconButton" parent="." instance=ExtResource("8_y3s3u")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 0
