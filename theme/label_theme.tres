@@ -1,0 +1,10 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cb3r3oyw7hxa0"]
+
+[ext_resource type="FontFile" uid="uid://b44m80u2kmjq8" path="res://assets/fonts/EFCO Brookshire Regular.ttf" id="1_akwid"]
+
+[resource]
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.172549)
+Label/font_sizes/font_size = 35
+Label/fonts/font = ExtResource("1_akwid")
+black/base_type = &"Label"
+black/colors/font_color = Color(0.551894, 0.268349, 0.11152, 1)

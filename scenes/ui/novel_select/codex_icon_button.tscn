@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://yiv8kheagrkk"]
+
+[ext_resource type="Theme" uid="uid://ctg5ru4kl6ydx" path="res://theme/button_theme.tres" id="1_f4js6"]
+[ext_resource type="Texture2D" uid="uid://bwpdww3tm84cn" path="res://assets/images/codex-icon.png" id="1_oqquy"]
+[ext_resource type="Texture2D" uid="uid://bd4ealorca511" path="res://assets/images/settings-icon.png" id="2_f4js6"]
+[ext_resource type="Texture2D" uid="uid://c2ojsh4p2eufo" path="res://assets/images/codex-icon-hover.png" id="3_oqquy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2qp6h"]
+bg_color = Color(0.0784314, 0.0784314, 0.0784314, 0.490196)
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+
+[node name="CodexIconButton" type="PanelContainer"]
+custom_minimum_size = Vector2(200, 150)
+offset_right = 100.0
+offset_bottom = 150.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_f4js6")
+theme_override_styles/panel = SubResource("StyleBoxFlat_2qp6h")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_f4js6")
+texture_normal = ExtResource("1_oqquy")
+texture_pressed = ExtResource("2_f4js6")
+texture_hover = ExtResource("3_oqquy")
+ignore_texture_size = true
+stretch_mode = 0
