@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmpv7wq312j87"]
+
+[ext_resource type="Theme" uid="uid://ctg5ru4kl6ydx" path="res://theme/button_theme.tres" id="1_uraqp"]
+[ext_resource type="Script" uid="uid://pmivu0poe1uv" path="res://scripts/chapter.gd" id="2_fc701"]
+
+[node name="ChapterButton" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 238.0
+offset_bottom = 40.0
+theme = ExtResource("1_uraqp")
+theme_type_variation = &"chapter"
+script = ExtResource("2_fc701")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

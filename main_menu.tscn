@@ -55,6 +55,8 @@ texture_hover = ExtResource("5_8qtwp")
 ignore_texture_size = true
 stretch_mode = 5
 
+[node name="HTTPRequest" type="HTTPRequest" parent="CenterContainer/VBoxContainer/Play_Button"]
+
 [node name="Quit_Button" type="TextureButton" parent="CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(50, 100)
 layout_mode = 2
@@ -63,3 +65,5 @@ texture_normal = ExtResource("5_nlkkf")
 texture_hover = ExtResource("6_qe12f")
 ignore_texture_size = true
 stretch_mode = 5
+
+[connection signal="request_completed" from="CenterContainer/VBoxContainer/Play_Button/HTTPRequest" to="." method="_on_http_request_request_completed"]

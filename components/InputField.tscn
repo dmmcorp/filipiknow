@@ -1,9 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://d00fefnqdimrg"]
+[gd_scene load_steps=5 format=3 uid="uid://d00fefnqdimrg"]
 
 [ext_resource type="Script" uid="uid://5dtexirvsf3h" path="res://scripts/login/input_field.gd" id="1_r40e4"]
+[ext_resource type="Theme" uid="uid://cb3r3oyw7hxa0" path="res://theme/label_theme.tres" id="2_ojm6v"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8uiwc"]
-bg_color = Color(0.851382, 0.732824, 0.523383, 1)
+bg_color = Color(0.815686, 0.756863, 0.643137, 1)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
@@ -15,7 +16,7 @@ corner_radius_bottom_right = 14
 corner_radius_bottom_left = 14
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r40e4"]
-bg_color = Color(0.85098, 0.733333, 0.521569, 1)
+bg_color = Color(0.815686, 0.756863, 0.643137, 1)
 
 [node name="InputField" type="Control"]
 layout_mode = 3
@@ -25,22 +26,27 @@ anchor_bottom = 1.0
 offset_left = 2.0
 offset_top = 5.0
 offset_right = -814.0
-offset_bottom = -585.0
+offset_bottom = -537.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 script = ExtResource("1_r40e4")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(200, 58)
+layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8uiwc")
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Panel"]
+custom_minimum_size = Vector2(200, 58)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,15 +58,18 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/Panel/MarginContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Panel/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 expand_mode = 3
 
-[node name="LineEdit" type="LineEdit" parent="Panel/MarginContainer/HBoxContainer"]
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/Panel/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 6.0
@@ -73,5 +82,12 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_r40e4")
 theme_override_styles/normal = SubResource("StyleBoxFlat_r40e4")
 caret_blink = true
 
-[connection signal="text_changed" from="Panel/MarginContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
-[connection signal="text_submitted" from="Panel/MarginContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]
+[node name="Label" type="Label" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+theme = ExtResource("2_ojm6v")
+theme_type_variation = &"error"
+text = " *Required"
+
+[connection signal="text_changed" from="VBoxContainer/Panel/MarginContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_submitted" from="VBoxContainer/Panel/MarginContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]
