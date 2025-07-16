@@ -1,0 +1,93 @@
+[gd_scene load_steps=6 format=3 uid="uid://bb87lemkuxm5t"]
+
+[ext_resource type="Script" uid="uid://b1elongrtk7vu" path="res://scripts/loader.gd" id="1_vbdfe"]
+[ext_resource type="Texture2D" uid="uid://bpyj5cvxfmtkp" path="res://assets/images/loading.png" id="1_ws45h"]
+
+[sub_resource type="Animation" id="Animation_vbdfe"]
+resource_name = "spin"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect/Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect/Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.2, 3.48),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.362786, 0.352083), Vector2(0.463, 0.449), Vector2(0.363, 0.352)]
+}
+
+[sub_resource type="Animation" id="Animation_xq13m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect/Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect/Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.362786, 0.352083)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b1yfa"]
+_data = {
+&"RESET": SubResource("Animation_xq13m"),
+&"spin": SubResource("Animation_vbdfe")
+}
+
+[node name="Loader" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vbdfe")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.184314)
+
+[node name="Sprite2D" type="Sprite2D" parent="ColorRect"]
+position = Vector2(568, 331)
+scale = Vector2(0.362786, 0.352083)
+texture = ExtResource("1_ws45h")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_b1yfa")
+}

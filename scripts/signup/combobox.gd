@@ -3,7 +3,7 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var popup = $Panel/MarginContainer/HBoxContainer/OptionButton.get_popup()
+	var popup = $VBoxContainer/Panel/MarginContainer/HBoxContainer/OptionButton.get_popup()
 	popup.hide_on_checkable_item_selection = false  # Optional
 	popup.clear()  # Optional: clear old items
 	

@@ -1,0 +1,86 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhxkcwp1qnr0y"]
+
+[ext_resource type="Texture2D" uid="uid://riocde56lyrh" path="res://assets/images/paper-container.png" id="1_mqpws"]
+[ext_resource type="PackedScene" uid="uid://dvtvqg1xt8i8k" path="res://scenes/ui/level_select/level_button.tscn" id="2_h7mmm"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h7mmm"]
+texture = ExtResource("1_mqpws")
+
+[node name="PanelContainer" type="PanelContainer"]
+custom_minimum_size = Vector2(550, 400)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.0
+offset_top = -200.0
+offset_right = 275.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_h7mmm")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 5
+
+[node name="TextureButton" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureButton2" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureButton3" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureButton4" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureButton5" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureButton6" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureButton7" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureButton8" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureButton9" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureButton10" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

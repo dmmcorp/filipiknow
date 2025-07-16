@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvtvqg1xt8i8k"]
+
+[ext_resource type="FontFile" uid="uid://dv50mgnju4pp6" path="res://assets/fonts/lazy_dog.ttf" id="1_e5nrs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_akxpb"]
+bg_color = Color(0.615686, 0.341176, 0.14902, 0)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.615686, 0.341176, 0.14902, 1)
+corner_radius_top_left = 41
+corner_radius_top_right = 41
+corner_radius_bottom_right = 41
+corner_radius_bottom_left = 41
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p8628"]
+bg_color = Color(0.615686, 0.341176, 0.14902, 0)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.615686, 0.341176, 0.14902, 1)
+corner_radius_top_left = 41
+corner_radius_top_right = 41
+corner_radius_bottom_right = 41
+corner_radius_bottom_left = 41
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mmdoe"]
+bg_color = Color(0.615686, 0.341176, 0.14902, 0)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.615686, 0.341176, 0.14902, 1)
+corner_radius_top_left = 41
+corner_radius_top_right = 41
+corner_radius_bottom_right = 41
+corner_radius_bottom_left = 41
+
+[node name="Button" type="Button"]
+offset_right = 132.0
+offset_bottom = 140.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.615686, 0.341176, 0.14902, 1)
+theme_override_fonts/font = ExtResource("1_e5nrs")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/hover = SubResource("StyleBoxFlat_akxpb")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_p8628")
+theme_override_styles/normal = SubResource("StyleBoxFlat_mmdoe")
+text = "1"

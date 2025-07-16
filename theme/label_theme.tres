@@ -1,10 +1,36 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cb3r3oyw7hxa0"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://cb3r3oyw7hxa0"]
 
 [ext_resource type="FontFile" uid="uid://b44m80u2kmjq8" path="res://assets/fonts/EFCO Brookshire Regular.ttf" id="1_akwid"]
+[ext_resource type="FontFile" uid="uid://dv50mgnju4pp6" path="res://assets/fonts/lazy_dog.ttf" id="2_h07dh"]
+[ext_resource type="FontFile" uid="uid://c2jpmdqqkk7aq" path="res://assets/fonts/Fredoka-SemiBold.ttf" id="2_xqy7k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xqy7k"]
+
+[sub_resource type="SystemFont" id="SystemFont_akwid"]
 
 [resource]
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/colors/font_shadow_color = Color(0, 0, 0, 0.172549)
-Label/font_sizes/font_size = 35
+Label/constants/line_spacing = 3
+Label/constants/outline_size = 0
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/constants/shadow_outline_size = 1
+Label/font_sizes/font_size = 50
 Label/fonts/font = ExtResource("1_akwid")
+Label/styles/normal = SubResource("StyleBoxEmpty_xqy7k")
+RichTextLabel/colors/default_color = Color(0.188235, 0.156863, 0.101961, 1)
+RichTextLabel/colors/font_outline_color = Color(0.74902, 0.552941, 0.203922, 1)
+RichTextLabel/constants/line_separation = 0
+RichTextLabel/constants/outline_size = 10
+RichTextLabel/font_sizes/bold_font_size = 24
+RichTextLabel/font_sizes/normal_font_size = 26
+RichTextLabel/fonts/normal_font = ExtResource("2_xqy7k")
 black/base_type = &"Label"
-black/colors/font_color = Color(0.551894, 0.268349, 0.11152, 1)
+black/colors/font_color = Color(0, 0, 0, 1)
+black/fonts/font = ExtResource("2_h07dh")
+error/base_type = &"Label"
+error/colors/font_color = Color(0.835294, 0, 0, 1)
+error/font_sizes/font_size = 20
+error/fonts/font = SubResource("SystemFont_akwid")

@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://dxv6aqskl31pl"]
+
+[ext_resource type="Script" uid="uid://diritbeuq21r2" path="res://scripts/story/story.gd" id="1_1xoiq"]
+[ext_resource type="Texture2D" uid="uid://brw3rnqh1lrqd" path="res://assets/story_bg/default_bg.png" id="2_6nge1"]
+[ext_resource type="PackedScene" uid="uid://brruoii0bk3dx" path="res://scenes/ui/story/Dialog_UI.tscn" id="3_7hgra"]
+[ext_resource type="PackedScene" uid="uid://tli8nkdjgmsb" path="res://components/character.tscn" id="3_ggycu"]
+
+[node name="Story" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1xoiq")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="BG" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_6nge1")
+expand_mode = 2
+
+[node name="Character" parent="CanvasLayer" instance=ExtResource("3_ggycu")]
+anchors_preset = 9
+anchor_right = 0.0
+grow_horizontal = 1
+
+[node name="DialogUi" parent="CanvasLayer" instance=ExtResource("3_7hgra")]
+offset_left = 1.0
+offset_right = 1.0

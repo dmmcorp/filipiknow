@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://yiv8kheagrkk"]
+[gd_scene load_steps=5 format=3 uid="uid://yiv8kheagrkk"]
 
 [ext_resource type="Theme" uid="uid://ctg5ru4kl6ydx" path="res://theme/button_theme.tres" id="1_f4js6"]
 [ext_resource type="Texture2D" uid="uid://bwpdww3tm84cn" path="res://assets/images/codex-icon.png" id="1_oqquy"]
-[ext_resource type="Texture2D" uid="uid://bd4ealorca511" path="res://assets/images/settings-icon.png" id="2_f4js6"]
 [ext_resource type="Texture2D" uid="uid://c2ojsh4p2eufo" path="res://assets/images/codex-icon-hover.png" id="3_oqquy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2qp6h"]
@@ -27,7 +26,7 @@ size_flags_vertical = 4
 mouse_default_cursor_shape = 2
 theme = ExtResource("1_f4js6")
 texture_normal = ExtResource("1_oqquy")
-texture_pressed = ExtResource("2_f4js6")
+texture_pressed = ExtResource("1_oqquy")
 texture_hover = ExtResource("3_oqquy")
 ignore_texture_size = true
 stretch_mode = 0
