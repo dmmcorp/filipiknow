@@ -58,7 +58,6 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 	login_button.disabled = false  # Re-enable login button
 	loader.visible = false
 	var response_text = body.get_string_from_utf8()
-	print("📨 Server Response:", response_text)
 	login_button.text = "Login"
 	# Handle connection errors
 	if result != HTTPRequest.RESULT_SUCCESS:
@@ -85,16 +84,16 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 		if json.has("result") and json.result.has("tokens"):
 			Globals.is_logged_in = true
 			error_message_label.visible = false
-			print("✅ Logged in. Token stored.")
 			var tokens = {
+				"user_id": json.userId,
 				"token": json.result.tokens.token,
 				"refresh_token": json.result.tokens.refreshToken
 			}
 			#save the tokens from convex to json file
-			save_token(tokens)
+			await save_token(tokens)
 			
 			# Navigate to main scene
-			SceneTransition.change_scene("res://scenes/main/novel_select.tscn")
+			SceneTransition.change_scene("res://scenes/main/novel_select.tscn", false)
 		else:
 			error_message_label.visible = true
 			error_message_label.text = "❌ Login failed: No token in response."
@@ -108,3 +107,4 @@ func save_token(tokens)-> void:
 	var jsonFile = FileAccess.open("user://auth_data.json", FileAccess.WRITE)
 	jsonFile.store_line(jsonString)
 	jsonFile.close()
+	print("✅ Logged in. Token stored.")

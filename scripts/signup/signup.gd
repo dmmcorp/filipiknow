@@ -113,6 +113,7 @@ func _on_http_request_request_completed(
 		signup_button.disabled = false
 		print("📦 Response JSON:", json)
 		var results_tokens = {
+				"user_id": json.userId,
 				"token": json.result.tokens.token,
 				"refresh_token": json.result.tokens.refreshToken
 			}
@@ -123,6 +124,20 @@ func _on_http_request_request_completed(
 	else:
 		print("⚠️ No JSON body returned.")
 		
+func get_student_progress()->void:
+	var data = Globals.load_auth_data()
+	var headers = [
+		"Content-Type: application/json"
+	]
+	var url = Globals.url + "getStudentInfoAndProgress"
+	if data.has("user_id"):
+		var userId = {
+			"userId": data.user_id
+		}
+		var json = JSON.stringify(userId)
+		print(json)
+		http_request.request(url, headers, HTTPClient.METHOD_POST,json)
+
 func save_token(tokens)-> void:
 	var jsonString = JSON.stringify(tokens)
 	var jsonFile = FileAccess.open("user://auth_data.json", FileAccess.WRITE)

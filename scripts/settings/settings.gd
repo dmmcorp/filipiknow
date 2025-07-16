@@ -66,4 +66,4 @@ func _on_http_request_request_completed(
 
 
 func _on_back_button_button_down() -> void:
-	SceneTransition.change_scene("res://scenes/main/novel_select.tscn", "move_left")
+	SceneTransition.change_scene("res://scenes/main/novel_select.tscn", true ,"move_left")
