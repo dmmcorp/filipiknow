@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://bqi065r7isa0n"]
+
+[node name="ImageLoader" type="HTTPRequest"]

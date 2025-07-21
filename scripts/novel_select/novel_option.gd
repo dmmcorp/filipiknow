@@ -204,16 +204,17 @@ func _on_back_to_chapters_button_down() -> void:
 
 func _on_get_level_resources_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	var response_text = body.get_string_from_utf8()
-	print("📦 Raw response text:", response_text)
 	var json = JSON.parse_string(response_text)
 	if not json:
 		print("❌ Failed to parse JSON!")
 		return
 	
 	if json and json.get("success", false):
-		print(json)
 		Globals.level_resource = json
 		var story_scene = load("res://scenes/main/story.tscn")
-		SceneTransition.change_scene("res://scenes/main/story.tscn")
+		var chapter_title = Globals.level_resource.result.novel_metadata.chapter_title
+		var chapter_number = Globals.level_resource.result.novel_metadata.chapter
+		SceneTransition.set_chapter_info(chapter_number, chapter_title)
+		SceneTransition.transition_chapter("res://scenes/main/story.tscn")
 	else:
 		print(json)
