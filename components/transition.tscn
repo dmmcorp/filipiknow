@@ -1,8 +1,20 @@
-[gd_scene load_steps=9 format=3 uid="uid://b5v8gv5jafiqe"]
+[gd_scene load_steps=14 format=3 uid="uid://b5v8gv5jafiqe"]
 
 [ext_resource type="Script" uid="uid://cs1oojlvtdgec" path="res://scripts/transition.gd" id="1_ka3md"]
+[ext_resource type="Texture2D" uid="uid://riocde56lyrh" path="res://assets/images/paper-container.png" id="2_8ic5q"]
 [ext_resource type="Theme" uid="uid://d000yir3fpqb2" path="res://theme/panel_theme.tres" id="2_s7m02"]
 [ext_resource type="Texture2D" uid="uid://cbukq1jk846ls" path="res://assets/images/Filipiknow.png" id="3_3cicy"]
+[ext_resource type="Theme" uid="uid://cb3r3oyw7hxa0" path="res://theme/label_theme.tres" id="3_kmkhe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhaxf"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_top = 5
+border_width_bottom = 5
+border_color = Color(0.74902, 0.552941, 0.203922, 1)
 
 [sub_resource type="Animation" id="Animation_lfmjd"]
 resource_name = "RESET"
@@ -55,6 +67,121 @@ tracks/3/keys = {
 "update": 0,
 "values": [Vector2(1323, 0)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CanvasLayer/ChapterTransition:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CanvasLayer/ChapterTransition/ChapterNumber:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-482, 249)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CanvasLayer/ChapterTransition/ChapterTitle:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1356, 349)]
+}
+
+[sub_resource type="Animation" id="Animation_8ic5q"]
+resource_name = "chapter_transition"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ChapterTransition:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/ChapterTransition/ChapterNumber:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.7, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-482, 249), Vector2(503, 249), Vector2(530.625, 249), Vector2(531, 249), Vector2(531, 249)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/ChapterTransition/ChapterTitle:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.708397, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1356, 349), Vector2(2, 349), Vector2(-47, 349), Vector2(0, 349), Vector2(0, 349)]
+}
+
+[sub_resource type="Animation" id="Animation_kmkhe"]
+resource_name = "chapter_transition_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ChapterTransition:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/ChapterTransition/ChapterNumber:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.307257, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(531, 249), Vector2(480, 249), Vector2(1638, 249)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/ChapterTransition/ChapterTitle:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.307257, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 349), Vector2(38, 349), Vector2(-1412, 349)]
+}
 
 [sub_resource type="Animation" id="Animation_s7m02"]
 resource_name = "dissolve"
@@ -105,6 +232,8 @@ resource_name = "move_right"
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3cicy"]
 _data = {
 &"RESET": SubResource("Animation_lfmjd"),
+&"chapter_transition": SubResource("Animation_8ic5q"),
+&"chapter_transition_out": SubResource("Animation_kmkhe"),
 &"dissolve": SubResource("Animation_s7m02"),
 &"move_left": SubResource("Animation_ka3md"),
 &"move_right": SubResource("Animation_3cicy")
@@ -120,6 +249,57 @@ grow_vertical = 2
 script = ExtResource("1_ka3md")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ChapterTransition" type="TextureRect" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -63.0
+offset_top = -29.0
+offset_right = 26.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_8ic5q")
+expand_mode = 2
+
+[node name="ChapterNumber" type="Label" parent="CanvasLayer/ChapterTransition"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1166.5
+offset_top = -136.0
+offset_right = -899.5
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_kmkhe")
+theme_type_variation = &"Label"
+theme_override_colors/font_color = Color(0.74902, 0.552941, 0.203922, 1)
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxFlat_rhaxf")
+
+[node name="ChapterTitle" type="Label" parent="CanvasLayer/ChapterTransition"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1356.0
+offset_top = -36.0
+offset_right = 1356.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_kmkhe")
+theme_override_constants/outline_size = 5
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 modulate = Color(1, 1, 1, 0)

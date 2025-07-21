@@ -1,14 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://tli8nkdjgmsb"]
+[gd_scene load_steps=8 format=3 uid="uid://tli8nkdjgmsb"]
 
-[ext_resource type="Texture2D" uid="uid://bd0yex4ern3dn" path="res://assets/characters/Ibarra.png" id="1_88t6f"]
 [ext_resource type="Script" uid="uid://dnk8jmnhe62la" path="res://scripts/character/character.gd" id="1_wptw5"]
 
-[sub_resource type="Animation" id="Animation_ptxnt"]
-resource_name = "not_speaking"
+[sub_resource type="Animation" id="Animation_q6bof"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Character:self_modulate")
+tracks/0/path = NodePath("CharacterLeft:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -17,13 +16,25 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(0.423651, 0.423651, 0.423651, 1)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterRight:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.423651, 0.423651, 0.423651, 1)]
+}
 
-[sub_resource type="Animation" id="Animation_q6bof"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_ptxnt"]
+resource_name = "not_speaking"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Character:self_modulate")
+tracks/0/path = NodePath("CharacterLeft:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -38,7 +49,7 @@ resource_name = "speaking"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Character:self_modulate")
+tracks/0/path = NodePath("CharacterLeft:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -48,9 +59,43 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_wptw5"]
+resource_name = "fade_in_left"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterLeft:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.423651, 0.423651, 0.423651, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_7p1xp"]
+resource_name = "fade_in_right"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterRight:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.423651, 0.423651, 0.423651, 1), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7p1xp"]
 _data = {
 &"RESET": SubResource("Animation_q6bof"),
+&"fade_in_left": SubResource("Animation_wptw5"),
+&"fade_in_right": SubResource("Animation_7p1xp"),
 &"not_speaking": SubResource("Animation_ptxnt"),
 &"speaking": SubResource("Animation_7k4gq")
 }
@@ -64,17 +109,44 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wptw5")
 
-[node name="Character" type="TextureRect" parent="."]
+[node name="CharacterLeft" type="TextureRect" parent="."]
 self_modulate = Color(0.423651, 0.423651, 0.423651, 1)
-offset_left = -60.0
-offset_top = 134.0
-offset_right = 348.0
-offset_bottom = 746.0
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -74.0
+offset_top = -203.0
+offset_right = 334.0
+offset_bottom = 409.0
+grow_vertical = 2
 scale = Vector2(1.27429, 1.27429)
-texture = ExtResource("1_88t6f")
 flip_h = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayerLeft" type="AnimationPlayer" parent="CharacterLeft"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_7p1xp")
+}
+
+[node name="CharacterRight" type="TextureRect" parent="."]
+self_modulate = Color(0.423651, 0.423651, 0.423651, 1)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -434.0
+offset_top = -215.0
+offset_right = -26.0
+offset_bottom = 397.0
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(1.27429, 1.27429)
+
+[node name="AnimationPlayerRight" type="AnimationPlayer" parent="CharacterRight"]
+root_node = NodePath("../..")
 libraries = {
 &"": SubResource("AnimationLibrary_7p1xp")
 }

@@ -1,9 +1,85 @@
-[gd_scene load_steps=5 format=3 uid="uid://brruoii0bk3dx"]
+[gd_scene load_steps=13 format=3 uid="uid://brruoii0bk3dx"]
 
 [ext_resource type="Texture2D" uid="uid://csdywowv5w4si" path="res://assets/images/Dialog-texture.png" id="1_ivmut"]
 [ext_resource type="Script" uid="uid://ct4qq22xco8a0" path="res://scripts/dialog_ui/dialog_ui.gd" id="1_lf3jq"]
 [ext_resource type="Theme" uid="uid://cb3r3oyw7hxa0" path="res://theme/label_theme.tres" id="2_lf3jq"]
 [ext_resource type="Script" uid="uid://cfyaphb1c71mf" path="res://scripts/dialog_ui/text.gd" id="4_58mnj"]
+[ext_resource type="Texture2D" uid="uid://cjbh83vhwjkc" path="res://assets/images/description_container.png" id="5_me5yu"]
+[ext_resource type="Texture2D" uid="uid://cboevju324t5e" path="res://assets/images/buttons.png" id="6_3iumo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oht87"]
+atlas = ExtResource("6_3iumo")
+region = Rect2(528, 461, 180, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3iumo"]
+atlas = ExtResource("6_3iumo")
+region = Rect2(528, 461, 180, 176)
+margin = Rect2(10, 10, 20, 20)
+
+[sub_resource type="Animation" id="Animation_me5yu"]
+resource_name = "fade_in"
+
+[sub_resource type="Animation" id="Animation_3iumo"]
+resource_name = "slide_up"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -130), Vector2(0, -90), Vector2(0, -104)]
+}
+
+[sub_resource type="Animation" id="Animation_oht87"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 334)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8u7gk"]
+_data = {
+&"RESET": SubResource("Animation_oht87"),
+&"fade_in": SubResource("Animation_me5yu"),
+&"slide_up": SubResource("Animation_3iumo")
+}
 
 [node name="DialogUi" type="Control"]
 layout_mode = 3
@@ -24,23 +100,70 @@ offset_right = 419.0
 offset_bottom = -157.0
 grow_vertical = 0
 
-[node name="SpeakerNameLeft" type="RichTextLabel" parent="SpeakerLeft"]
+[node name="CenterContainer" type="CenterContainer" parent="."]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 27.0
-offset_top = -63.0
-offset_right = 547.0
-offset_bottom = -2.0
-grow_vertical = 0
-scale = Vector2(1.00702, 1)
+offset_top = 334.0
+offset_right = 20.0
+offset_bottom = 514.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.984312, 0.92114)
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer"]
+custom_minimum_size = Vector2(1300, 900)
+layout_mode = 2
+texture = ExtResource("5_me5yu")
+expand_mode = 1
+
+[node name="Description" type="RichTextLabel" parent="CenterContainer/TextureRect"]
+custom_minimum_size = Vector2(600, 200)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -335.0
+offset_top = -134.0
+offset_right = 339.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("2_lf3jq")
-theme_type_variation = &"RichTextLabel"
-theme_override_font_sizes/normal_font_size = 40
-fit_content = true
-autowrap_mode = 0
-tab_size = 1
+theme_override_colors/default_color = Color(1, 0.933333, 0.862745, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/normal_font_size = 26
+text = "description"
+
+[node name="TextureButton" type="TextureButton" parent="CenterContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 286.0
+offset_top = -251.0
+offset_right = 466.0
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.418829, 0.418829)
+focus_mode = 0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+texture_normal = SubResource("AtlasTexture_oht87")
+texture_pressed = SubResource("AtlasTexture_3iumo")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer"]
+root_node = NodePath("../TextureRect")
+libraries = {
+&"": SubResource("AnimationLibrary_8u7gk")
+}
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -48,7 +171,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -159.0
+offset_top = -190.0
 grow_horizontal = 2
 grow_vertical = 0
 
@@ -57,10 +180,27 @@ layout_mode = 2
 texture = ExtResource("1_ivmut")
 expand_mode = 2
 
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+
+[node name="SpeakerNameLeft" type="RichTextLabel" parent="PanelContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("2_lf3jq")
+theme_type_variation = &"RichTextLabel"
+theme_override_colors/default_color = Color(0.169245, 0.169245, 0.169245, 1)
+theme_override_font_sizes/normal_font_size = 30
+text = "asdasd"
+fit_content = true
+autowrap_mode = 0
+tab_size = 1
+
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 30
+theme_override_constants/margin_top = 60
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 30
 
@@ -69,5 +209,9 @@ layout_mode = 2
 theme = ExtResource("2_lf3jq")
 theme_type_variation = &"RichTextLabel"
 theme_override_constants/outline_size = 0
+bbcode_enabled = true
 text = "Ah, ipagpatawad po ninyong kayo'y gambalain ko. Bumigkas kayo ng isang salitang nakapukaw sa aking kalooban. Tunay nga bang ang ugaling mapagpabaya ay likas sa mga ipinanganak dito, o ang nangyayari'y gaya ng sabi ng isang manlalakbay na tagaibang bayan, na dinadahilan daw natin ang kapabayaang iyan para mapagtakpan ang sarili nating kapabayaan, ang ating pagkakahuli sa mabuting paraan sa pamamahala sa mga nasasakop natin? Tinutukoy ang ibang lupaing sakop na, na ang mga tao'y kalahi ng mga tagarito!"
 script = ExtResource("4_58mnj")
+
+[connection signal="button_down" from="CenterContainer/TextureRect/TextureButton" to="PanelContainer/MarginContainer/Text" method="_on_texture_button_button_down"]
+[connection signal="meta_clicked" from="PanelContainer/MarginContainer/Text" to="PanelContainer/MarginContainer/Text" method="_on_meta_clicked"]

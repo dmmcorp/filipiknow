@@ -222,7 +222,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "[color=black]Already have an account?[/color] [color=blue]Click here[/color] [color=red][url=login]Login[/url][/color]"
+text = "[color=black]Already have an account?[/color] [color=blue][u]Click here[/u][/color] [color=red][url=login]Login[/url][/color]"
 horizontal_alignment = 1
 
 [node name="ErrorText" type="Label" parent="SignupContainer"]

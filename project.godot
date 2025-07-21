@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 Globals="*res://globals.gd"
 SceneTransition="*res://components/transition.tscn"
 Loader="*res://components/loader.tscn"
+ChapterTransition="*res://scripts/story/chapter_transition.gd"
 
 [display]
 
