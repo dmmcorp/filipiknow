@@ -18,7 +18,7 @@ size_flags_vertical = 4
 theme = ExtResource("1_f4js6")
 theme_override_styles/panel = SubResource("StyleBoxFlat_2qp6h")
 
-[node name="TextureButton" type="TextureButton" parent="."]
+[node name="CodexButton" type="TextureButton" parent="."]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 4
