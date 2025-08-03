@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cjdrk1f7jnnke"]
+[gd_scene load_steps=14 format=3 uid="uid://cjdrk1f7jnnke"]
 
 [ext_resource type="Theme" uid="uid://d000yir3fpqb2" path="res://theme/panel_theme.tres" id="1_5jayq"]
 [ext_resource type="Texture2D" uid="uid://51si0qrucy28" path="res://assets/images/menu-bg.png" id="2_1hnnh"]
@@ -11,6 +11,7 @@
 [ext_resource type="Theme" uid="uid://ctg5ru4kl6ydx" path="res://theme/button_theme.tres" id="10_dk8rd"]
 [ext_resource type="Texture2D" uid="uid://bwpdww3tm84cn" path="res://assets/images/codex-icon.png" id="10_sviti"]
 [ext_resource type="Texture2D" uid="uid://c2ojsh4p2eufo" path="res://assets/images/codex-icon-hover.png" id="11_yd4p6"]
+[ext_resource type="Texture2D" uid="uid://dnx7hfimbr8ok" path="res://assets/images/leaderbord-button.png" id="12_yd4p6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sviti"]
 bg_color = Color(0, 0, 0, 0.517647)
@@ -105,5 +106,30 @@ texture_hover = ExtResource("11_yd4p6")
 ignore_texture_size = true
 stretch_mode = 0
 
+[node name="Leaderboard" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.91
+anchor_top = 0.03
+anchor_right = 0.91
+anchor_bottom = 0.03
+offset_left = -69.6
+offset_top = 0.200001
+offset_right = 16.4
+offset_bottom = 84.2
+grow_horizontal = 0
+theme = ExtResource("4_y3s3u")
+theme_type_variation = &"no_bg"
+
+[node name="LeaderboardButton" type="TextureButton" parent="Leaderboard"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("12_yd4p6")
+texture_pressed = ExtResource("12_yd4p6")
+ignore_texture_size = true
+stretch_mode = 0
+
 [connection signal="button_down" from="Settings/SettingsButton" to="." method="_on_settings_button_button_down"]
 [connection signal="button_down" from="Codex/CodexButton" to="." method="_on_codex_button_button_down"]
+[connection signal="button_down" from="Leaderboard/LeaderboardButton" to="." method="_on_leaderboard_button_button_down"]

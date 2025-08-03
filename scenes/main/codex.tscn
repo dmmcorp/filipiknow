@@ -53,6 +53,7 @@ columns = 2
 
 [node name="KabanataImage1" type="TextureRect" parent="LeftBook"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 texture = ExtResource("4_ikfp7")
 
 [node name="KabanataLabel1" type="Label" parent="LeftBook/KabanataImage1"]
@@ -69,6 +70,7 @@ text = "IBARRA"
 
 [node name="KabanataImage2" type="TextureRect" parent="LeftBook"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 texture = ExtResource("4_0ariq")
 
 [node name="KabanataLabel2" type="Label" parent="LeftBook/KabanataImage2"]
@@ -85,6 +87,7 @@ text = "KABANATA 2"
 
 [node name="KabanataImage3" type="TextureRect" parent="LeftBook"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 texture = ExtResource("4_0ariq")
 
 [node name="KabanataLabel3" type="Label" parent="LeftBook/KabanataImage3"]
@@ -101,6 +104,7 @@ text = "KABANATA 3"
 
 [node name="KabanataImage4" type="TextureRect" parent="LeftBook"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 texture = ExtResource("4_0ariq")
 
 [node name="KabanataLabel4" type="Label" parent="LeftBook/KabanataImage4"]
@@ -117,6 +121,7 @@ text = "KABANATA 4"
 
 [node name="KabanataImage5" type="TextureRect" parent="LeftBook"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 texture = ExtResource("4_0ariq")
 
 [node name="KabanataLabel5" type="Label" parent="LeftBook/KabanataImage5"]
@@ -133,6 +138,7 @@ text = "KABANATA 5"
 
 [node name="KabanataImage6" type="TextureRect" parent="LeftBook"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 texture = ExtResource("4_0ariq")
 
 [node name="KabanataLabel6" type="Label" parent="LeftBook/KabanataImage6"]
