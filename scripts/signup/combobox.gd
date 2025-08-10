@@ -1,6 +1,8 @@
 extends Control
+@onready var dropdown = $VBoxContainer/Panel/MarginContainer/HBoxContainer/OptionButton
+var selected_item
 
-
+signal grade_selected(grade: String)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var popup = $VBoxContainer/Panel/MarginContainer/HBoxContainer/OptionButton.get_popup()
@@ -18,6 +20,7 @@ func _ready() -> void:
 	popup.add_theme_color_override("font_color", Color.BLACK)
 	popup.add_theme_color_override("font_color_hover", Color.WHITE)
 	popup.add_theme_color_override("font_color_pressed", Color.DIM_GRAY)
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	
+func _on_option_button_item_selected(index: int) -> void:
+	var text = dropdown.get_item_text(index)
+	emit_signal("grade_selected", text)

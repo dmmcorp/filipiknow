@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cg1dxchri27lj"]
+[gd_scene load_steps=15 format=3 uid="uid://cg1dxchri27lj"]
 
 [ext_resource type="Script" uid="uid://bwa7og0882iim" path="res://scripts/signup/signup.gd" id="1_jqkw8"]
 [ext_resource type="Theme" uid="uid://d000yir3fpqb2" path="res://theme/panel_theme.tres" id="2_28klx"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://wj057r61auak" path="res://assets/images/email_icon.png" id="5_ht2v2"]
 [ext_resource type="Texture2D" uid="uid://w4l0fe5bl263" path="res://assets/images/lock.png" id="5_vrk3p"]
 [ext_resource type="PackedScene" uid="uid://exadjcdug6ee" path="res://components/Combobox.tscn" id="7_28klx"]
+[ext_resource type="PackedScene" uid="uid://q8vlip5q77qu" path="res://components/section_dropdown.tscn" id="8_ht2v2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cwikc"]
 bg_color = Color(0.941176, 0.945098, 0.941176, 1)
@@ -162,9 +163,8 @@ expand_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Section" parent="SignupContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("3_28klx")]
+[node name="Section" parent="SignupContainer/HBoxContainer/VBoxContainer2" instance=ExtResource("8_ht2v2")]
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="LoginLabel" type="Label" parent="SignupContainer"]
 layout_mode = 1
@@ -240,5 +240,8 @@ grow_vertical = 2
 label_settings = SubResource("LabelSettings_28klx")
 horizontal_alignment = 1
 
+[node name="GetSectionRequest" type="HTTPRequest" parent="SignupContainer"]
+
 [connection signal="request_completed" from="SignupContainer/SignupBtnContainer/Button/HTTPRequest" to="." method="_on_http_request_request_completed"]
 [connection signal="meta_clicked" from="SignupContainer/RichTextLabel" to="." method="_on_rich_text_label_meta_clicked"]
+[connection signal="request_completed" from="SignupContainer/GetSectionRequest" to="." method="_on_get_section_request_request_completed"]
