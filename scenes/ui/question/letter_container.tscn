@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://1lvwqcyvryei"]
+
+[ext_resource type="Theme" uid="uid://cb3r3oyw7hxa0" path="res://theme/label_theme.tres" id="1_urb7q"]
+[ext_resource type="FontFile" uid="uid://c2jpmdqqkk7aq" path="res://assets/fonts/Fredoka-SemiBold.ttf" id="2_xuunr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_62ovn"]
+bg_color = Color(0.698039, 0.576471, 0.356863, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="LetterContainer" type="PanelContainer"]
+offset_right = 50.0
+offset_bottom = 63.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_62ovn")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme = ExtResource("1_urb7q")
+theme_type_variation = &"Label"
+theme_override_fonts/font = ExtResource("2_xuunr")
+theme_override_font_sizes/font_size = 30
+text = "A"
+horizontal_alignment = 1

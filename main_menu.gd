@@ -42,7 +42,6 @@ func get_student_progress()->void:
 			"userId": data.user_id
 		}
 		var json = JSON.stringify(userId)
-		print(json)
 		http_GET.request(url, headers, HTTPClient.METHOD_POST,json)
 		
 func _on_get_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:

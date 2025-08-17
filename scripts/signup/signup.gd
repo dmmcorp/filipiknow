@@ -41,15 +41,15 @@ func input_placeholder_setter() -> void:
 	email.set_placeholder("Email")
 	lrn.set_placeholder("Student LRN")
 func on_grade_selected(grade: String) -> void:
-	print("Grade selected in Signup script:", grade)
+	#print("Grade selected in Signup script:", grade)
 	filtered_sections = []
 	selectedSectionid = ""
 	if sections:
 		for section in sections:
 			if section.gradeLevel.to_lower() == grade.to_lower():
-				print(section.gradeLevel)
+				#print(section.gradeLevel)
 				filtered_sections.append(section)
-				print("Filtered:", filtered_sections)
+				#print("Filtered:", filtered_sections)
 	section_dropdown.clear()
 	for section in filtered_sections:
 		section_dropdown.add_item(section["name"])
@@ -73,7 +73,7 @@ func on_signup_pressed() -> void:
 		for sec in sections:
 			if sec.name.to_lower() == section_dropdown.text.to_lower(): # or sec["sectionName"] if it's a dictionary
 				var section_id = sec._id     # or sec["_id"] if it's a dictionary
-				print("Found section ID:", section_id)
+				#print("Found section ID:", section_id)
 				selectedSectionid = section_id
 
 		var section = $SignupContainer/HBoxContainer/VBoxContainer2/Section
@@ -85,7 +85,7 @@ func on_signup_pressed() -> void:
 		"gradeLevel": gradelevel.get_item_text(gradelevel.selected),
 		"section": selectedSectionid,
 	}
-	print(data)
+	#print(data)
 	if validate_inputs() == true:
 		send_request(data)
 	else:

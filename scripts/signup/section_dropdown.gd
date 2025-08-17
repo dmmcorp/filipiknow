@@ -24,7 +24,6 @@ func _ready() -> void:
 
 func _on_option_button_item_selected(index: int) -> void:
 	var text = dropdown.get_item_text(index)
-	print(text)
 	emit_signal("section_selected", text)
 	
 func set_error_message():

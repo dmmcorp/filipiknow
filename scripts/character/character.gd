@@ -49,15 +49,15 @@ func assign_character(image_url, char_name: String) -> void:
 	if pos == "LEFT":
 		character_left.texture = texture
 		animation_player_left.play("fade_in_left")
-		print("left:",character_left.self_modulate.a)
-		print("right:",character_right.self_modulate.a)
+		#print("left:",character_left.self_modulate.a)
+		#print("right:",character_right.self_modulate.a)
 		animation_player_right.play_backwards("fade_in_right")
 	elif pos == "RIGHT":
 		character_right.texture = texture
 		animation_player_right.play("fade_in_right")
 		animation_player_left.play_backwards("fade_in_left")
-		print("right:",character_right.self_modulate.a)
-		print("left:",character_left.self_modulate.a)
+		#print("right:",character_right.self_modulate.a)
+		#print("left:",character_left.self_modulate.a)
 
 #add speaker name to the speaker_names array
 func add_speaker_name(char_name:String, position: String):

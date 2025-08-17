@@ -23,15 +23,16 @@ func _ready() -> void:
 	Globals.levels_btn = levels_btn
 
 func _unhandled_input(event):
-	if event.is_action_pressed("next_line"):
-		if index < len(Globals.chapter_resource.result.scenes) - 1:
-			dialog_ui.set_index()
-			index = dialog_ui.get_current_index()
-			auto_place_character()
-		else:
-			proceed_to_levels.visible = true
-			animation_player.play("pop_up")
-			touch_btn.hide()
+	if Globals.input_enabled == true:
+		if event.is_action_pressed("next_line"):
+			if index < len(Globals.chapter_resource.result.scenes) - 1:
+				dialog_ui.set_index()
+				index = dialog_ui.get_current_index()
+				auto_place_character()
+			else:
+				proceed_to_levels.visible = true
+				animation_player.play("pop_up")
+				touch_btn.hide()
 	
 func _on_back_button_down() -> void:
 	dialog_ui.set_index(true)

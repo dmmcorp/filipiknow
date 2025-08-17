@@ -47,7 +47,7 @@ func authenticate_user()->void:
 		
 func send_request(data):
 	loader.visible = true
-	login_button.text = "Logging in"
+	login_button.text = "Loading"
 	login_button.disabled = true
 	var headers = ["Content-Type: application/json"]
 	var url = Globals.url + "api/auth/signin"

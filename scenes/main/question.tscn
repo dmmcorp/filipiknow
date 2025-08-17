@@ -1,16 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://cjy0kt1vbmmh"]
+[gd_scene load_steps=12 format=3 uid="uid://cjy0kt1vbmmh"]
 
+[ext_resource type="Script" uid="uid://bis6x5xbtuqoo" path="res://scripts/question/question.gd" id="1_4bruo"]
 [ext_resource type="Texture2D" uid="uid://8mafvng5xb3g" path="res://assets/images/quiz-container.png" id="1_lgccu"]
-[ext_resource type="Script" uid="uid://davtmtbbw4hcg" path="res://scenes/main/question.gd" id="1_tdqlg"]
 [ext_resource type="Theme" uid="uid://cb3r3oyw7hxa0" path="res://theme/label_theme.tres" id="2_ii4o5"]
 [ext_resource type="FontFile" uid="uid://c2jpmdqqkk7aq" path="res://assets/fonts/Fredoka-SemiBold.ttf" id="3_ii4o5"]
+[ext_resource type="Script" uid="uid://b3a7nfllky6d8" path="res://scenes/main/grid_container.gd" id="4_sjiwk"]
+[ext_resource type="Script" uid="uid://deljwcca2u5gt" path="res://scripts/question/choices_container.gd" id="4_tdqlg"]
+[ext_resource type="Texture2D" uid="uid://b5xo2fmc4biht" path="res://assets/images/submit-btn.png" id="6_rkyf2"]
+[ext_resource type="Texture2D" uid="uid://cboevju324t5e" path="res://assets/images/buttons.png" id="8_m3vaj"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tdqlg"]
-bg_color = Color(0.698039, 0.576471, 0.356863, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sjiwk"]
+texture = ExtResource("6_rkyf2")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbufi"]
+atlas = ExtResource("8_m3vaj")
+region = Rect2(528, 461, 180, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a31p4"]
+atlas = ExtResource("8_m3vaj")
+region = Rect2(1130, 869, 181, 177)
 
 [node name="Question" type="Control"]
 layout_mode = 3
@@ -19,7 +27,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_tdqlg")
+script = ExtResource("1_4bruo")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -51,8 +59,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -131.5
-offset_bottom = 202.5
+offset_top = -127.5
+offset_bottom = 224.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
@@ -71,35 +79,65 @@ theme_override_font_sizes/normal_font_size = 18
 text = "Batay sa pagkakagamit ng salitang “Makutya” ibigay ang salitang kasingkahulugan nito?"
 fit_content = true
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/TextureRect/VBoxContainer"]
+[node name="AnswerInputContainer" type="MarginContainer" parent="CenterContainer/TextureRect/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_right = 50
 
-[node name="GridContainer" type="GridContainer" parent="CenterContainer/TextureRect/VBoxContainer/MarginContainer"]
+[node name="GridContainer" type="GridContainer" parent="CenterContainer/TextureRect/VBoxContainer/AnswerInputContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 5
 columns = 8
+script = ExtResource("4_sjiwk")
 
-[node name="LetterContainer" type="PanelContainer" parent="CenterContainer/TextureRect/VBoxContainer/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(30, 40)
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/TextureRect/VBoxContainer"]
+custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_tdqlg")
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
 
-[node name="LetterLabel" type="Label" parent="CenterContainer/TextureRect/VBoxContainer/MarginContainer/GridContainer/LetterContainer"]
+[node name="Control" type="Control" parent="CenterContainer/TextureRect/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
-theme = ExtResource("2_ii4o5")
-theme_type_variation = &"Label"
+script = ExtResource("4_tdqlg")
+
+[node name="CenterContainer" type="CenterContainer" parent="CenterContainer/TextureRect/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="SubmitButton" type="Button" parent="CenterContainer/TextureRect/VBoxContainer/CenterContainer"]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.545098, 0.270588, 0.0745098, 1)
 theme_override_fonts/font = ExtResource("3_ii4o5")
-theme_override_font_sizes/font_size = 30
-text = "A"
-horizontal_alignment = 1
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxTexture_sjiwk")
+text = "ISUMITE"
 
-[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/TextureRect/VBoxContainer"]
-layout_mode = 2
+[node name="HTTPRequest" type="HTTPRequest" parent="CenterContainer/TextureRect/VBoxContainer/CenterContainer/SubmitButton"]
 
-[node name="Label" type="Label" parent="CenterContainer/TextureRect/VBoxContainer/MarginContainer2"]
-layout_mode = 2
+[node name="CloseButton" type="TextureButton" parent="CenterContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -61.0
+offset_bottom = 57.0
+grow_horizontal = 0
+texture_normal = SubResource("AtlasTexture_tbufi")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="InstructionButton" type="TextureButton" parent="CenterContainer/TextureRect"]
+layout_mode = 0
+offset_top = 9.0
+offset_right = 40.0
+offset_bottom = 49.0
+texture_normal = SubResource("AtlasTexture_a31p4")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="button_down" from="CenterContainer/TextureRect/CloseButton" to="." method="_on_close_button_button_down"]

@@ -10,11 +10,6 @@ extends Control
 func _ready() -> void:
 	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
 func close_proceed_dialog():
 	animation_player.play_backwards("pop_up")
 	await animation_player.animation_finished
@@ -24,8 +19,11 @@ func close_proceed_dialog():
 func _on_texture_button_button_down() -> void:
 	close_proceed_dialog()
 	touch_btn.show()
+	Globals.input_enabled = true
 	
 #yes btn signal
 func _on_button_button_down() -> void:
 	close_proceed_dialog()
 	levels_btn.visible = true
+	Globals.input_enabled = false
+	print(Globals.input_enabled)

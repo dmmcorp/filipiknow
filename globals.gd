@@ -9,14 +9,15 @@ var user_firstname := ""
 var user_lastname := ""
 
 #variables for story scene
+var input_enabled = true
 var progress_data
 var chapter_resource
 var touch_btn
 var levels_btn
+var selected_level
 
 func auth_guard(http_request: HTTPRequest)->void:
 	var tokens = load_auth_data()
-	print(tokens)
 	if  tokens.has("token"):
 		verify_token(tokens["token"], http_request)
 	else: 

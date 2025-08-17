@@ -23,7 +23,7 @@ var selected: Dictionary
 func _ready() -> void:
 	await get_student_progress()
 	load_data()
-	print(Globals.progress_data)
+	#print(Globals.progress_data)
 func get_student_progress()->void:
 	var data = Globals.load_auth_data()
 	var headers = [
@@ -35,14 +35,14 @@ func get_student_progress()->void:
 			"userId": data.user_id
 		}
 		var json = JSON.stringify(userId)
-		print(json)
+		#print(json)
 		http_request.request(url, headers, HTTPClient.METHOD_POST,json)
 
 func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	var response_text = body.get_string_from_utf8()
 	var json = JSON.parse_string(response_text)
 	if json and json.get("success", false):
-		print(json)
+		#print(json)
 		Globals.save(json)
 		Globals.progress_data = {
 			"student": json.student,
@@ -140,8 +140,7 @@ func _on_chapter_pressed(btn, num: int) -> void:
 	var tween := create_tween()
 	if btn.text == "KABANATA %d" % num:
 		selected["chapter"] = num
-		print("Chapter %d pressed" % num)
-	print(selected)
+
 	#get the current level in the chapter
 	tween.tween_property(btn, "scale", Vector2(0.95, 0.95), 0.05)
 	tween.tween_property(btn, "scale", Vector2(1, 1), 0.1)
