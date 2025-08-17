@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://b5v8gv5jafiqe"]
+[gd_scene load_steps=15 format=3 uid="uid://b5v8gv5jafiqe"]
 
 [ext_resource type="Script" uid="uid://cs1oojlvtdgec" path="res://scripts/transition.gd" id="1_ka3md"]
 [ext_resource type="Texture2D" uid="uid://riocde56lyrh" path="res://assets/images/paper-container.png" id="2_8ic5q"]
 [ext_resource type="Theme" uid="uid://d000yir3fpqb2" path="res://theme/panel_theme.tres" id="2_s7m02"]
 [ext_resource type="Texture2D" uid="uid://cbukq1jk846ls" path="res://assets/images/Filipiknow.png" id="3_3cicy"]
 [ext_resource type="Theme" uid="uid://cb3r3oyw7hxa0" path="res://theme/label_theme.tres" id="3_kmkhe"]
+[ext_resource type="Script" uid="uid://dxosyhcknbyyl" path="res://scripts/loading_text_container.gd" id="4_kmkhe"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhaxf"]
 content_margin_left = 10.0
@@ -103,6 +104,30 @@ tracks/6/keys = {
 "update": 0,
 "values": [Vector2(1356, 349)]
 }
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CanvasLayer/ChapterTransition/LoadingTextContainer:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CanvasLayer/ChapterTransition/LoadingTextContainer/ChapterTitle:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_8ic5q"]
 resource_name = "chapter_transition"
@@ -142,6 +167,30 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(1356, 349), Vector2(2, 349), Vector2(-47, 349), Vector2(0, 349), Vector2(0, 349)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/ChapterTransition/LoadingTextContainer:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.25, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CanvasLayer/ChapterTransition/LoadingTextContainer/ChapterTitle:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.25, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_kmkhe"]
@@ -298,6 +347,42 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_kmkhe")
 theme_override_constants/outline_size = 5
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoadingTextContainer" type="HBoxContainer" parent="CanvasLayer/ChapterTransition"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -158.5
+offset_top = 249.0
+offset_right = 346.5
+offset_bottom = 289.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+script = ExtResource("4_kmkhe")
+
+[node name="ChapterTitle" type="Label" parent="CanvasLayer/ChapterTransition/LoadingTextContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme = ExtResource("3_kmkhe")
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 20
+text = "Please wait while"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ChapterTitle2" type="Label" parent="CanvasLayer/ChapterTransition/LoadingTextContainer"]
+layout_mode = 2
+theme = ExtResource("3_kmkhe")
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 20
+text = "resources are loading . . ."
 horizontal_alignment = 1
 vertical_alignment = 1
 

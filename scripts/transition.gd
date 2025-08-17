@@ -40,13 +40,13 @@ func play_backward(animation):
 func transition_chapter(target: String) -> void:
 	animation_player.play('chapter_transition')
 	await animation_player.animation_finished
-	if Globals.level_resource.result.scenes:
+	if Globals.chapter_resource.result.scenes:
 		set_character_images()
 	else:
 		print("No scenes")
 #set the characters image resource while in transition. It is used in transition_chapter function
 func set_character_images() -> void:
-	var scenes: Array = Globals.level_resource.result.scenes
+	var scenes: Array = Globals.chapter_resource.result.scenes
 	var scenes_with_texture: Array = []
 	if scenes:
 		for scene in scenes:
@@ -63,7 +63,7 @@ func set_character_images() -> void:
 					print("Failed to load image.")
 				scenes_with_texture.append(current_scene)
 
-		Globals.level_resource.result.scenes = scenes_with_texture
+		Globals.chapter_resource.result.scenes = scenes_with_texture
 		print("✅ All scenes processed!")
 		get_tree().change_scene_to_file("res://scenes/main/story.tscn")
 		play_backward("chapter_transition")

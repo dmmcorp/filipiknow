@@ -7,8 +7,12 @@ var is_logged_in := false
 var user_email := ""
 var user_firstname := ""
 var user_lastname := ""
+
+#variables for story scene
 var progress_data
-var level_resource
+var chapter_resource
+var touch_btn
+var levels_btn
 
 func auth_guard(http_request: HTTPRequest)->void:
 	var tokens = load_auth_data()

@@ -5,6 +5,7 @@ extends RichTextLabel
 @onready var description_dialog = $"../../../CenterContainer"
 @onready var description_text = $"../../../CenterContainer/TextureRect/Description"
 @onready var animation_player = $"../../../CenterContainer/AnimationPlayer"
+
 const ANIMATION_SPEED : int = 30 
 var animate_text : bool = false
 var current_visible_character: int =  0
@@ -25,7 +26,7 @@ func _process(delta: float) -> void:
 			animate_text = false
 		
 func display_first_speaker():
-	if Globals.level_resource and Globals.level_resource.has("result"):
+	if Globals.chapter_resource and Globals.chapter_resource.has("result"):
 		process_lines()
 		current_index = 0
 	else:
@@ -33,17 +34,17 @@ func display_first_speaker():
 
 
 func process_lines():
-	var text = Globals.level_resource.result.scenes[current_index].text
+	var text = Globals.chapter_resource.result.scenes[current_index].text
 	
 	display_speaker_text(text)
-	display_speaker_name_left(Globals.level_resource.result.scenes[current_index].speaker.name)
-	current_speaker = Globals.level_resource.result.scenes[current_index].speaker.name
+	display_speaker_name_left(Globals.chapter_resource.result.scenes[current_index].speaker.name)
+	current_speaker = Globals.chapter_resource.result.scenes[current_index].speaker.name
 
 func get_current_speaker()->String:
 	return current_speaker
 
 func display_speaker_text(text:String):
-	var scene =  Globals.level_resource.result.scenes[current_index]
+	var scene =  Globals.chapter_resource.result.scenes[current_index]
 	if scene.has("highlighted_word"):
 		set_bold_word(text, scene.highlighted_word.word)
 	else:
@@ -59,7 +60,7 @@ func set_index(back: bool = false):
 		if current_index > 0:
 			current_index -= 1
 			process_lines()
-	if back == false and current_index != len(Globals.level_resource.result.scenes) - 1:
+	if back == false and current_index != len(Globals.chapter_resource.result.scenes) - 1:
 		current_index += 1
 		process_lines()
 
@@ -71,9 +72,10 @@ func set_bold_word(text: String, word: String) -> void:
 func _on_meta_clicked(meta: Variant) -> void:
 	if meta == "vocabulary":
 		description_dialog.visible = true
-		
-		if Globals.level_resource.result.scenes[current_index].has("highlighted_word"):
-			var scene_data = Globals.level_resource.result.scenes[current_index]
+		if Globals.touch_btn is TouchScreenButton:
+			Globals.touch_btn.hide()
+		if Globals.chapter_resource.result.scenes[current_index].has("highlighted_word"):
+			var scene_data = Globals.chapter_resource.result.scenes[current_index]
 			if scene_data.highlighted_word and scene_data.highlighted_word.has("definition"):
 				description_text.text = scene_data.highlighted_word.definition
 				animation_player.play("slide_up")
@@ -88,3 +90,6 @@ func _on_meta_clicked(meta: Variant) -> void:
 func _on_texture_button_button_down() -> void:
 	animation_player.play_backwards("slide_up")
 	description_dialog.visible = true
+	await animation_player.animation_finished
+	if Globals.touch_btn is TouchScreenButton:
+		Globals.touch_btn.show()

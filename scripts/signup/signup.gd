@@ -19,6 +19,7 @@ var errors = 0
 var sections = []
 var filtered_sections = sections
 var selectedSectionid: String
+var selectedGradeLevel: String
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	handle_connection_signal()
@@ -56,7 +57,7 @@ func on_section_selected(section: String) -> void:
 	for sec in sections:
 		if sec.name.to_lower() == section.to_lower(): # or sec["sectionName"] if it's a dictionary
 			var section_id = sec._id     # or sec["_id"] if it's a dictionary
-			print("Found section ID:", section_id)
+		
 			selectedSectionid = section_id
 func handle_connection_signal() -> void:
 	get_all_sections()
@@ -68,6 +69,14 @@ func _on_rich_text_label_meta_clicked(meta: Variant) -> void:
 		SceneTransition.change_scene(login)
 
 func on_signup_pressed() -> void:
+	if selectedSectionid == "":
+		for sec in sections:
+			if sec.name.to_lower() == section_dropdown.text.to_lower(): # or sec["sectionName"] if it's a dictionary
+				var section_id = sec._id     # or sec["_id"] if it's a dictionary
+				print("Found section ID:", section_id)
+				selectedSectionid = section_id
+
+		var section = $SignupContainer/HBoxContainer/VBoxContainer2/Section
 	var data := {
 		"fname": firstname.get_value(),
 		"lname": lastname.get_value(),
@@ -76,6 +85,7 @@ func on_signup_pressed() -> void:
 		"gradeLevel": gradelevel.get_item_text(gradelevel.selected),
 		"section": selectedSectionid,
 	}
+	print(data)
 	if validate_inputs() == true:
 		send_request(data)
 	else:
@@ -88,6 +98,7 @@ func validate_inputs():
 	password.set_error_message()
 	email.set_error_message()
 	lrn.set_error_message()
+	
 	if firstname.error or lastname.error or password.error or email.error or lrn.error:
 		return false
 	else:

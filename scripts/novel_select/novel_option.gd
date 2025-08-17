@@ -2,16 +2,15 @@ class_name NovelOptions
 extends Control
 
 @onready var http_request = $HTTPRequest
-@onready var http_get_resources = $GETLevelResources
+@onready var http_get_resources = $GETChapterResources
 @onready var novel_title_label = $PanelContainer/HBoxContainer/MarginContainer/VBoxContainer2/NovelTitleLabel
 @onready var noli_tab = $PanelContainer/HBoxContainer/Tabs/Noli
 @onready var elfili_tab = $PanelContainer/HBoxContainer/Tabs/Elfili
 @onready var noli_lock = $PanelContainer/HBoxContainer/Tabs/Noli/TextureRect
 @onready var Elfili_lock = $PanelContainer/HBoxContainer/Tabs/Elfili/TextureRect
-@onready var levelLabel = $PanelContainer2/HBoxContainer/LevelLabel
 @onready var chapter_list = $PanelContainer/HBoxContainer/MarginContainer/VBoxContainer2/ScrollContainer/ChaptersContainer
-@onready var selected_chapter_label = $PanelContainer/HBoxContainer/MarginContainer/VBoxContainer2/HBoxContainer/SelectedChapter
-@onready var back_btn = $PanelContainer/HBoxContainer/MarginContainer/VBoxContainer2/HBoxContainer/BackToChapters
+
+
 
 var selected_tab = "1"
 var original_scale = Vector2.ONE
@@ -24,7 +23,7 @@ var selected: Dictionary
 func _ready() -> void:
 	await get_student_progress()
 	load_data()
-
+	print(Globals.progress_data)
 func get_student_progress()->void:
 	var data = Globals.load_auth_data()
 	var headers = [
@@ -60,7 +59,6 @@ func load_data()-> void:
 		_grade_checker()
 		_set_selected_tab_color()
 		_create_chapters()
-		_get_chapter_level()
 
 func _grade_checker()-> void:
 	if Globals.progress_data.student.gradeLevel == "Grade 9":
@@ -113,7 +111,7 @@ func _on_elfili_mouse_exited() -> void:
 
 func _create_chapters()-> void:
 	var chapters_count = 0
-	if Globals.progress_data.student.gradeLevel == "grade 9":
+	if Globals.progress_data.student.gradeLevel.to_lower() == "grade 9":
 		chapters_count = 65
 	else:
 		chapters_count = 40
@@ -126,14 +124,6 @@ func _create_chapters()-> void:
 			btn.icon = load("res://assets/images/lock.png")
 		else:
 			btn.disabled = false
-
-func _create_levels()-> void:
-	for i in range(1, 11):
-		var btn = Button.new()
-		if i > Globals.progress_data.progress.current_level:
-			btn.disabled = true
-			btn.icon = load("res://assets/images/lock.png")
-		_set_chapters_theme(btn, i, "levels")
 		
 func _set_chapters_theme(btn:Button, i, type)-> void:
 	if type == "chapters":
@@ -146,74 +136,50 @@ func _set_chapters_theme(btn:Button, i, type)-> void:
 	btn.connect("pressed", Callable(self, "_on_chapter_pressed").bind(btn,i))
 	chapter_list.add_child(btn)
 
-
 func _on_chapter_pressed(btn, num: int) -> void:
 	var tween := create_tween()
 	if btn.text == "KABANATA %d" % num:
 		selected["chapter"] = num
 		print("Chapter %d pressed" % num)
-	if btn.text == "Level %d" % num:
-		on_level_pressed(btn,num)
-		print("Level %d pressed" % num)
-	
 	print(selected)
 	#get the current level in the chapter
-	_get_chapter_level()
-	selected_chapter_label.visible = true
-	selected_chapter_label.text = btn.text
 	tween.tween_property(btn, "scale", Vector2(0.95, 0.95), 0.05)
 	tween.tween_property(btn, "scale", Vector2(1, 1), 0.1)
-	for button in chapter_list.get_children():
-		if button is Button:
-			button.visible = false
-	_create_levels()
-
-func on_level_pressed(btn, level_num: int) -> void:
-	var tween := create_tween()
-	selected["level"] = level_num
-	get_level_resources()
-	
-func get_level_resources():
-	var headers = [
-		"Content-Type: application/json"
-	]
-	if selected.has("novel") and selected.has("chapter") and selected.has("level"):
-		var encoded_novel = selected.novel.replace(" ", "%20")
-		var full_url = "%sgetDialogue?novel=%s&chapter=%d&level=%d" % [
-			Globals.url,
-			encoded_novel,
-			selected.chapter,
-			selected.level
-		]
-		print(full_url)
-		http_get_resources.request(full_url, headers, HTTPClient.METHOD_GET)
-
-func _get_chapter_level()-> void:
-	levelLabel.text = str(int(Globals.progress_data.progress.completed))
+	get_chapter_resources()
 
 func _on_back_to_chapters_button_down() -> void:
 	# Clear all existing buttons
 	for button in chapter_list.get_children():
 		chapter_list.remove_child(button)
 		button.queue_free()
-	# Show chapter label again
-	selected_chapter_label.visible = false
 	# Recreate chapter buttons
 	_create_chapters()
 
 
-func _on_get_level_resources_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+func get_chapter_resources():
+	var headers = [
+		"Content-Type: application/json"
+	]
+	if selected.has("novel") and selected.has("chapter"):
+		var data = {
+			"novel": selected["novel"],
+			"chapter": selected["chapter"]
+		}
+		var url = Globals.url + "getChapterDialogues"
+		var json_data = JSON.stringify(data)
+		http_get_resources.request(url, headers, HTTPClient.METHOD_POST, json_data)
+
+func _on_get_chapter_resources_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	var response_text = body.get_string_from_utf8()
 	var json = JSON.parse_string(response_text)
 	if not json:
 		print("❌ Failed to parse JSON!")
 		return
-	
 	if json and json.get("success", false):
-		Globals.level_resource = json
+		Globals.chapter_resource = json
 		var story_scene = load("res://scenes/main/story.tscn")
-		var chapter_title = Globals.level_resource.result.novel_metadata.chapter_title
-		var chapter_number = Globals.level_resource.result.novel_metadata.chapter
+		var chapter_title = Globals.chapter_resource.result.novel_metadata.chapter_title
+		var chapter_number = Globals.chapter_resource.result.novel_metadata.chapter
 		SceneTransition.set_chapter_info(chapter_number, chapter_title)
 		SceneTransition.transition_chapter("res://scenes/main/story.tscn")
 	else:

@@ -1,0 +1,75 @@
+[gd_scene load_steps=8 format=3 uid="uid://b6shygf0io3ih"]
+
+[ext_resource type="Script" uid="uid://chle3x8dc2yp1" path="res://scripts/story/proceed_to_quiz_dialog.gd" id="1_ayxq0"]
+[ext_resource type="Texture2D" uid="uid://b6ywd6ncuwjv" path="res://assets/images/popup-container.png" id="1_ystcb"]
+[ext_resource type="Theme" uid="uid://ctg5ru4kl6ydx" path="res://theme/button_theme.tres" id="2_ayxq0"]
+[ext_resource type="Texture2D" uid="uid://cboevju324t5e" path="res://assets/images/buttons.png" id="3_1dx7s"]
+[ext_resource type="Theme" uid="uid://cb3r3oyw7hxa0" path="res://theme/label_theme.tres" id="4_w3ejo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwcvq"]
+atlas = ExtResource("3_1dx7s")
+region = Rect2(528, 461, 180, 176)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ayxq0"]
+atlas = ExtResource("3_1dx7s")
+region = Rect2(528, 461, 180, 176)
+margin = Rect2(10, 10, 20, 20)
+
+[node name="ProceedToQuizDialog" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ayxq0")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 45.0
+offset_right = 1271.0
+offset_bottom = 644.0
+texture = ExtResource("1_ystcb")
+expand_mode = 2
+
+[node name="Button" type="Button" parent="TextureRect"]
+layout_mode = 0
+offset_left = 526.0
+offset_top = 417.0
+offset_right = 684.0
+offset_bottom = 490.0
+theme = ExtResource("2_ayxq0")
+theme_type_variation = &"auth"
+text = "Yes"
+
+[node name="TextureButton" type="TextureButton" parent="TextureRect"]
+layout_mode = 0
+offset_left = 811.0
+offset_top = 67.0
+offset_right = 887.0
+offset_bottom = 146.0
+texture_normal = SubResource("AtlasTexture_xwcvq")
+texture_pressed = SubResource("AtlasTexture_ayxq0")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -173.0
+offset_top = -58.0
+offset_right = 189.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_w3ejo")
+theme_type_variation = &"black"
+text = "Proceed to quizzes?"
+
+[connection signal="button_down" from="TextureRect/Button" to="." method="_on_button_button_down"]
+[connection signal="button_down" from="TextureRect/TextureButton" to="." method="_on_texture_button_button_down"]

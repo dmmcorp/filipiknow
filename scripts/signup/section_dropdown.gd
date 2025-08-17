@@ -1,6 +1,7 @@
 extends Control
 @onready var dropdown = $VBoxContainer/Panel/MarginContainer/HBoxContainer/OptionButton
 var selected_item
+@onready var error_label = $VBoxContainer/Label
 
 signal section_selected(section: String)
 # Called when the node enters the scene tree for the first time.
@@ -25,3 +26,6 @@ func _on_option_button_item_selected(index: int) -> void:
 	var text = dropdown.get_item_text(index)
 	print(text)
 	emit_signal("section_selected", text)
+	
+func set_error_message():
+	error_label.visible = true
