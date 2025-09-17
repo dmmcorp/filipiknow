@@ -3,14 +3,14 @@ extends Control
 
 @onready var http_request = $HTTPRequest
 @onready var http_get_resources = $GETChapterResources
-@onready var novel_title_label = $PanelContainer/HBoxContainer/MarginContainer/VBoxContainer2/NovelTitleLabel
-@onready var noli_tab = $PanelContainer/HBoxContainer/Tabs/Noli
-@onready var elfili_tab = $PanelContainer/HBoxContainer/Tabs/Elfili
-@onready var noli_lock = $PanelContainer/HBoxContainer/Tabs/Noli/TextureRect
-@onready var Elfili_lock = $PanelContainer/HBoxContainer/Tabs/Elfili/TextureRect
-@onready var chapter_list = $PanelContainer/HBoxContainer/MarginContainer/VBoxContainer2/ScrollContainer/ChaptersContainer
-
-
+@onready var novel_title_label = $TextureRect/MarginContainer/HBoxContainer/Tabs/Noli/Label
+@onready var noli_tab = $TextureRect/MarginContainer/HBoxContainer/Tabs/Noli
+@onready var elfili_tab = $TextureRect/MarginContainer/HBoxContainer/Tabs/Elfili
+@onready var noli_lock = $TextureRect/MarginContainer/HBoxContainer/Tabs/Noli/TextureRect
+@onready var Elfili_lock = $TextureRect/MarginContainer/HBoxContainer/Tabs/Elfili/TextureRect
+@onready var chapter_list = $TextureRect/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/ScrollContainer/ChaptersContainer
+@onready var get_student_progress_http = $TextureRect/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2/MarginContainer/ScrollContainer/ChaptersContainer/StudentProgress
+@onready var points = $PanelContainer2/HBoxContainer/Points
 
 var selected_tab = "1"
 var original_scale = Vector2.ONE
@@ -18,38 +18,39 @@ var hover_scale = Vector2(1.05, 1.05)
 var dark_brown = Color(0.88,0.484,0.278)
 var brown = Color(1,1,1)
 var selected: Dictionary
-
+var progress_fetched: bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	http_request.request_completed.connect(_on_http_request_request_completed)
+	http_get_resources.request_completed.connect(_on_get_chapter_resources_request_completed)
 	await get_student_progress()
 	load_data()
 	#print(Globals.progress_data)
-func get_student_progress()->void:
-	var data = Globals.load_auth_data()
+func get_student_progress() -> void:
 	var headers = [
 		"Content-Type: application/json"
 	]
 	var url = Globals.url + "getStudentInfoAndProgress"
-	if data.has("user_id"):
-		var userId = {
-			"userId": data.user_id
-		}
+	if Globals.user_id:
+		var userId = { "userId": Globals.user_id }
 		var json = JSON.stringify(userId)
-		#print(json)
-		http_request.request(url, headers, HTTPClient.METHOD_POST,json)
+		http_request.request(url, headers, HTTPClient.METHOD_POST, json)
 
 func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	var response_text = body.get_string_from_utf8()
 	var json = JSON.parse_string(response_text)
 	if json and json.get("success", false):
-		#print(json)
 		Globals.save(json)
 		Globals.progress_data = {
 			"student": json.student,
 			"progress": json.progress
 		}
+		points.text = str(int(json.progress.total_points))
 		load_data()
 		SceneTransition.play_backward("dissolve")
+
+		# ✅ Mark fetch as finished
+		progress_fetched = true
 	else:
 		print("❌ Auto-login failed. Show login screen.")
 		SceneTransition.change_scene("res://scenes/main/login.tscn")
@@ -119,11 +120,14 @@ func _create_chapters()-> void:
 		var btn = Button.new()
 		btn.disabled = true
 		_set_chapters_theme(btn, i, "chapters")
+		btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
 		if i > Globals.progress_data.progress.current_chapter:
 			btn.disabled = true
-			btn.icon = load("res://assets/images/lock.png")
+			btn.icon = load("res://assets/images/lock-icon.png")
 		else:
 			btn.disabled = false
+			btn.icon = load("res://assets/images/transparent-icon-lock.png")
+			
 		
 func _set_chapters_theme(btn:Button, i, type)-> void:
 	if type == "chapters":
@@ -137,15 +141,48 @@ func _set_chapters_theme(btn:Button, i, type)-> void:
 	chapter_list.add_child(btn)
 
 func _on_chapter_pressed(btn, num: int) -> void:
+	btn.disabled = true
 	var tween := create_tween()
 	if btn.text == "KABANATA %d" % num:
 		selected["chapter"] = num
 
-	#get the current level in the chapter
 	tween.tween_property(btn, "scale", Vector2(0.95, 0.95), 0.05)
 	tween.tween_property(btn, "scale", Vector2(1, 1), 0.1)
-	get_chapter_resources()
 
+	# ✅ Reset before fetch
+	progress_fetched = false
+	Globals.selected_chapter_level = selected
+	refetch_progress()
+	# Wait until fetch is done
+	await self.progress_fetched
+
+	#print("pressed")
+	get_chapter_resources()
+	btn.disabled = false
+	
+func refetch_progress() -> void:
+	var headers = [
+		"Content-Type: application/json"
+	]
+	var url = Globals.url + "getStudentInfoAndProgress"
+	if Globals.user_id:
+		var userId = { "userId": Globals.user_id }
+		var json = JSON.stringify(userId)
+		print("Pasok naman")
+		get_student_progress_http.request(url, headers, HTTPClient.METHOD_POST, json)
+
+func _on_student_progress_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+	var response_text = body.get_string_from_utf8()
+	var json = JSON.parse_string(response_text)
+	if json and json.get("success", false):
+		Globals.save(json)
+		Globals.progress_data = {
+			"student": json.student,
+			"progress": json.progress
+		}
+		points.text = str(int(json.progress.total_points))
+	else:
+		print("Can't refetch in While in chapter loading.")
 func _on_back_to_chapters_button_down() -> void:
 	# Clear all existing buttons
 	for button in chapter_list.get_children():
@@ -162,7 +199,9 @@ func get_chapter_resources():
 	if selected.has("novel") and selected.has("chapter"):
 		var data = {
 			"novel": selected["novel"],
-			"chapter": selected["chapter"]
+			"chapter": selected["chapter"],
+			"teacherId": Globals.progress_data.student.teacher["teacherId"],
+			"sectionId": Globals.progress_data.student.teacher["sectionId"]
 		}
 		var url = Globals.url + "getChapterDialogues"
 		var json_data = JSON.stringify(data)
@@ -172,7 +211,7 @@ func _on_get_chapter_resources_request_completed(result: int, response_code: int
 	var response_text = body.get_string_from_utf8()
 	var json = JSON.parse_string(response_text)
 	if not json:
-		print("❌ Failed to parse JSON!")
+		print("Failed to parse JSON!")
 		return
 	if json and json.get("success", false):
 		Globals.chapter_resource = json
@@ -180,6 +219,8 @@ func _on_get_chapter_resources_request_completed(result: int, response_code: int
 		var chapter_title = Globals.chapter_resource.result.novel_metadata.chapter_title
 		var chapter_number = Globals.chapter_resource.result.novel_metadata.chapter
 		SceneTransition.set_chapter_info(chapter_number, chapter_title)
-		SceneTransition.transition_chapter("res://scenes/main/story.tscn")
+		Globals.access_grid_buttons()
+		SceneTransition.transition_chapter("res://scenes/main/chapter.tscn")
 	else:
 		print(json)
+		

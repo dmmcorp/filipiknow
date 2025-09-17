@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bsare4ir5ea0"]
+[gd_scene load_steps=30 format=3 uid="uid://bsare4ir5ea0"]
 
 [ext_resource type="Script" uid="uid://v8hwjd67wswh" path="res://scripts/settings/settings.gd" id="1_8my36"]
 [ext_resource type="Theme" uid="uid://b7eumke0q4lm" path="res://theme/bg_them.tres" id="1_58qqr"]
@@ -66,7 +66,6 @@ region = Rect2(928, 71, 180, 176)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8my36"]
 atlas = ExtResource("8_ebdyw")
-region = Rect2(552, 164, 866, 840)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u8w1m"]
 atlas = ExtResource("7_net7w")
@@ -95,43 +94,6 @@ margin = Rect2(50, 50, 100, 100)
 [sub_resource type="AtlasTexture" id="AtlasTexture_6lpsh"]
 atlas = ExtResource("7_net7w")
 region = Rect2(528, 461, 180, 176)
-
-[sub_resource type="Animation" id="Animation_u8w1m"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LogoutPopup/TextureRect:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(301, 500)]
-}
-
-[sub_resource type="Animation" id="Animation_8my36"]
-resource_name = "pop_up"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LogoutPopup/TextureRect:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(301, 500), Vector2(301, 107)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_snst7"]
-_data = {
-&"RESET": SubResource("Animation_u8w1m"),
-&"pop_up": SubResource("Animation_8my36")
-}
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -268,7 +230,6 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="LogoutPopup" type="ColorRect" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -279,11 +240,18 @@ color = Color(0.0705882, 0.0705882, 0.0705882, 0.482353)
 
 [node name="TextureRect" type="TextureRect" parent="LogoutPopup"]
 custom_minimum_size = Vector2(550, 450)
-layout_mode = 2
-offset_left = 301.0
-offset_top = 500.0
-offset_right = 851.0
-offset_bottom = 950.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -275.0
+offset_top = -585.0
+offset_right = 275.0
+offset_bottom = -135.0
+grow_horizontal = 2
+grow_vertical = 0
 texture = SubResource("AtlasTexture_8my36")
 expand_mode = 1
 
@@ -352,11 +320,6 @@ texture_pressed = SubResource("AtlasTexture_net7w")
 texture_hover = SubResource("AtlasTexture_6lpsh")
 ignore_texture_size = true
 stretch_mode = 0
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_snst7")
-}
 
 [connection signal="button_down" from="LogoutModalTrigger" to="." method="_on_logout_modal_trigger_button_down"]
 [connection signal="button_down" from="BackButton" to="." method="_on_back_button_button_down"]

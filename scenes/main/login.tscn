@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b1ooenkkh4paq"]
+[gd_scene load_steps=11 format=3 uid="uid://b1ooenkkh4paq"]
 
 [ext_resource type="Script" uid="uid://cu1csbrrlgg4d" path="res://scripts/login/login.gd" id="1_12s85"]
 [ext_resource type="FontFile" uid="uid://ykf1mhpohd8q" path="res://assets/fonts/Lovelo Black.otf" id="2_6ohee"]
@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://c0s6y44brf20c" path="res://assets/images/user.png" id="6_lq6j6"]
 [ext_resource type="Theme" uid="uid://cb3r3oyw7hxa0" path="res://theme/label_theme.tres" id="7_xu3c5"]
 [ext_resource type="Theme" uid="uid://ctg5ru4kl6ydx" path="res://theme/button_theme.tres" id="8_eaq3q"]
-[ext_resource type="PackedScene" uid="uid://bb87lemkuxm5t" path="res://components/loader.tscn" id="9_yteee"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_12s85"]
 bg_color = Color(0.941176, 0.945098, 0.941176, 1)
@@ -62,7 +61,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="LoginContainer" type="Panel" parent="CenterContainer"]
-custom_minimum_size = Vector2(600, 520)
+custom_minimum_size = Vector2(700, 600)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_12s85")
 
@@ -101,24 +100,25 @@ theme_override_constants/separation = 20
 alignment = 2
 
 [node name="Email" parent="CenterContainer/LoginContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_s8msf")]
-custom_minimum_size = Vector2(10, 60)
+custom_minimum_size = Vector2(10, 70)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="CenterContainer/LoginContainer/MarginContainer/VBoxContainer/Email"]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 0
-offset_left = 17.0
-offset_top = 13.0
-offset_right = 51.0
-offset_bottom = 46.0
+offset_left = 13.0
+offset_top = 15.0
+offset_right = 58.0
+offset_bottom = 59.0
 texture = ExtResource("6_lq6j6")
+expand_mode = 1
 
 [node name="Spacer2" type="Control" parent="CenterContainer/LoginContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
 [node name="Password" parent="CenterContainer/LoginContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_s8msf")]
-custom_minimum_size = Vector2(10, 60)
+custom_minimum_size = Vector2(10, 70)
 layout_mode = 2
 size_flags_horizontal = 1
 
@@ -126,10 +126,11 @@ size_flags_horizontal = 1
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 0
 offset_left = 17.0
-offset_top = 14.0
-offset_right = 50.0
-offset_bottom = 44.0
+offset_top = 11.0
+offset_right = 57.0
+offset_bottom = 56.0
 texture = ExtResource("4_s8msf")
+expand_mode = 1
 
 [node name="ErrorMessageLabel" type="Label" parent="CenterContainer/LoginContainer/MarginContainer/VBoxContainer"]
 visible = false
@@ -145,7 +146,7 @@ custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
 [node name="LoginBtnContainer" type="VBoxContainer" parent="CenterContainer/LoginContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(150, 50)
+custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 alignment = 1
@@ -167,10 +168,6 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[color=black]Don’t have an account?[/color] [color=blue]Click here[/color] [color=red][url=signup]Sign Up[/url][/color]"
 horizontal_alignment = 1
-
-[node name="Loader" parent="." instance=ExtResource("9_yteee")]
-visible = false
-layout_mode = 1
 
 [connection signal="button_down" from="CenterContainer/LoginContainer/MarginContainer/VBoxContainer/LoginBtnContainer/Button" to="." method="_on_button_button_down"]
 [connection signal="request_completed" from="CenterContainer/LoginContainer/MarginContainer/VBoxContainer/LoginBtnContainer/Button/HTTPRequest" to="." method="_on_http_request_request_completed"]

@@ -15,11 +15,11 @@ func _process(delta: float) -> void:
 
 func _on_logout_modal_trigger_button_down() -> void:
 	modal.visible = true
-	$AnimationPlayer.play("pop_up")
+	#$AnimationPlayer.play("pop_up")
 
 func _on_no_button_down() -> void:
-	$AnimationPlayer.play_backwards("pop_up")
-	await $AnimationPlayer.animation_finished
+	#$AnimationPlayer.play_backwards("pop_up")
+	#await $AnimationPlayer.animation_finished
 	modal.visible = false
 
 func _on_yes_button_down() -> void:
@@ -66,4 +66,4 @@ func _on_http_request_request_completed(
 
 
 func _on_back_button_button_down() -> void:
-	SceneTransition.change_scene("res://scenes/main/novel_select.tscn", true ,"move_left")
+	SceneTransition.transition_dissolve("res://scenes/main/novel_select.tscn", false)

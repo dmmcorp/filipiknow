@@ -4,18 +4,26 @@ extends GridContainer
 @onready var letter_scene = preload("res://scenes/ui/question/letter_container.tscn")
 @onready var submit_button = $"../../CenterContainer/SubmitButton"
 @onready var http_request = submit_button.get_node("HTTPRequest")
+@onready var submit_btn = $"../../CenterContainer/SubmitButton"
+@onready var next_button_container = $"../../CenterContainer/HBoxContainer"
+@onready var question_containmer = $"../../../../.."
+@onready var http_get_resources = $HTTPRequest
+@onready var question_container_anim = $"../../../../AnimationPlayer"
+
+signal progress_updated(new_progress)
+signal answer_submitted(success: bool, points: float)
 
 var correct_answer: Array = []
 var empty_slots: Array = []
 var slot_buttons: Array = []
 var slot_sources: Dictionary = {}
-var points: int = Globals.selected_level.game.points
+var points: float = Globals.selected_level.points
 
 func _ready() -> void:
 	control_node.answer_ready.connect(_on_answer_ready)
 	control_node.letter_clicked.connect(_on_letter_clicked)
 	submit_button.pressed.connect(_on_submit_pressed)
-	http_request.request_completed.connect(_on_http_request_completed) # ✅ connect signal
+	http_request.request_completed.connect(_on_http_request_completed) #connect signal
 
 func _on_answer_ready(answer: Array) -> void:
 	correct_answer = answer
@@ -85,17 +93,27 @@ func _on_submit_pressed() -> void:
 	
 	var data
 	var progressId = Globals.progress_data.progress._id
-	var gameId = Globals.selected_level.game._id
+	var gameId = Globals.selected_level._id
 	var time_spent = 0 # TODO: measure actual time spent
-
-	if correct_ans_str == answer_str:
+	var url = Globals.url + "recordStudentScore"
+	var headers = ["Content-Type: application/json"]
+	
+	var is_correct = correct_ans_str == answer_str
+	if is_correct == true:
 		data = {
 			"progressId": progressId,
 			"score": points,
 			"time_spent": time_spent,
 			"gameId": gameId
 		}
-		print("✅ Correct! Adding", points, "points")
+		print(data)
+		submit_btn.text = "Correct!"
+		var body = JSON.stringify(data)
+		print("Sending request:", data)
+		http_request.request(url, headers, HTTPClient.METHOD_POST, body)
+		submit_button.disabled = true
+		submit_button.text = "Submitting..."
+	
 	else:
 		data = {
 			"progressId": progressId,
@@ -103,16 +121,11 @@ func _on_submit_pressed() -> void:
 			"time_spent": time_spent,
 			"gameId": gameId
 		}
+		print(data)
 		print("❌ Wrong. Not adding points")
-
-	var url = Globals.url + "recordStudentScore"
-	var headers = ["Content-Type: application/json"]
-	var body = JSON.stringify(data)
-	print("Sending request:", data)
-	http_request.request(url, headers, HTTPClient.METHOD_POST, body)
-	submit_button.disabled = true
-	submit_button.text = "Submitting..."
-
+		emit_signal("answer_submitted", false, 0)
+		
+	print("labas:", data)
 # ✅ Handle server response
 func _on_http_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	var text = body.get_string_from_utf8()
@@ -121,13 +134,57 @@ func _on_http_request_completed(result: int, response_code: int, headers: Packed
 	if response_code == 200:
 		var json = JSON.parse_string(text)
 		if typeof(json) == TYPE_DICTIONARY and json.has("success") and json["success"]:
-			print("✅ Score recorded successfully:",)
+			print("Score recorded successfully:",)
 			print("Display score and proceed to next level ui",)
+			print("Correct! Adding: ", points, "points")
+			get_level_resources(json.data.nextLevel)
+			get_student_progress()
+			emit_signal("answer_submitted", true, points)
 		else:
-			print("⚠️ Server responded but with error:", json)
-			print("✅ Score recorded successfully:",)
+			print("Server responded but with error:", json)
+			print("Score recorded successfully:",)
 			print("Display score and proceed to next level ui",)
+			emit_signal("answer_submitted", false, 0)
 		submit_button.text = "Submitted"
 	else:
-		print("❌ HTTP error code:", response_code, "Message:", text)
-		submit_button.text = "Submitted"
+		print("HTTP error code:", response_code, "Message:", text)
+		submit_button.text = "Retry"
+		emit_signal("answer_submitted", false, 0)
+
+func get_level_resources(selected_level: int):
+	if Globals.chapter_resource.result.has("levels"):
+		for game in Globals.chapter_resource.result["levels"]:
+			if int(game.level) == float(selected_level):
+				Globals.selected_level = game
+				print(Globals.selected_level)
+
+func instantiate_question_scene():
+	var questions_scene = preload("res://scenes/main/question.tscn")
+	var questions_instance = questions_scene.instantiate()
+	get_parent().add_child(questions_instance)
+	
+func get_student_progress() -> void:
+	var data = Globals.load_auth_data()
+	var headers = [
+		"Content-Type: application/json"
+	]
+	var url = Globals.url + "getStudentInfoAndProgress"
+	if data.has("user_id"):
+		var userId = { "userId": data.user_id }
+		var json = JSON.stringify(userId)
+		http_request.request(url, headers, HTTPClient.METHOD_POST, json)
+
+func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+	var response_text = body.get_string_from_utf8()
+	var json = JSON.parse_string(response_text)
+	if json and json.get("success", false):
+		Globals.save(json)
+		Globals.progress_data = {
+			"student": json.student,
+			"progress": json.progress
+		}
+		print(json.progress)
+		print("Fetch in question:",json.progress)
+		Globals.access_grid_buttons()
+	else:
+		print("failed to fetch progresss data.")

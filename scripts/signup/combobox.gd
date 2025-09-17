@@ -3,11 +3,11 @@ extends Control
 var selected_item
 
 signal grade_selected(grade: String)
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
 	var popup = $VBoxContainer/Panel/MarginContainer/HBoxContainer/OptionButton.get_popup()
-	popup.hide_on_checkable_item_selection = false  # Optional
-	popup.clear()  # Optional: clear old items
+	popup.hide_on_checkable_item_selection = false 
+	popup.clear()  
 	
 	var style_normal = StyleBoxFlat.new()
 	style_normal.bg_color = Color(0.9, 0.9, 250)

@@ -1,12 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cssx70xt002xh"]
+[gd_scene load_steps=5 format=3 uid="uid://cssx70xt002xh"]
 
 [ext_resource type="Theme" uid="uid://d000yir3fpqb2" path="res://theme/panel_theme.tres" id="1_06t4h"]
 [ext_resource type="Script" uid="uid://du758thfaj5m8" path="res://main_menu.gd" id="1_jix8l"]
-[ext_resource type="Texture2D" uid="uid://cbukq1jk846ls" path="res://assets/images/Filipiknow.png" id="2_fu7sn"]
-[ext_resource type="Texture2D" uid="uid://b4kw1kpkpqqbv" path="res://assets/images/Play-Button.png" id="4_qe12f"]
-[ext_resource type="Texture2D" uid="uid://dj2gbia81sh24" path="res://assets/images/Play-hover.png" id="5_8qtwp"]
-[ext_resource type="Texture2D" uid="uid://imcuhufmrryr" path="res://assets/images/quit-button.png" id="5_nlkkf"]
-[ext_resource type="Texture2D" uid="uid://c08464yjlefuw" path="res://assets/images/quit-hover.png" id="6_qe12f"]
+[ext_resource type="Texture2D" uid="uid://3qtsjyopwda7" path="res://assets/images/Start_button.png" id="4_glbon"]
+[ext_resource type="Texture2D" uid="uid://b7ki54fdeyide" path="res://assets/images/Quit_button.png" id="5_nlkkf"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -35,36 +32,42 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(600, 500)
+custom_minimum_size = Vector2(350, 550)
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 0
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 300)
+[node name="Control" type="Control" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 260)
 layout_mode = 2
-texture = ExtResource("2_fu7sn")
-expand_mode = 2
 
 [node name="Play_Button" type="TextureButton" parent="CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(50, 100)
 layout_mode = 2
+size_flags_vertical = 3
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("4_qe12f")
-texture_hover = ExtResource("5_8qtwp")
+texture_normal = ExtResource("4_glbon")
+texture_pressed = ExtResource("4_glbon")
+texture_hover = ExtResource("4_glbon")
+texture_disabled = ExtResource("4_glbon")
+texture_focused = ExtResource("4_glbon")
 ignore_texture_size = true
-stretch_mode = 5
+stretch_mode = 0
 
 [node name="HTTPRequest" type="HTTPRequest" parent="CenterContainer/VBoxContainer/Play_Button"]
 
 [node name="Quit_Button" type="TextureButton" parent="CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(50, 100)
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("5_nlkkf")
-texture_hover = ExtResource("6_qe12f")
+texture_pressed = ExtResource("5_nlkkf")
+texture_hover = ExtResource("5_nlkkf")
+texture_disabled = ExtResource("5_nlkkf")
+texture_focused = ExtResource("5_nlkkf")
 ignore_texture_size = true
-stretch_mode = 5
+stretch_mode = 0
 
 [node name="GET" type="HTTPRequest" parent="."]
 

@@ -37,50 +37,30 @@ columns = 5
 
 [node name="TextureButton" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="TextureButton2" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="TextureButton3" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="TextureButton4" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="TextureButton5" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="TextureButton6" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="TextureButton7" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="TextureButton8" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="TextureButton9" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="TextureButton10" parent="MarginContainer/GridContainer" instance=ExtResource("2_h7mmm")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3

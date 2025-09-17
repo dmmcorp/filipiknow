@@ -1,10 +1,11 @@
 extends Control
 
-@onready var dialog_text = $PanelContainer/MarginContainer/Text
+@onready var dialog_text = $PanelContainer/MarginContainer/VBoxContainer/Text
 @onready var character = $"../Character"
 @onready var description_dialog = $CenterContainer
+@onready var current_bg = $"../StoryBg"
 var current_speaker_name: String = ""
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
 	pass
 func get_current_index() -> int:

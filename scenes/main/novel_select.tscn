@@ -1,12 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://cjdrk1f7jnnke"]
+[gd_scene load_steps=13 format=3 uid="uid://cjdrk1f7jnnke"]
 
 [ext_resource type="Theme" uid="uid://d000yir3fpqb2" path="res://theme/panel_theme.tres" id="1_5jayq"]
-[ext_resource type="Texture2D" uid="uid://51si0qrucy28" path="res://assets/images/menu-bg.png" id="2_1hnnh"]
 [ext_resource type="Script" uid="uid://dtrvlt4x2jo0o" path="res://scripts/novel_select/novel_select.gd" id="2_sviti"]
+[ext_resource type="Texture2D" uid="uid://don5u23mrp7sj" path="res://assets/images/Dashboard.png" id="3_yd4p6"]
 [ext_resource type="Theme" uid="uid://1t6hcp42xdxm" path="res://theme/panel_container_theme.tres" id="4_y3s3u"]
 [ext_resource type="Texture2D" uid="uid://bd4ealorca511" path="res://assets/images/settings-icon.png" id="5_dk8rd"]
 [ext_resource type="Texture2D" uid="uid://bx3eo7v3itfba" path="res://assets/images/settings-hover.png" id="6_sviti"]
-[ext_resource type="PackedScene" uid="uid://lhs2uwuvbk1g" path="res://scenes/ui/novel_select/play_icon_button.tscn" id="8_y3s3u"]
 [ext_resource type="PackedScene" uid="uid://crma7psgxv3p0" path="res://scenes/ui/novel_select/novel_option.tscn" id="9_y3s3u"]
 [ext_resource type="Theme" uid="uid://ctg5ru4kl6ydx" path="res://theme/button_theme.tres" id="10_dk8rd"]
 [ext_resource type="Texture2D" uid="uid://bwpdww3tm84cn" path="res://assets/images/codex-icon.png" id="10_sviti"]
@@ -37,22 +36,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_1hnnh")
+texture = ExtResource("3_yd4p6")
 expand_mode = 1
 
 [node name="NovelOptions" parent="." instance=ExtResource("9_y3s3u")]
 layout_mode = 1
 
 [node name="Settings" type="PanelContainer" parent="."]
-custom_minimum_size = Vector2(70, 70)
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -97.0
-offset_top = 29.0
-offset_right = -27.0
-offset_bottom = 99.0
+offset_left = -162.0
+offset_top = 39.0
+offset_right = -62.0
+offset_bottom = 139.0
 grow_horizontal = 0
 theme = ExtResource("4_y3s3u")
 theme_type_variation = &"no_bg"
@@ -66,20 +65,6 @@ texture_hover = ExtResource("6_sviti")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="PlayIconButton" parent="." instance=ExtResource("8_y3s3u")]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -200.0
-offset_top = -150.0
-offset_right = 0.0
-offset_bottom = 0.0
-grow_horizontal = 0
-grow_vertical = 0
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="Codex" type="PanelContainer" parent="."]
@@ -88,14 +73,16 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -150.0
-offset_right = 200.0
+offset_left = 3.0
+offset_top = -210.0
+offset_right = 288.0
+offset_bottom = 3.0
 grow_vertical = 0
 theme = ExtResource("10_dk8rd")
 theme_override_styles/panel = SubResource("StyleBoxFlat_sviti")
 
 [node name="CodexButton" type="TextureButton" parent="Codex"]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(150, 120)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -107,17 +94,15 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="Leaderboard" type="PanelContainer" parent="."]
-custom_minimum_size = Vector2(70, 70)
+custom_minimum_size = Vector2(120, 120)
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.91
-anchor_top = 0.03
-anchor_right = 0.91
-anchor_bottom = 0.03
-offset_left = -69.6
-offset_top = 0.200001
-offset_right = 16.4
-offset_bottom = 84.2
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -291.0
+offset_top = 33.0
+offset_right = -171.0
+offset_bottom = 153.0
 grow_horizontal = 0
 theme = ExtResource("4_y3s3u")
 theme_type_variation = &"no_bg"

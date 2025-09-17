@@ -1,15 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://dxv6aqskl31pl"]
+[gd_scene load_steps=11 format=3 uid="uid://dxv6aqskl31pl"]
 
 [ext_resource type="Script" uid="uid://diritbeuq21r2" path="res://scripts/story/story.gd" id="1_1xoiq"]
-[ext_resource type="Texture2D" uid="uid://brw3rnqh1lrqd" path="res://assets/story_bg/default_bg.png" id="2_6nge1"]
+[ext_resource type="PackedScene" uid="uid://bpa514bhngtob" path="res://scenes/ui/story/Story_BG.tscn" id="2_2va2b"]
 [ext_resource type="PackedScene" uid="uid://brruoii0bk3dx" path="res://scenes/ui/story/Dialog_UI.tscn" id="3_7hgra"]
 [ext_resource type="PackedScene" uid="uid://tli8nkdjgmsb" path="res://components/character.tscn" id="3_ggycu"]
 [ext_resource type="Theme" uid="uid://ctg5ru4kl6ydx" path="res://theme/button_theme.tres" id="5_ggycu"]
 [ext_resource type="PackedScene" uid="uid://b6shygf0io3ih" path="res://scenes/ui/story/Proceed_To_Quiz_Dialog.tscn" id="6_7khpe"]
 [ext_resource type="PackedScene" uid="uid://c5q5wwgaq0gav" path="res://scenes/main/levels.tscn" id="7_2va2b"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ggycu"]
-size = Vector2(1300, 500)
 
 [sub_resource type="Animation" id="Animation_2va2b"]
 length = 0.001
@@ -82,33 +79,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_1xoiq")
 
-[node name="BG" type="TextureRect" parent="."]
+[node name="StoryBg" parent="." instance=ExtResource("2_2va2b")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_6nge1")
-expand_mode = 2
 
 [node name="Character" parent="." instance=ExtResource("3_ggycu")]
 layout_mode = 1
-anchors_preset = 9
-anchor_right = 0.0
-offset_right = 1281.0
-grow_horizontal = 1
-
-[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
-position = Vector2(645, 305)
-shape = SubResource("RectangleShape2D_ggycu")
-shape_visible = false
-passby_press = true
-
-[node name="DialogUi" parent="." instance=ExtResource("3_7hgra")]
-layout_mode = 1
-offset_left = 1.0
-offset_right = 1.0
 
 [node name="ProceedToQuizDialog" parent="." instance=ExtResource("6_7khpe")]
 visible = false
@@ -117,48 +92,56 @@ layout_mode = 1
 offset_top = 103.0
 offset_bottom = 103.0
 
-[node name="Levels" parent="." instance=ExtResource("7_2va2b")]
+[node name="DialogUi" parent="." instance=ExtResource("3_7hgra")]
 layout_mode = 1
 
-[node name="LevelsButton" type="Button" parent="."]
+[node name="Levels" parent="." instance=ExtResource("7_2va2b")]
 visible = false
-layout_mode = 0
-offset_left = 615.0
-offset_top = 17.0
-offset_right = 671.0
-offset_bottom = 48.0
-focus_mode = 0
-toggle_mode = true
-text = "Levels"
+layout_mode = 1
 
 [node name="Back" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0.501961)
 layout_mode = 1
-offset_left = 12.0
-offset_top = 13.0
-offset_right = 57.0
-offset_bottom = 45.0
+offset_left = 41.0
+offset_top = 21.0
+offset_right = 171.0
+offset_bottom = 91.0
 focus_mode = 0
 theme = ExtResource("5_ggycu")
 text = "Back
 "
 
 [node name="Quit" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0.537255)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -65.0
+offset_top = 21.0
+offset_right = 65.0
+offset_bottom = 91.0
+grow_horizontal = 2
+text = "Quit"
+
+[node name="Next" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0.52549)
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -74.0
-offset_top = 13.0
-offset_right = -21.0
-offset_bottom = 44.0
+offset_left = -176.0
+offset_top = 21.0
+offset_right = -46.0
+offset_bottom = 91.0
 grow_horizontal = 0
-text = "Quit"
+text = "Next"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_l5mw1")
 }
 
-[connection signal="pressed" from="TouchScreenButton" to="." method="_on_touch_screen_button_pressed"]
 [connection signal="button_down" from="Back" to="." method="_on_back_button_down"]
 [connection signal="button_down" from="Quit" to="." method="_on_quit_button_down"]
+[connection signal="button_down" from="Next" to="." method="_on_next_button_down"]

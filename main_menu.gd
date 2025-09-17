@@ -24,11 +24,11 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 	var response_text = body.get_string_from_utf8()
 	var json = JSON.parse_string(response_text)
 	if json and json.get("success", false):
-		print("✅ Auto-login successful")
+		print("Auto-login successful")
 		#await get_student_progress()
 		SceneTransition.change_scene("res://scenes/main/novel_select.tscn")
 	else:
-		print("❌ Auto-login failed. Show login screen.")
+		print("Auto-login failed. Show login screen.")
 		SceneTransition.change_scene("res://scenes/main/login.tscn")
 		
 func get_student_progress()->void:
@@ -55,7 +55,7 @@ func _on_get_request_completed(result: int, response_code: int, headers: PackedS
 		}
 		SceneTransition.change_scene("res://scenes/main/novel_select.tscn")
 	else:
-		print("❌ Getting Progress data failed. Show login screen.")
+		print("Getting Progress data failed. Show login screen.")
 		SceneTransition.change_scene("res://scenes/main/login.tscn")
 	
 	

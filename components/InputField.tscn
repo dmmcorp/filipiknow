@@ -41,7 +41,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="VBoxContainer"]
-custom_minimum_size = Vector2(200, 58)
+custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8uiwc")
 
@@ -60,6 +60,7 @@ theme_override_constants/margin_bottom = 5
 
 [node name="Label" type="Label" parent="VBoxContainer/Panel/MarginContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Panel/MarginContainer"]
 layout_mode = 2

@@ -1,13 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://tli8nkdjgmsb"]
+[gd_scene load_steps=10 format=3 uid="uid://tli8nkdjgmsb"]
 
 [ext_resource type="Script" uid="uid://dnk8jmnhe62la" path="res://scripts/character/character.gd" id="1_wptw5"]
+[ext_resource type="Texture2D" uid="uid://ixqoxfdwm2j3" path="res://assets/characters/binatang-mapula-ang-buhok.png" id="2_ptxnt"]
+[ext_resource type="Texture2D" uid="uid://bd0yex4ern3dn" path="res://assets/characters/Ibarra.png" id="2_wptw5"]
 
 [sub_resource type="Animation" id="Animation_q6bof"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterLeft:self_modulate")
+tracks/0/path = NodePath("HBoxContainer/CharacterLeft:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -19,7 +21,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CharacterRight:self_modulate")
+tracks/1/path = NodePath("HBoxContainer/CharacterRight:self_modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -35,7 +37,7 @@ length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterLeft:self_modulate")
+tracks/0/path = NodePath("HBoxContainer/CharacterLeft:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -51,7 +53,7 @@ length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterRight:self_modulate")
+tracks/0/path = NodePath("HBoxContainer/CharacterRight:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -66,7 +68,7 @@ resource_name = "not_speaking"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterLeft:self_modulate")
+tracks/0/path = NodePath("HBoxContainer/CharacterLeft:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -81,7 +83,7 @@ resource_name = "speaking"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterLeft:self_modulate")
+tracks/0/path = NodePath("HBoxContainer/CharacterLeft:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -109,44 +111,45 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wptw5")
 
-[node name="CharacterLeft" type="TextureRect" parent="."]
-self_modulate = Color(0.423651, 0.423651, 0.423651, 1)
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = -74.0
-offset_top = -203.0
-offset_right = 334.0
-offset_bottom = 409.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -56.0
+offset_top = 148.0
+offset_right = 67.0
+offset_bottom = 138.0
+grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.27429, 1.27429)
-flip_h = true
 
-[node name="AnimationPlayerLeft" type="AnimationPlayer" parent="CharacterLeft"]
-root_node = NodePath("../..")
+[node name="CharacterLeft" type="TextureRect" parent="HBoxContainer"]
+self_modulate = Color(0.423651, 0.423651, 0.423651, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_ptxnt")
+expand_mode = 1
+
+[node name="AnimationPlayerLeft" type="AnimationPlayer" parent="HBoxContainer/CharacterLeft"]
+root_node = NodePath("../../..")
 libraries = {
 &"": SubResource("AnimationLibrary_7p1xp")
 }
 
-[node name="CharacterRight" type="TextureRect" parent="."]
-self_modulate = Color(0.423651, 0.423651, 0.423651, 1)
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -434.0
-offset_top = -215.0
-offset_right = -26.0
-offset_bottom = 397.0
-grow_horizontal = 0
-grow_vertical = 2
-scale = Vector2(1.27429, 1.27429)
+[node name="Spacer" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="AnimationPlayerRight" type="AnimationPlayer" parent="CharacterRight"]
-root_node = NodePath("../..")
+[node name="CharacterRight" type="TextureRect" parent="HBoxContainer"]
+self_modulate = Color(0.423651, 0.423651, 0.423651, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_wptw5")
+expand_mode = 1
+flip_h = true
+
+[node name="AnimationPlayerRight" type="AnimationPlayer" parent="HBoxContainer/CharacterRight"]
+root_node = NodePath("../../..")
 libraries = {
 &"": SubResource("AnimationLibrary_7p1xp")
 }

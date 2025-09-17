@@ -33,11 +33,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -180.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.16314, 1.02368)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(500, 700)
 layout_mode = 2
 alignment = 2
 
@@ -48,11 +50,18 @@ texture = ExtResource("2_utcwe")
 expand_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 2
-offset_left = 535.0
-offset_top = 242.0
-offset_right = 844.0
-offset_bottom = 290.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -95.0
+offset_top = -144.0
+offset_right = 308.0
+offset_bottom = -96.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="LeaderboardVBox" type="VBoxContainer" parent="MarginContainer"]
 z_index = 1
@@ -92,8 +101,9 @@ text = "Maria Clara
 10 - Rizal"
 
 [node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/LeaderboardVBox/PlayerEntry"]
+custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
-theme_override_constants/margin_left = 61
+theme_override_constants/margin_left = 20
 
 [node name="ScoreLabel" type="Label" parent="MarginContainer/LeaderboardVBox/PlayerEntry"]
 layout_mode = 2
@@ -108,10 +118,10 @@ anchor_left = 0.686
 anchor_top = 0.165
 anchor_right = 0.686
 anchor_bottom = 0.165
-offset_left = -61.0801
-offset_top = -47.8
-offset_right = 60.9199
-offset_bottom = 48.2
+offset_left = -27.08
+offset_top = -102.8
+offset_right = 94.92
+offset_bottom = -6.8
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("4_kspuw")
 texture_pressed = ExtResource("4_kspuw")
@@ -125,10 +135,10 @@ anchor_left = 0.382
 anchor_top = 0.172
 anchor_right = 0.382
 anchor_bottom = 0.172
-offset_left = -36.96
-offset_top = -45.84
-offset_right = 38.04
-offset_bottom = 46.16
+offset_left = -54.96
+offset_top = -93.84
+offset_right = 20.04
+offset_bottom = -1.84
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_fvrrk")
 ignore_texture_size = true
@@ -136,10 +146,10 @@ stretch_mode = 0
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 2
-offset_left = 562.0
-offset_top = 192.0
-offset_right = 845.0
-offset_bottom = 340.0
+offset_left = 524.0
+offset_top = 155.0
+offset_right = 876.0
+offset_bottom = 320.0
 texture = ExtResource("7_wbk0u")
 expand_mode = 1
 

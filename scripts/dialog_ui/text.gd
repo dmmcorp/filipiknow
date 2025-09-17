@@ -1,10 +1,11 @@
 extends RichTextLabel
 
 @onready var dialog_text = $"."
-@onready var speaker_name_left = $"../../MarginContainer2/SpeakerNameLeft"
-@onready var description_dialog = $"../../../CenterContainer"
-@onready var description_text = $"../../../CenterContainer/TextureRect/Description"
-@onready var animation_player = $"../../../CenterContainer/AnimationPlayer"
+@onready var speaker_name_left = $"../SpeakerNameLeft"
+@onready var description_dialog = $"../../../../CenterContainer"
+@onready var description_text = $"../../../../CenterContainer/TextureRect/Description"
+@onready var animation_player = $"../../../../CenterContainer/AnimationPlayer"
+@onready var speaker_container = $"../SpeakerNameLeft"
 
 const ANIMATION_SPEED : int = 30 
 var animate_text : bool = false
@@ -24,9 +25,11 @@ func _process(delta: float) -> void:
 			dialog_text.visible_ratio += (2.0/dialog_text.text.length()) * (ANIMATION_SPEED * delta)
 		else:
 			animate_text = false
-		
+	
+
 func display_first_speaker():
 	if Globals.chapter_resource and Globals.chapter_resource.has("result"):
+		print("gasol")
 		process_lines()
 		current_index = 0
 	else:
@@ -35,10 +38,16 @@ func display_first_speaker():
 
 func process_lines():
 	var text = Globals.chapter_resource.result.scenes[current_index].text
-	
+	var scene_data = Globals.chapter_resource.result.scenes[current_index]
 	display_speaker_text(text)
-	display_speaker_name_left(Globals.chapter_resource.result.scenes[current_index].speaker.name)
-	current_speaker = Globals.chapter_resource.result.scenes[current_index].speaker.name
+	
+	if scene_data.has("speaker") and scene_data.speaker and scene_data.speaker.has("name"):
+		speaker_container.visible = true
+		display_speaker_name_left(Globals.chapter_resource.result.scenes[current_index].speaker.name)
+		current_speaker = Globals.chapter_resource.result.scenes[current_index].speaker.name
+	else:
+		speaker_container.visible = false
+	
 
 func get_current_speaker()->String:
 	return current_speaker
@@ -51,7 +60,7 @@ func display_speaker_text(text:String):
 		dialog_text.text = text
 
 func display_speaker_name_left(name:String):
-	speaker_name_left.text = name
+	speaker_name_left.text = name + ":" 
 	
 func set_index(back: bool = false):
 	dialog_text.visible_ratio = 0
