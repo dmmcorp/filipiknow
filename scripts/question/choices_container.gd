@@ -1,12 +1,13 @@
 extends Control
 
 @onready var container = $"."   # scatter area
+@onready var question_label = $"../../QuestionContainer/QuestionLabel"
 var answer: Array
 var label_theme = preload("res://theme/label_theme.tres")
 
 signal answer_ready(answer: Array)
 signal letter_clicked(letter: String, btn: Button)
-
+signal question_ready(question: String)
 # Colors (hex from your request)
 var normal_color: Color = Color("#684210") 
 var selected_color: Color = Color("#feb74f") 
@@ -20,9 +21,12 @@ func _ready() -> void:
 func assign_values():
 	if Globals.selected_level.gameType == "identification":
 		var text = Globals.selected_level.identification.answer
-		if text and text.length() > 0:
+		var question = Globals.selected_level.identification.question
+		if text:
 			answer = text.split("", true)
 			emit_signal("answer_ready", answer)
+			emit_signal("question_ready", question)
+			question_label.text = question
 
 func scatter_letters():
 	var area_size = container.size

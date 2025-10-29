@@ -14,7 +14,7 @@ extends Control
 @onready var gradelevel = $SignupContainer/HBoxContainer/VBoxContainer1/GradeLevel/VBoxContainer/Panel/MarginContainer/HBoxContainer/OptionButton
 @onready var get_section = $SignupContainer/GetSectionRequest
 @onready var section_dropdown = $SignupContainer/HBoxContainer/VBoxContainer2/Section/VBoxContainer/Panel/MarginContainer/HBoxContainer/OptionButton
-
+@onready var auth_http = $SignupContainer/SignupBtnContainer/Button/AuthRequest
 var errors = 0
 var sections = []
 var filtered_sections = sections
@@ -148,7 +148,7 @@ func _on_http_request_request_completed(
 			}
 		#save the tokens from convex to json file
 		save_token(results_tokens)
-		SceneTransition.change_scene("res://scenes/main/novel_select.tscn")
+		authenticate_user()
 		# You can check for something like json["message"] or json["status"]
 	else:
 		print("⚠️ No JSON body returned.")
@@ -212,3 +212,77 @@ func _on_get_section_request_request_completed(result: int, response_code: int, 
 			
 	else:
 		print("⚠️ No JSON body returned.")
+		
+func authenticate_user()->void:
+	#check if the email and password is not empty. call the convex auth here
+	if email.get_value() != "" or password.get_value() != "":
+		var data := {
+			"email":email.get_value(),
+			"password":password.get_value()
+		}
+		auth_request(data)
+		#check if the email and password is valid then assign the Global variable and navigate to next scene
+	else:
+		pass
+		
+func auth_request(data):
+	#login_button.text = "Loading"
+	#login_button.disabled = true
+	var headers = ["Content-Type: application/json"]
+	var url = Globals.url + "api/auth/signin"
+	var json = JSON.stringify(data)
+	auth_http.request(url,headers,HTTPClient.METHOD_POST,json)
+
+
+func _on_auth_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+	#login_button.disabled = false  # Re-enable login button
+	var response_text = body.get_string_from_utf8()
+	login_button.text = "Login"
+	# Handle connection errors
+	if result != HTTPRequest.RESULT_SUCCESS:
+		#error_message_label.visible = true
+		#error_message_label.text = "Connection error. Please check your internet connection."
+		
+		print(1)
+		return
+
+	# Handle invalid HTTP status
+	if response_code < 200 or response_code >= 300:
+		#error_message_label.visible = true
+		#error_message_label.text = "Wrong email or password."
+		print(2)
+		return
+
+	# Parse JSON response
+	var json = JSON.parse_string(response_text)
+	if json == null:
+		#error_message_label.visible = true
+		#error_message_label.text = "Failed to parse server response."
+		print(3)
+		return
+
+	# Check success field in response
+	if json.has("success") and json.success:
+		# Login success! Extract and store token
+		if json.has("result") and json.result.has("tokens"):
+			Globals.is_logged_in = true
+			#error_message_label.visible = false
+			var tokens = {
+				"user_id": json.userId,
+				"token": json.result.tokens.token,
+				"refresh_token": json.result.tokens.refreshToken
+			}
+			Globals.user_id = json.userId
+			#save the tokens from convex to json file
+			await save_token(tokens)
+			print(3)
+			# Navigate to main scene
+			SceneTransition.change_scene("res://scenes/main/novel_select.tscn", false)
+		else:
+			#error_message_label.visible = true
+			#error_message_label.text = "Login failed: No token in response."
+			print("Error loging in")
+	else:
+		#error_message_label.visible = true
+		var error_msg: String = json.get("message", "Invalid credentials.")
+		#error_message_label.text = "Login failed: " + error_msg

@@ -30,7 +30,6 @@ func _ready() -> void:
 
 
 func _unhandled_input(event):
-	print(index)
 	if Globals.input_enabled:
 		if event.is_action_pressed("next_line"):
 			if index < len(Globals.chapter_resource.result.scenes) - 1:
@@ -94,20 +93,16 @@ func set_bg():
 	line_bg_image = Globals.chapter_resource.result.scenes[index].scene_bg_image
 	chapter_bg_image = Globals.chapter_resource.result.novel_metadata.bg_image
 	var texture: Texture2D = null
-	print(current_bg.texture)
 	if line_bg_image:
 		# Always replace with line background if available
 	
 		texture = get_image(line_bg_image)
-		print(texture)
 		current_bg.texture = texture
-		print("balatuba")
 	elif not current_bg.texture and chapter_bg_image:
 		# Only apply chapter BG if no background has been set yet
 		texture = get_image(chapter_bg_image)
 		if texture:
 			current_bg.texture = texture
-			print(chapter_bg_image)
 	else:
 		# No line_bg → keep the old one
 		print("Keeping previous BG:", current_bg.texture)

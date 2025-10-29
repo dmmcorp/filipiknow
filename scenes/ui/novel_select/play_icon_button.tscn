@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://lhs2uwuvbk1g"]
+[gd_scene load_steps=5 format=3 uid="uid://lhs2uwuvbk1g"]
 
 [ext_resource type="Texture2D" uid="uid://bbueqt4v4prmv" path="res://assets/images/play-icon.png" id="1_siilj"]
+[ext_resource type="Script" uid="uid://cf0iycfic8whb" path="res://scenes/ui/novel_select/texture_button.gd" id="3_wu5w0"]
 [ext_resource type="Texture2D" uid="uid://5wsii3pqkdof" path="res://assets/images/play-icon-hover.png" id="3_yjwiq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u78h3"]
@@ -22,3 +23,6 @@ texture_pressed = ExtResource("1_siilj")
 texture_hover = ExtResource("3_yjwiq")
 ignore_texture_size = true
 stretch_mode = 0
+script = ExtResource("3_wu5w0")
+
+[connection signal="button_down" from="TextureButton" to="TextureButton" method="_on_button_down"]

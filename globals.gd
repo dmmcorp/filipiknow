@@ -1,10 +1,10 @@
 extends Node
 
 #uncomment this if using dev db
-#var url := "https://tangible-chicken-583.convex.site/"
+var url := "https://tangible-chicken-583.convex.site/"
 
 #uncomment this if using production db
-var url := "https://charming-marten-156.convex.site/"
+#var url := "https://charming-marten-156.convex.site/"
 
 var is_logged_in := false
 var user_id
@@ -66,9 +66,9 @@ func access_grid_buttons():
 
 	# ✅ Get levels safely
 	var levels: Array = []
-	if Globals.chapter_resource.result.has("levels") and Globals.chapter_resource.result.levels:
+	if Globals.chapter_resource.result.levels:
 		levels = Globals.chapter_resource.result.levels
-
+	
 	if level_grid_container:
 		for child in level_grid_container.get_children():
 			var index = level_grid_container.get_children().find(child)

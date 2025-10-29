@@ -8,15 +8,18 @@ extends Control
 @onready var popup_anim = $PopupContainer/AnimationPlayer
 #@onready var question_container_anim = $CenterContainer/AnimationPlayer
 @onready var level_label = $CenterContainer/TextureRect/Level
-
+@onready var question_label = $CenterContainer/TextureRect/VBoxContainer/QuestionContainer/QuestionLabel
 # Called when the node enters the scene tree for the first time.
+@onready var control_node = $CenterContainer/TextureRect/VBoxContainer/MarginContainer/Control
 func _ready() -> void:
 	#question_container_anim.play("slide-down")
 	grid_container.connect("answer_submitted", Callable(self, "_on_show_result_popup"))
 	#question_container_anim.play("slide-down")
+	control_node.connect("question_ready",  Callable(self, "_on_question_ready"))
 	level_label.text = "Level " + str(int(Globals.selected_level.level))
 	
-
+func _on_question_ready(question:String):
+	question_label.text = question
 func _on_show_result_popup(success: bool, points: float) -> void:
 	print(success)
 	

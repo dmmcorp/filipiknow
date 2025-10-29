@@ -21,6 +21,7 @@ Globals="*res://globals.gd"
 SceneTransition="*res://components/transition.tscn"
 Loader="*res://components/loader.tscn"
 ChapterTransition="*res://scripts/story/chapter_transition.gd"
+CacheMngr="*res://scripts/cache-manager.gd"
 
 [display]
 

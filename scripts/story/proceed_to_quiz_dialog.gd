@@ -26,4 +26,3 @@ func _on_button_button_down() -> void:
 	close_proceed_dialog()
 	levels_btn.visible = true
 	Globals.input_enabled = false
-	print(Globals.input_enabled)

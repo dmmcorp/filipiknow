@@ -22,7 +22,6 @@ var progress_fetched: bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	http_request.request_completed.connect(_on_http_request_request_completed)
-	http_get_resources.request_completed.connect(_on_get_chapter_resources_request_completed)
 	await get_student_progress()
 	load_data()
 	#print(Globals.progress_data)
@@ -45,7 +44,10 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 			"student": json.student,
 			"progress": json.progress
 		}
-		points.text = str(int(json.progress.total_points))
+		if json.progress.has("total_points"):
+			points.text = str(int(json.progress.total_points))
+		else:
+			points.text = str(0)
 		load_data()
 		SceneTransition.play_backward("dissolve")
 
@@ -168,7 +170,6 @@ func refetch_progress() -> void:
 	if Globals.user_id:
 		var userId = { "userId": Globals.user_id }
 		var json = JSON.stringify(userId)
-		print("Pasok naman")
 		get_student_progress_http.request(url, headers, HTTPClient.METHOD_POST, json)
 
 func _on_student_progress_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
@@ -180,7 +181,10 @@ func _on_student_progress_request_completed(result: int, response_code: int, hea
 			"student": json.student,
 			"progress": json.progress
 		}
-		points.text = str(int(json.progress.total_points))
+		if json.progress.has("total_points"):
+			points.text = str(int(json.progress.total_points))
+		else:
+			points.text = str(0)
 	else:
 		print("Can't refetch in While in chapter loading.")
 func _on_back_to_chapters_button_down() -> void:
@@ -197,30 +201,28 @@ func get_chapter_resources():
 		"Content-Type: application/json"
 	]
 	if selected.has("novel") and selected.has("chapter"):
-		var data = {
-			"novel": selected["novel"],
-			"chapter": selected["chapter"],
-			"teacherId": Globals.progress_data.student.teacher["teacherId"],
-			"sectionId": Globals.progress_data.student.teacher["sectionId"]
-		}
-		var url = Globals.url + "getChapterDialogues"
-		var json_data = JSON.stringify(data)
-		http_get_resources.request(url, headers, HTTPClient.METHOD_POST, json_data)
-
-func _on_get_chapter_resources_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
-	var response_text = body.get_string_from_utf8()
-	var json = JSON.parse_string(response_text)
-	if not json:
-		print("Failed to parse JSON!")
-		return
-	if json and json.get("success", false):
-		Globals.chapter_resource = json
-		var story_scene = load("res://scenes/main/story.tscn")
-		var chapter_title = Globals.chapter_resource.result.novel_metadata.chapter_title
-		var chapter_number = Globals.chapter_resource.result.novel_metadata.chapter
-		SceneTransition.set_chapter_info(chapter_number, chapter_title)
-		Globals.access_grid_buttons()
-		SceneTransition.transition_chapter("res://scenes/main/chapter.tscn")
+		if Globals.progress_data.student.has("teacher"):
+			# it gets the cache data first and refetch if find none
+			CacheMngr.load_chapter(selected["novel"], selected['chapter'])
+		else:
+			print("Can't find teacher data.")
 	else:
-		print(json)
-		
+		return
+
+#func _on_get_chapter_resources_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+	#var response_text = body.get_string_from_utf8()
+	#var json = JSON.parse_string(response_text)
+	#if not json:
+		#print("Failed to parse JSON!")
+		#return
+	#if json and json.get("success", false):
+		#Globals.chapter_resource = json
+		#var story_scene = load("res://scenes/main/story.tscn")
+		#var chapter_title = Globals.chapter_resource.result.novel_metadata.chapter_title
+		#var chapter_number = Globals.chapter_resource.result.novel_metadata.chapter
+		#SceneTransition.set_chapter_info(chapter_number, chapter_title)
+		#Globals.access_grid_buttons()
+		#SceneTransition.transition_chapter("res://scenes/main/chapter.tscn")
+	#else:
+		#print(json)
+		#

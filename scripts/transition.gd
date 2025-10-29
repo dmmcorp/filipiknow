@@ -97,7 +97,7 @@ func set_character_images(resource_to_load: Array, loaded_count: int) -> void:
 
 		# --- Handle speaker image (if any) ---
 		if image_url != "":
-			var texture: ImageTexture = await image_loader.load_image_async(image_url)
+			var texture: ImageTexture = await CacheMngr.get_cached_image(image_url)
 			if texture:
 				current_scene.speaker.image = texture
 			else:
@@ -105,7 +105,7 @@ func set_character_images(resource_to_load: Array, loaded_count: int) -> void:
 
 		# --- Always handle background image (even if no speaker) ---
 		if scene_bg_image_url != "":
-			var scene_bg_texture: ImageTexture = await image_loader.load_image_async(scene_bg_image_url)
+			var scene_bg_texture: ImageTexture = await CacheMngr.get_cached_image(scene_bg_image_url)
 			if scene_bg_texture:
 				current_scene.scene_bg_image = scene_bg_texture
 			else:
@@ -123,23 +123,23 @@ func set_character_images(resource_to_load: Array, loaded_count: int) -> void:
 
 		var percent = int(float(loaded_count) / float(resource_to_load.size()) * 100.0)
 		percent_label.text = str(percent) + "%"
-		print("Loaded:", path, "Progress:", percent, "%")
 
 	# ✅ Save processed scenes
 	Globals.chapter_resource.result.scenes = scenes_with_texture
-	print("✅ All scenes processed!")
+	print("✅ All scenes processed (cached)!")
 
 
 func set_bg_images() -> void:
 	var chapter_data = Globals.chapter_resource.result.novel_metadata
-	if chapter_data.has('bg_image'):
-		if chapter_data.bg_image != "" or chapter_data.bg_image != null:
-			var texture: ImageTexture = await image_loader.load_image_async(chapter_data.bg_image)
+	if chapter_data.has("bg_image"):
+		var url: String = chapter_data.bg_image
+		if url != "" and url != null:
+			var texture = await CacheMngr.get_cached_image(url)
 			if texture:
 				chapter_data.bg_image = texture
 			else:
-				print("Failed to load image.")
-		
+				print("❌ Failed to load background image from:", url)
+
 func set_chapter_info(number: int, title: String):
 	#chapter_number_label.text = "KABANATA %d" % number
 	chapter_title_label.text = "Loading.."

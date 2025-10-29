@@ -56,7 +56,7 @@ func _process(delta: float) -> void:
 	pass
 	
 func _on_close_button_button_down() -> void:
-	SceneTransition.change_scene("res://scenes/main/novel_select.tscn")	
+	SceneTransition.transition_dissolve("res://scenes/main/novel_select.tscn",false)	
 
 #func _on_character_selected(character_id: String) -> void:
 	#print("Selected character:", character_id)
