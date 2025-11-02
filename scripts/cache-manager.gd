@@ -1,5 +1,6 @@
 extends Node
 
+const PROGRESS_CACHE_PATH := "user://cache/player_progress/"
 const CACHE_PATH := "user://cache/chapters/"
 const ASSET_PATH := "user://cache/assets/"
 
@@ -22,6 +23,19 @@ func load_chapter(selected_novel: String, selected_chapter: int) -> Dictionary:
 		save_chapter(selected_novel, chapter, new_data)
 		return new_data
 
+	return {}
+	
+func load_progress(userId: String) -> Dictionary:
+	var cache_file = PROGRESS_CACHE_PATH + userId + ".json"
+	var cached_progress := load_cached_progress(userId)
+	var new_data := await fetch_progress_from_convex(userId)
+
+	if new_data:
+		save_progress_to_cache(userId ,{
+			"student": new_data.student,
+			"progress": new_data.progress
+		})
+		return new_data
 	return {}
 
 
@@ -123,11 +137,6 @@ func fetch_chapter_from_convex(selected_novel: String, selected_chapter: int, tr
 	else:
 		print("📥 No cache found, saving new chapter data.")
 
-	# --- Save new data to cache ---
-	var file := FileAccess.open(cache_file, FileAccess.WRITE)
-	file.store_string(JSON.stringify(new_data))
-	file.close()
-
 	Globals.chapter_resource = new_data
 
 	if transition:
@@ -186,6 +195,82 @@ func get_cached_image(url: String) -> ImageTexture:
 
 	return null
 	
+
+func fetch_progress_from_convex(userId: String) -> Dictionary:
+	var url := Globals.url + "getStudentInfoAndProgress"
+	var cache_file := PROGRESS_CACHE_PATH + userId + ".json"
+	var cached_updated_at := ""
+	var cached_data: Dictionary
+	
+	if FileAccess.file_exists(cache_file):
+		var cached_text := FileAccess.get_file_as_string(cache_file)
+		var cached_json = JSON.parse_string(cached_text)
+		if cached_json:
+			cached_data = cached_json
+			cached_updated_at = cached_data.progress.updatedAt
+	
+	# Prepare request payload
+	var data := {
+		"userId": userId,
+		"cachedUpdatedAt": cached_updated_at
+	}
+	var headers := ["Content-Type: application/json"]
+	var json_data := JSON.stringify(data)
+	
+	# Make HTTP Request
+	var err := http.request(url, headers, HTTPClient.METHOD_POST, json_data)
+	if err != OK:
+		push_warning("❌ HTTP request failed to start: %s" % err)
+		return cached_data
+
+	var result = await http.request_completed
+	var response_code: int = result[1]
+	var response_body: PackedByteArray = result[3]
+	
+	# Handle 404: progress deleted/reset
+	if response_code == 404:
+		print("⚠️ Progress deleted on server or student not found, clearing local cache.")
+		clear_progress_cache()
+		return {}
+
+	# Handle network or server errors
+	if response_code != 200:
+		push_warning("⚠️ Convex responded with %s. Using cached progress." % response_code)
+		return {}
+
+	# Parse response
+	var text := response_body.get_string_from_utf8()
+	var json_result = JSON.parse_string(text)
+	
+	if json_result.has("error"):
+		push_warning("⚠️ JSON parse error: %s" % json_result.error)
+		return {}
+	
+	var response = json_result
+	
+	# Check for "No updates available" message
+	if response.has("message") and response.message == "No updates available":
+		print("✅ Progress cache is up-to-date.")
+		Globals.progress_data = cached_data
+		return cached_data
+	
+	# Update local cache if new progress data is returned
+	if response.has("success") and response.student and response.progress:
+		Globals.progress_data = {
+			"student": response.student,
+			"progress": response.progress
+		}
+		print("🔄 Progress data updated and cached.")
+		return {
+			"student": response.student,
+			"progress": response.progress
+		}
+	else:
+		push_warning("⚠️ Unexpected response format, using cached data.")
+		return {}
+	return response
+
+	
 func clear_cache() -> void:
 	var dir := DirAccess.open(CACHE_PATH)
 	if dir:
@@ -204,3 +289,30 @@ func clear_cache() -> void:
 		print("✅ Cache cleared successfully.")
 	else:
 		print("❌ Failed to open cache directory.")
+		
+# --- Helper Functions ---
+
+func save_progress_to_cache(userId: String, data: Dictionary) -> void:
+	var path := PROGRESS_CACHE_PATH + userId + ".json"
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	if file:
+		file.store_string(JSON.stringify(data))
+		file.close()
+
+
+func load_cached_progress(userId: String) -> Dictionary:
+	var path := PROGRESS_CACHE_PATH + userId + ".json"
+	if not FileAccess.file_exists(path):
+		return {}
+	var json_text := FileAccess.get_file_as_string(path)
+	var parsed = JSON.parse_string(json_text)
+	if parsed.error == OK:
+		return parsed.result
+	return {}
+
+
+func clear_progress_cache() -> void:
+	if FileAccess.file_exists(PROGRESS_CACHE_PATH):
+		DirAccess.remove_absolute(PROGRESS_CACHE_PATH)
+		print("🗑️ Cleared cached progress file.")
+		

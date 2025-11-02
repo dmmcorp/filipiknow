@@ -26,11 +26,7 @@ var levels_node  # <- reference to the Levels.gd node
 var touch_button: TouchScreenButton
 
 func auth_guard(http_request: HTTPRequest)->void:
-	var tokens = load_auth_data()
-	if  tokens.has("token"):
-		verify_token(tokens["token"], http_request)
-	else: 
-		SceneTransition.change_scene("res://scenes/main/login.tscn")
+	SceneTransition.change_scene("res://scenes/main/login.tscn")
 		
 func load_auth_data() -> Dictionary:
 	if FileAccess.file_exists("user://auth_data.json"):
@@ -80,7 +76,7 @@ func access_grid_buttons():
 
 				#Check if level exists
 				var level_exists = index < levels.size()
-				var current_level = int(progress.progress.current_level)
+				var current_level = int(progress.progress.progress.current_level)
 
 				if not level_exists:
 					# No such level mark N/A
@@ -133,9 +129,6 @@ func _on_level_button_button_down(index: int) -> void:
 		await levels_node.anim_player.animation_finished
 
 		levels_node.levels_container.visible = false
-		#levels_node.level_button.set_block_signals(true)
-		#levels_node.level_button.button_pressed = false
-		#levels_node.level_button.set_block_signals(false)
 
 		levels_node.instantiate_question_scene()
 	Globals.input_enabled = false

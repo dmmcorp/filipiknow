@@ -21,41 +21,47 @@ var selected: Dictionary
 var progress_fetched: bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	http_request.request_completed.connect(_on_http_request_request_completed)
-	await get_student_progress()
+	get_student_progress()
 	load_data()
 	#print(Globals.progress_data)
 func get_student_progress() -> void:
-	var headers = [
-		"Content-Type: application/json"
-	]
-	var url = Globals.url + "getStudentInfoAndProgress"
 	if Globals.user_id:
-		var userId = { "userId": Globals.user_id }
-		var json = JSON.stringify(userId)
-		http_request.request(url, headers, HTTPClient.METHOD_POST, json)
-
-func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
-	var response_text = body.get_string_from_utf8()
-	var json = JSON.parse_string(response_text)
-	if json and json.get("success", false):
-		Globals.save(json)
-		Globals.progress_data = {
-			"student": json.student,
-			"progress": json.progress
-		}
-		if json.progress.has("total_points"):
-			points.text = str(int(json.progress.total_points))
+		var result = await CacheMngr.load_progress(Globals.user_id)
+		print("this is the result form cache",result.progress.progress.total_points)
+		
+		if result.has("progress") and result.progress.progress.has("total_points"):
+			points.text = str(int(result.progress.progress.total_points))
 		else:
 			points.text = str(0)
-		load_data()
-		SceneTransition.play_backward("dissolve")
-
-		# ✅ Mark fetch as finished
 		progress_fetched = true
+		if progress_fetched:
+			load_data()
+			SceneTransition.play_backward("dissolve")
 	else:
-		print("❌ Auto-login failed. Show login screen.")
+		print("❌ No user Found. Show login screen.")
 		SceneTransition.change_scene("res://scenes/main/login.tscn")
+
+#func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+	#var response_text = body.get_string_from_utf8()
+	#var json = JSON.parse_string(response_text)
+	#if json and json.get("success", false):
+		#Globals.save(json)
+		#Globals.progress_data = {
+			#"student": json.student,
+			#"progress": json.progress
+		#}
+		#if json.progress.has("total_points"):
+			#points.text = str(int(json.progress.total_points))
+		#else:
+			#points.text = str(0)
+		#load_data()
+		#SceneTransition.play_backward("dissolve")
+#
+		## ✅ Mark fetch as finished
+		#progress_fetched = true
+	#else:
+		#print("❌ Auto-login failed. Show login screen.")
+		#SceneTransition.change_scene("res://scenes/main/login.tscn")
 
 func load_data()-> void:
 	if Globals.progress_data:
@@ -123,7 +129,8 @@ func _create_chapters()-> void:
 		btn.disabled = true
 		_set_chapters_theme(btn, i, "chapters")
 		btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
-		if i > Globals.progress_data.progress.current_chapter:
+		print(Globals.progress_data.progress.progress.current_chapter)
+		if i > Globals.progress_data.progress.progress.current_chapter:
 			btn.disabled = true
 			btn.icon = load("res://assets/images/lock-icon.png")
 		else:
@@ -181,8 +188,10 @@ func _on_student_progress_request_completed(result: int, response_code: int, hea
 			"student": json.student,
 			"progress": json.progress
 		}
-		if json.progress.has("total_points"):
-			points.text = str(int(json.progress.total_points))
+		print("This is the requesrt Progress:", json.progress)
+		if json.progress.progress.has("total_points"):
+			print(json.progress.progress)
+			points.text = str(int(json.progress.progress.total_points))
 		else:
 			points.text = str(0)
 	else:

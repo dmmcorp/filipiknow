@@ -18,36 +18,23 @@ func _ready() -> void:
 	#level_button.connect("toggled", Callable(self, "_on_level_button_toggled"))
 	Globals.access_grid_buttons()
 
-#func assign_levels():
-	#pass
-
-
-#function when button was click
-#func _on_level_button_button_down(index):
-	#var level = index + 1
-	#print("index:", index)
-	#get_level_resources(level)
-	## Your animation + toggle reset logic here
-	#anim_player.play_backwards("show_levels")
-	#await anim_player.animation_finished
-	#levels_container.visible = false
-	#level_button.set_block_signals(true)
-	#level_button.button_pressed = false
-	#level_button.set_block_signals(false)
-	#instantiate_question_scene()
-	#Globals.input_enabled = false
-
 func instantiate_question_scene():
 	var questions_scene = preload("res://scenes/main/question.tscn")
 	var questions_instance = questions_scene.instantiate()
 	get_parent().add_child(questions_instance)
 	#Globals.touch_btn.hide()
+	
+func remove_question_scene():
+	var target = get_node_or_null("res://scenes/main/question.tscn")
+	if target:
+		target.queue_free()
 
 func get_level_resources(selected_level: int):
 	if Globals.chapter_resource.result.has("levels"):
 		for game in Globals.chapter_resource.result["levels"]:
 			if int(game.level) == float(selected_level):
 				Globals.selected_level = game
+				print("This is the Selected Level",Globals.selected_level)
 
 #function for toggling the levels menu
 func _on_level_button_toggled(toggled_on: bool) -> void:
@@ -78,5 +65,4 @@ func btn_animation_pressed():
 	#Globals.touch_btn.show()
 	this.visible = false
 	Globals.input_enabled = true
-	
 	

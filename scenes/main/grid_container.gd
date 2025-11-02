@@ -3,6 +3,7 @@ extends GridContainer
 @onready var control_node = $"../../MarginContainer/Control"
 @onready var letter_scene = preload("res://scenes/ui/question/letter_container.tscn")
 @onready var submit_button = $"../../CenterContainer/SubmitButton"
+@onready var next_level_btn = $"../../CenterContainer/NextLevelButton"
 @onready var http_request = submit_button.get_node("HTTPRequest")
 @onready var submit_btn = $"../../CenterContainer/SubmitButton"
 @onready var next_button_container = $"../../CenterContainer/HBoxContainer"
@@ -10,20 +11,24 @@ extends GridContainer
 @onready var http_get_resources = $HTTPRequest
 @onready var question_container_anim = $"../../../../AnimationPlayer"
 
+
 signal progress_updated(new_progress)
 signal answer_submitted(success: bool, points: float)
+signal next_level_pressed()
 
 var correct_answer: Array = []
 var empty_slots: Array = []
 var slot_buttons: Array = []
 var slot_sources: Dictionary = {}
-var points: float = Globals.selected_level.points
+var points = Globals.selected_level.points
 
 func _ready() -> void:
 	control_node.answer_ready.connect(_on_answer_ready)
 	control_node.letter_clicked.connect(_on_letter_clicked)
 	submit_button.pressed.connect(_on_submit_pressed)
 	http_request.request_completed.connect(_on_http_request_completed) #connect signal
+	next_level_btn.visible = false
+	submit_btn.visible = true
 
 func _on_answer_ready(answer: Array) -> void:
 	correct_answer = answer
@@ -82,6 +87,8 @@ func _on_slot_clicked(slot_index: int) -> void:
 
 func _on_submit_pressed() -> void:
 	# Collect the letters from slot_buttons
+	submit_button.focus_mode = false
+	print("pressed")
 	var user_answer: Array = []
 	for lbl in slot_buttons:
 		if lbl.text != "":
@@ -92,13 +99,14 @@ func _on_submit_pressed() -> void:
 	var correct_ans_str: String = "".join(correct_answer).to_lower()
 	
 	var data
-	var progressId = Globals.progress_data.progress._id
+	var progressId = Globals.progress_data.progress.progress._id
 	var gameId = Globals.selected_level._id
 	var time_spent = 0 # TODO: measure actual time spent
 	var url = Globals.url + "recordStudentScore"
 	var headers = ["Content-Type: application/json"]
 	
 	var is_correct = correct_ans_str == answer_str
+	var is_empty_ans = answer_str.is_empty()
 	if is_correct == true:
 		data = {
 			"progressId": progressId,
@@ -106,26 +114,27 @@ func _on_submit_pressed() -> void:
 			"time_spent": time_spent,
 			"gameId": gameId
 		}
-		print(data)
-		submit_btn.text = "Correct!"
 		var body = JSON.stringify(data)
-		print("Sending request:", data)
 		http_request.request(url, headers, HTTPClient.METHOD_POST, body)
 		submit_button.disabled = true
 		submit_button.text = "Submitting..."
 	
 	else:
+		if is_empty_ans:
+			print("⚠️ Empty answer — please fill in the slots.")
+			emit_signal("answer_submitted", false, 0)
+			return
+		
+		# ❌ Wrong answer — handle normally
 		data = {
 			"progressId": progressId,
 			"score": 0,
 			"time_spent": time_spent,
 			"gameId": gameId
 		}
-		print(data)
 		print("❌ Wrong. Not adding points")
 		emit_signal("answer_submitted", false, 0)
 		
-	print("labas:", data)
 # ✅ Handle server response
 func _on_http_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	var text = body.get_string_from_utf8()
@@ -133,22 +142,38 @@ func _on_http_request_completed(result: int, response_code: int, headers: Packed
 
 	if response_code == 200:
 		var json = JSON.parse_string(text)
+
 		if typeof(json) == TYPE_DICTIONARY and json.has("success") and json["success"]:
-			print("Score recorded successfully:",)
-			print("Display score and proceed to next level ui",)
-			print("Correct! Adding: ", points, "points")
+			print("✅ Score recorded successfully.")
+			print("🎯 Display score and proceed to next level UI.")
+			print("Correct! Adding:", points, "points")
+
+			# Move to next level or fetch resources
 			get_level_resources(json.data.nextLevel)
-			get_student_progress()
+
+			# --- Refresh Progress ---
+			var new_progress := await CacheMngr.load_progress(Globals.user_id)  # ✅ Await ensures cache is updated before refreshing UI
+
+			if new_progress.size() > 0:
+				Globals.progress_data = new_progress
+				print("🔄 Progress data updated. Refreshing Levels UI...")
+				Globals.access_grid_buttons()  # ✅ Refresh the UI here, not before load_progress completes
+			else:
+				print("⚠️ Failed to refresh progress. Using cached data.")
+
 			emit_signal("answer_submitted", true, points)
+			next_level_btn.visible = true
+
 		else:
-			print("Server responded but with error:", json)
-			print("Score recorded successfully:",)
-			print("Display score and proceed to next level ui",)
+			print("⚠️ Server responded with an error:", json)
 			emit_signal("answer_submitted", false, 0)
-		submit_button.text = "Submitted"
+
+		submit_button.visible = false
+		submit_button.disabled = true
+
 	else:
-		print("HTTP error code:", response_code, "Message:", text)
-		submit_button.text = "Retry"
+		print("❌ HTTP error code:", response_code, "Message:", text)
+		submit_button.text = "Isumite"
 		emit_signal("answer_submitted", false, 0)
 
 func get_level_resources(selected_level: int):
