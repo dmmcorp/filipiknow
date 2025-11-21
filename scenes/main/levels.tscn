@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://c5q5wwgaq0gav"]
+[gd_scene load_steps=15 format=3 uid="uid://c5q5wwgaq0gav"]
 
 [ext_resource type="Script" uid="uid://c5owg674ujnro" path="res://scripts/level/levels.gd" id="1_30t3e"]
 [ext_resource type="Texture2D" uid="uid://8mafvng5xb3g" path="res://assets/images/quiz-container.png" id="2_n27gx"]
 [ext_resource type="Theme" uid="uid://cb3r3oyw7hxa0" path="res://theme/label_theme.tres" id="3_38fuq"]
 [ext_resource type="Texture2D" uid="uid://1okmy5mkb5fy" path="res://assets/images/level_button.png" id="4_jtdkp"]
 [ext_resource type="Texture2D" uid="uid://w4l0fe5bl263" path="res://assets/images/lock.png" id="5_5ayhu"]
+[ext_resource type="Texture2D" uid="uid://xg7mhchbivmh" path="res://assets/images/level-ten-button.png" id="6_n27gx"]
 [ext_resource type="Texture2D" uid="uid://cboevju324t5e" path="res://assets/images/buttons.png" id="6_wqcom"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_30t3e"]
@@ -636,7 +637,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("4_jtdkp")
+texture_normal = ExtResource("6_n27gx")
+texture_pressed = ExtResource("6_n27gx")
+texture_hover = ExtResource("6_n27gx")
+texture_disabled = ExtResource("6_n27gx")
+texture_focused = ExtResource("6_n27gx")
 ignore_texture_size = true
 stretch_mode = 0
 

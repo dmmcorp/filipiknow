@@ -1,0 +1,97 @@
+[gd_scene load_steps=5 format=3 uid="uid://b44xtogx4u53x"]
+
+[ext_resource type="Texture2D" uid="uid://b6ywd6ncuwjv" path="res://assets/images/popup-container.png" id="1_akgyk"]
+[ext_resource type="Script" uid="uid://dw7xl5ryp5fko" path="res://scripts/four_pics_one_word.gd" id="1_yfl72"]
+[ext_resource type="Texture2D" uid="uid://kax4jojf14ec" path="res://assets/images/codex-bg.png" id="3_lhq7m"]
+[ext_resource type="Script" uid="uid://j8hj04scbivv" path="res://scripts/assessment/answer_slots.gd" id="4_1upsh"]
+
+[node name="FourPicsOneWord" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yfl72")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -230.0
+offset_right = 230.0
+offset_bottom = 230.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_akgyk")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/MarginContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="TextureRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+columns = 2
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+texture = ExtResource("3_lhq7m")
+expand_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="TextureRect/MarginContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("3_lhq7m")
+expand_mode = 1
+
+[node name="TextureRect3" type="TextureRect" parent="TextureRect/MarginContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("3_lhq7m")
+expand_mode = 1
+
+[node name="TextureRect4" type="TextureRect" parent="TextureRect/MarginContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("3_lhq7m")
+expand_mode = 1
+
+[node name="ClueLabel" type="Label" parent="TextureRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AnswerSlots" type="HBoxContainer" parent="TextureRect/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+script = ExtResource("4_1upsh")
+
+[node name="LetterSelection" type="HBoxContainer" parent="TextureRect/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="ButtonBar" type="HBoxContainer" parent="TextureRect/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="ClueButton" type="TextureButton" parent="TextureRect/MarginContainer/VBoxContainer/ButtonBar"]
+layout_mode = 2
+
+[node name="ShuffleButton" type="TextureButton" parent="TextureRect/MarginContainer/VBoxContainer/ButtonBar"]
+layout_mode = 2

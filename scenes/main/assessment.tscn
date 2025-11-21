@@ -1,0 +1,313 @@
+[gd_scene load_steps=11 format=3 uid="uid://q8frbw3cjjxt"]
+
+[ext_resource type="Script" uid="uid://0tt5nnx21hxp" path="res://scripts/assessment/assessment.gd" id="1_c5s7t"]
+[ext_resource type="Theme" uid="uid://cb3r3oyw7hxa0" path="res://theme/label_theme.tres" id="1_t86xb"]
+[ext_resource type="Texture2D" uid="uid://brw3rnqh1lrqd" path="res://assets/story_bg/default_bg.png" id="2_2u1c7"]
+[ext_resource type="FontFile" uid="uid://c2jpmdqqkk7aq" path="res://assets/fonts/Fredoka-SemiBold.ttf" id="2_eipy5"]
+[ext_resource type="Script" uid="uid://duba4hmu47uwy" path="res://scripts/assessment/assessment_numbers.gd" id="2_iekdg"]
+[ext_resource type="PackedScene" uid="uid://d4cr864a2iq0k" path="res://scenes/ui/assessment/timer.tscn" id="3_eipy5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eipy5"]
+bg_color = Color(0.6, 0.6, 0.6, 0.282353)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e6ipr"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 7
+border_width_top = 7
+border_width_right = 7
+border_width_bottom = 7
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="Theme" id="Theme_c5s7t"]
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_e6ipr")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t86xb"]
+bg_color = Color(0.752941, 0.752941, 0.752941, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[node name="Assessment" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c5s7t")
+
+[node name="BG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_2u1c7")
+expand_mode = 1
+
+[node name="AssessmentNumbers" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -531.0
+offset_top = 34.0
+offset_right = 531.0
+offset_bottom = 106.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_eipy5")
+script = ExtResource("2_iekdg")
+
+[node name="MarginContainer" type="MarginContainer" parent="AssessmentNumbers"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AssessmentNumbers/MarginContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="AssessmentNumberOne" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = SubResource("Theme_c5s7t")
+
+[node name="CenterContainer" type="CenterContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne/CenterContainer"]
+layout_mode = 2
+theme = ExtResource("1_t86xb")
+theme_type_variation = &"black"
+theme_override_fonts/font = ExtResource("2_eipy5")
+theme_override_font_sizes/font_size = 30
+text = "1"
+
+[node name="Line1" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
+
+[node name="AssessmentNumberOne2" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = SubResource("Theme_c5s7t")
+
+[node name="CenterContainer" type="CenterContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne2/CenterContainer"]
+layout_mode = 2
+theme = ExtResource("1_t86xb")
+theme_type_variation = &"black"
+theme_override_fonts/font = ExtResource("2_eipy5")
+theme_override_font_sizes/font_size = 30
+text = "2"
+
+[node name="Line2" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
+
+[node name="AssessmentNumberOne3" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = SubResource("Theme_c5s7t")
+
+[node name="CenterContainer" type="CenterContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne3/CenterContainer"]
+layout_mode = 2
+theme = ExtResource("1_t86xb")
+theme_type_variation = &"black"
+theme_override_fonts/font = ExtResource("2_eipy5")
+theme_override_font_sizes/font_size = 30
+text = "3"
+
+[node name="Line3" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
+
+[node name="AssessmentNumberOne4" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = SubResource("Theme_c5s7t")
+
+[node name="CenterContainer" type="CenterContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne4"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne4/CenterContainer"]
+layout_mode = 2
+theme = ExtResource("1_t86xb")
+theme_type_variation = &"black"
+theme_override_fonts/font = ExtResource("2_eipy5")
+theme_override_font_sizes/font_size = 30
+text = "4"
+
+[node name="Line4" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
+
+[node name="AssessmentNumberOne5" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = SubResource("Theme_c5s7t")
+
+[node name="CenterContainer" type="CenterContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne5"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne5/CenterContainer"]
+layout_mode = 2
+theme = ExtResource("1_t86xb")
+theme_type_variation = &"black"
+theme_override_fonts/font = ExtResource("2_eipy5")
+theme_override_font_sizes/font_size = 30
+text = "5"
+
+[node name="Line5" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
+
+[node name="AssessmentNumberOne6" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = SubResource("Theme_c5s7t")
+
+[node name="CenterContainer" type="CenterContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne6"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne6/CenterContainer"]
+layout_mode = 2
+theme = ExtResource("1_t86xb")
+theme_type_variation = &"black"
+theme_override_fonts/font = ExtResource("2_eipy5")
+theme_override_font_sizes/font_size = 30
+text = "6"
+
+[node name="Line6" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
+
+[node name="AssessmentNumberOne7" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = SubResource("Theme_c5s7t")
+
+[node name="CenterContainer" type="CenterContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne7"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne7/CenterContainer"]
+layout_mode = 2
+theme = ExtResource("1_t86xb")
+theme_type_variation = &"black"
+theme_override_fonts/font = ExtResource("2_eipy5")
+theme_override_font_sizes/font_size = 30
+text = "7"
+
+[node name="Line7" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
+
+[node name="AssessmentNumberOne8" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = SubResource("Theme_c5s7t")
+
+[node name="CenterContainer" type="CenterContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne8"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne8/CenterContainer"]
+layout_mode = 2
+theme = ExtResource("1_t86xb")
+theme_type_variation = &"black"
+theme_override_fonts/font = ExtResource("2_eipy5")
+theme_override_font_sizes/font_size = 30
+text = "8"
+
+[node name="Line8" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
+
+[node name="AssessmentNumberOne9" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = SubResource("Theme_c5s7t")
+
+[node name="CenterContainer" type="CenterContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne9"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne9/CenterContainer"]
+layout_mode = 2
+theme = ExtResource("1_t86xb")
+theme_type_variation = &"black"
+theme_override_fonts/font = ExtResource("2_eipy5")
+theme_override_font_sizes/font_size = 30
+text = "9"
+
+[node name="Line9" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
+
+[node name="AssessmentNumberOne10" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = SubResource("Theme_c5s7t")
+
+[node name="CenterContainer" type="CenterContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne10"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="AssessmentNumbers/MarginContainer/HBoxContainer/AssessmentNumberOne10/CenterContainer"]
+layout_mode = 2
+theme = ExtResource("1_t86xb")
+theme_type_variation = &"black"
+theme_override_fonts/font = ExtResource("2_eipy5")
+theme_override_font_sizes/font_size = 30
+text = "10"
+
+[node name="Timer" parent="." instance=ExtResource("3_eipy5")]
+layout_mode = 1
+
+[node name="AssessmentContainer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

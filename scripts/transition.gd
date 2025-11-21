@@ -6,9 +6,14 @@ extends Control
 @onready var progress_bar = $CanvasLayer/ChapterTransition/ProgressBar
 @onready var percent_label = $CanvasLayer/ChapterTransition/Percentage
 @onready var chapter_title_label = $CanvasLayer/ChapterTransition/ChapterTitle
+@onready var progress_label = $CanvasLayer/AssessmentTransition/ProgressLabel
+@onready var loading_bar = $CanvasLayer/AssessmentTransition/LoadingBar
+@onready var assessment_transition_texture = $CanvasLayer/AssessmentTransition
 
 
 func _ready() -> void:
+	Globals.connect("load_progress", Callable(self, "_on_load_progress"))
+	Globals.connect("load_finished", Callable(self, "_on_load_finished"))
 	add_child(image_loader)
 
 func change_scene(target: String, no_http_request: bool = true, type: String = 'dissolve')-> void:
@@ -144,3 +149,22 @@ func set_chapter_info(number: int, title: String):
 	#chapter_number_label.text = "KABANATA %d" % number
 	chapter_title_label.text = "Loading.."
 	
+	
+func assessment_transitioon(animation:String = "In"):
+	if animation == "In":
+		assessment_transition_texture.visible = true
+		animation_player.play("AssessmentTransition")
+		await animation_player.animation_finished
+	else:
+		animation_player.play_backwards("AssessmentTransition")
+		await animation_player.animation_finished
+		assessment_transition_texture.visible = false
+
+func _on_load_progress(progress: float, loaded: int, total: int):
+	loading_bar.value = progress * 100.0
+	progress_label.text = "%d%%  (%d / %d)" % [progress * 100, loaded, total]
+	# Force UI to update immediately
+	await get_tree().process_frame
+func _on_load_finished():
+	print("Loading completed!")
+	assessment_transitioon("Out")

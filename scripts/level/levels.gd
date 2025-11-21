@@ -12,6 +12,7 @@ var levels
 var resources
 signal level_pressed(index)
 func _ready() -> void:
+	print(Globals.chapter_resource.result["levels"])
 	Globals.level_grid_container = grid_container
 	Globals.levels_node = self  # register myself in Globals
 	levels_container.visible = false
@@ -30,9 +31,12 @@ func remove_question_scene():
 		target.queue_free()
 
 func get_level_resources(selected_level: int):
+	print("selected level:", selected_level)
 	if Globals.chapter_resource.result.has("levels"):
+		
 		for game in Globals.chapter_resource.result["levels"]:
 			if int(game.level) == float(selected_level):
+				print(game)
 				Globals.selected_level = game
 				print("This is the Selected Level",Globals.selected_level)
 

@@ -20,7 +20,7 @@ var correct_answer: Array = []
 var empty_slots: Array = []
 var slot_buttons: Array = []
 var slot_sources: Dictionary = {}
-var points = Globals.selected_level.points
+var points
 
 func _ready() -> void:
 	control_node.answer_ready.connect(_on_answer_ready)
@@ -29,6 +29,8 @@ func _ready() -> void:
 	http_request.request_completed.connect(_on_http_request_completed) #connect signal
 	next_level_btn.visible = false
 	submit_btn.visible = true
+	if Globals.selected_level and Globals.selected_level.has('points'):
+		points = Globals.selected_level.has('points')
 
 func _on_answer_ready(answer: Array) -> void:
 	correct_answer = answer
@@ -180,7 +182,7 @@ func get_level_resources(selected_level: int):
 	if Globals.chapter_resource.result.has("levels"):
 		for game in Globals.chapter_resource.result["levels"]:
 			if int(game.level) == float(selected_level):
-				Globals.selected_level = game
+				Globals.assessments = game
 				print(Globals.selected_level)
 
 func instantiate_question_scene():

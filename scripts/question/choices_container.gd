@@ -19,7 +19,7 @@ func _ready() -> void:
 	scatter_letters()
 
 func assign_values():
-	if Globals.selected_level.gameType == "identification":
+	if Globals.selected_level and Globals.selected_level.gameType == "identification":
 		var text = Globals.selected_level.identification.answer
 		var question = Globals.selected_level.identification.question
 		if text:

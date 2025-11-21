@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhucicpevv8la"]
+
+[ext_resource type="Theme" uid="uid://cb3r3oyw7hxa0" path="res://theme/label_theme.tres" id="1_ur4mj"]
+[ext_resource type="FontFile" uid="uid://c2jpmdqqkk7aq" path="res://assets/fonts/Fredoka-SemiBold.ttf" id="2_mpjep"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e6ipr"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 7
+border_width_top = 7
+border_width_right = 7
+border_width_bottom = 7
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
+
+[sub_resource type="Theme" id="Theme_idt2s"]
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_e6ipr")
+
+[node name="Assessment-number" type="PanelContainer"]
+custom_minimum_size = Vector2(100, 100)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1180.0
+offset_bottom = -620.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_idt2s")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer"]
+layout_mode = 2
+theme = ExtResource("1_ur4mj")
+theme_type_variation = &"black"
+theme_override_fonts/font = ExtResource("2_mpjep")
+theme_override_font_sizes/font_size = 50
+text = "1"

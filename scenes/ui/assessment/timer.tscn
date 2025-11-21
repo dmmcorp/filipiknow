@@ -1,0 +1,73 @@
+[gd_scene load_steps=5 format=3 uid="uid://d4cr864a2iq0k"]
+
+[ext_resource type="Texture2D" uid="uid://brt3sef4dkmm1" path="res://assets/images/timer.png" id="1_5xftn"]
+[ext_resource type="Script" uid="uid://cj5dq87u3c7gs" path="res://scripts/assessment/timer.gd" id="1_vba0s"]
+[ext_resource type="Texture2D" uid="uid://bpyj5cvxfmtkp" path="res://assets/images/progress.png" id="2_36otc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36otc"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[node name="Timer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vba0s")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -106.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 40)
+layout_mode = 2
+texture = ExtResource("1_5xftn")
+expand_mode = 1
+
+[node name="TimerProgressUI" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_36otc")
+
+[node name="Timer" type="Timer" parent="MarginContainer/HBoxContainer/TimerProgressUI"]
+autostart = true
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="MarginContainer/HBoxContainer/TimerProgressUI"]
+layout_mode = 2
+value = 100.0
+nine_patch_stretch = true
+texture_progress = ExtResource("2_36otc")
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/TimerProgressUI"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "20s"
+horizontal_alignment = 1
+
+[connection signal="timeout" from="MarginContainer/HBoxContainer/TimerProgressUI/Timer" to="MarginContainer/HBoxContainer/TimerProgressUI" method="_on_timer_timeout"]

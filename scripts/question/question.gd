@@ -19,9 +19,10 @@ func _ready() -> void:
 	grid_container.connect("answer_submitted", Callable(self, "_on_show_result_popup"))
 	#question_container_anim.play("slide-down")
 	control_node.connect("question_ready",  Callable(self, "_on_question_ready"))
-	level_label.text = "Level " + str(int(Globals.selected_level.level))
+	
 	
 func _on_question_ready(question:String):
+	level_label.text = "Level " + str(int(Globals.selected_level.level))
 	question_label.text = question
 	
 func _on_show_result_popup(success: bool, points: float) -> void:
