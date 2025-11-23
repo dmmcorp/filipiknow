@@ -28,7 +28,7 @@ var touch_button: TouchScreenButton
 
 #signals for loading the assessment transition
 signal load_progress(progress: float, loaded: int, total: int)
-signal load_finished
+signal load_finished(status: String)
 
 func auth_guard(http_request: HTTPRequest)->void:
 	SceneTransition.change_scene("res://scenes/main/login.tscn")
@@ -142,50 +142,25 @@ func _on_level_button_button_down(index: int) -> void:
 	Globals.input_enabled = false
 
 func _load_assessment_scene():
-	# Path to your Assessment scene
-	var assessment_scene_path = "res://scenes/main/assessment.tscn"
-	var assessment_scene = load(assessment_scene_path)
-
-	if not assessment_scene:
-		push_error("❌ Failed to load assessment scene at path: " + assessment_scene_path)
-		return
-
-	# Instantiate the scene
-	var assessment_instance = assessment_scene.instantiate()
-	
 	SceneTransition.assessment_transitioon("In")
-
-	# Optionally, pass your selected assessments to the new scene
-	if Globals.assessments is Array:
-		#load the images first before seeting up the assessments
-		await load_assessment_textures_parallel()
-		
-		if assessment_instance.has_method("setup_assessments"):
-			assessment_instance.setup_assessments(Globals.assessments)
-		else:
-			push_warning("⚠️ setup_assessments() not found in assessment scene.")
-	
-	# Transition effect
-	SceneTransition.transition_dissolve(assessment_scene_path, false)
-	
 	print("✅ Assessment scene instantiated and transitioning!")
 
 func get_level_resources(selected_level: int):
-
 	if Globals.chapter_resource.result.has("levels"):
+		var assessments: Array = []
 		for game in Globals.chapter_resource.result["levels"]:
 			if int(game.level) == float(selected_level):
 				if selected_level == 10:
-					var assessments: Array = []
 					assessments.append(game)
-					Globals.assessments = assessments
-					print(Globals.selected_level)
 				else:
 					Globals.selected_level = game
+		Globals.assessments = assessments
+	print("This is the stored assessments:",Globals.assessments)
 
 #Returns the ImageTexture or the url itself if something went wrong.
-func load_texture_from_url(url: String) -> Variant:
+func load_texture_from_url(url) -> Variant:
 	var req = HTTPRequest.new()
+	print(url)
 	add_child(req)
 	var finished = false
 	var result_texture: Texture2D = null
@@ -212,66 +187,39 @@ func load_texture_from_url(url: String) -> Variant:
 	else:
 		push_warning("⚠️ Image HTTP error: %s" % response_code)
 	return url
-
-# Load all textures in parallel for all assessments
-func load_assessment_textures_parallel():
-	var total_images := 0
-	var loaded_images := 0
-	var tasks := []
+	
+func load_assessment_textures():
+	print("Loading assessment resources…")
+	emit_signal("load_finished", "loading")
+	await get_level_resources(10)
 	for assessment in Globals.assessments:
-		if assessment.has("fourPicsOneWord") and assessment.fourPicsOneWord.images.size() > 0:
-			var tex_promises := []
+		# Four Pics One Word
+		if assessment.has("fourPicsOneWord"):
+			var new_images := []
 			for url in assessment.fourPicsOneWord.images:
-				tex_promises.append(await load_texture_from_url(url))
-			tasks.append({ "target": assessment.fourPicsOneWord, "key": "images", "promises": tex_promises })
+				var tex = await load_texture_from_url(url)
+				new_images.append(tex)
+				emit_signal("load_progress")
+				print("+1")
+				await get_tree().process_frame
+			assessment.fourPicsOneWord.images = new_images
 			
 		# Multiple Choice
-		if assessment.has("multipleChoice") and assessment.multipleChoice.image != "":
-			tasks.append({
-				"target": assessment.multipleChoice,
-				"key": "image",
-				"promises": [await load_texture_from_url(assessment.multipleChoice.image)]
-			})
-
+		if assessment.has("multipleChoice"):
+			assessment.multipleChoice.image = await load_texture_from_url(assessment.multipleChoice.image)
+			emit_signal("load_progress")
 		# Jigsaw Puzzle
-		if assessment.has("jigsawPuzzle") and assessment.jigsawPuzzle.image != "":
-			tasks.append({
-				"target": assessment.jigsawPuzzle,
-				"key": "image",
-				"promises": [await load_texture_from_url(assessment.jigsawPuzzle.image)]
-			})
+		if assessment.has("jigsawPuzzle"):
+			assessment.jigsawPuzzle.image = await load_texture_from_url(assessment.jigsawPuzzle.image)
+			emit_signal("load_progress")
 		# Who Said It
-		if assessment.has("whoSaidIt") and assessment.whoSaidIt.options.size() > 0:
+		if assessment.has("whoSaidIt"):
 			for i in range(assessment.whoSaidIt.options.size()):
 				var opt = assessment.whoSaidIt.options[i]
 				if opt.image:
-					tasks.append({
-						"target": assessment.whoSaidIt.options,
-						"key": str(i) + ".image",
-						"promises": [await load_texture_from_url(opt.image)]
-					})
-	# Await all tasks in parallel
-	for task in tasks:
-		var results := []
-		for promise in task.promises:
-			results.append(await promise)
-			# Update progress
-			loaded_images += 1
-			var progress := float(loaded_images) / float(total_images)
-
-			emit_signal("load_progress", progress, loaded_images, total_images)
-
-			await get_tree().process_frame
-		 # Handle nested key like "0.images"
-		if typeof(task.key) == TYPE_STRING:
-			var parts = task.key.split(".")
-			if parts.size() == 2:
-				var idx = int(parts[0])
-				var subkey = parts[1]
-				task.target[idx][subkey] = results if results.size() > 1 else results[0]
-			else:
-				task.target[task.key] = results if results.size() > 1 else results[0]
-		else:
-			task.target[task.key] = results if results.size() > 1 else results[0]
-	print("✅ All assessment images loaded in parallel and replaced with textures")
-	emit_signal("load_finished")
+					assessment.whoSaidIt.options[i].image = await load_texture_from_url(opt.image)
+					emit_signal("load_progress")
+		# Identification
+		# (No image to load here unless you have optional images)
+	emit_signal("load_finished", "finished")
+	print("✅ All assessment images loaded and replaced with textures")

@@ -40,3 +40,4 @@ func _on_continue_button_button_down() -> void:
 	anim_player.play_backwards("pop_up")
 	await anim_player.animation_finished
 	SceneTransition.transition_dissolve("res://scenes/main/story.tscn")
+	await Globals.load_assessment_textures()

@@ -31,9 +31,9 @@ func _on_time_finished():
 	current_assessment_index += 1
 	if current_assessment_index < assessment_numbers.get_assessment_count():
 		assessment_numbers.highlight_assessment(current_assessment_index)
-		await get_tree().create_timer(0.3).timeout # small delay for smooth transition
-		timer_ui.start_countdown(10.0)
-		_show_assessment(current_assessment_index, assessments)
+		#await get_tree().create_timer(0.3).timeout # small delay for smooth transition
+		#timer_ui.start_countdown(10.0)
+		#_show_assessment(current_assessment_index, assessments)
 	else:
 		print("✅ All assessments completed!")
 		
@@ -101,7 +101,6 @@ func _show_four_pics(data: Dictionary) -> void:
 		timer_ui.start_countdown(time_limit)
 	else:
 		push_warning("⚠️ timer_ui not found or missing start_countdown() function!")
-
 	print("▶️ Started FourPicsOneWord with time limit:", time_limit, "seconds.")
 	
 

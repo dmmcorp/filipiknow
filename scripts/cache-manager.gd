@@ -5,6 +5,7 @@ const CACHE_PATH := "user://cache/chapters/"
 const ASSET_PATH := "user://cache/assets/"
 
 @onready var http := HTTPRequest.new()
+@onready var loader_thread := Thread.new()
 
 func _ready() -> void:
 	add_child(http)
@@ -22,7 +23,7 @@ func load_chapter(selected_novel: String, selected_chapter: int) -> Dictionary:
 	if new_data:
 		save_chapter(selected_novel, chapter, new_data)
 		return new_data
-
+	await Globals.load_assessment_textures_parallel()
 	return {}
 	
 func load_progress(userId: String) -> Dictionary:
@@ -38,6 +39,15 @@ func load_progress(userId: String) -> Dictionary:
 		return new_data
 	return {}
 
+func preload_images(image_urls: Array):
+	loader_thread.start(Callable(self, "_load_images_background").bind(image_urls))
+
+func _load_images_background(image_urls):
+	var list = []
+	for url in image_urls:
+		var tex = await get_cached_image(url)
+		list.append(tex)
+	return list
 
 # --- Save chapter locally ---
 func save_chapter(selected_novel: String, selected_chapter: String, data: Dictionary) -> void:
@@ -315,4 +325,3 @@ func clear_progress_cache() -> void:
 	if FileAccess.file_exists(PROGRESS_CACHE_PATH):
 		DirAccess.remove_absolute(PROGRESS_CACHE_PATH)
 		print("🗑️ Cleared cached progress file.")
-		

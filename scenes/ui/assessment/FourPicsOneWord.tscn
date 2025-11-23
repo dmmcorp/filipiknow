@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b44xtogx4u53x"]
 
 [ext_resource type="Texture2D" uid="uid://b6ywd6ncuwjv" path="res://assets/images/popup-container.png" id="1_akgyk"]
-[ext_resource type="Script" uid="uid://dw7xl5ryp5fko" path="res://scripts/four_pics_one_word.gd" id="1_yfl72"]
+[ext_resource type="Script" uid="uid://dw7xl5ryp5fko" path="res://scripts/assessment/four_pics_one_word.gd" id="1_yfl72"]
 [ext_resource type="Texture2D" uid="uid://kax4jojf14ec" path="res://assets/images/codex-bg.png" id="3_lhq7m"]
 [ext_resource type="Script" uid="uid://j8hj04scbivv" path="res://scripts/assessment/answer_slots.gd" id="4_1upsh"]
 
@@ -77,14 +77,25 @@ expand_mode = 1
 [node name="ClueLabel" type="Label" parent="TextureRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="AnswerSlots" type="HBoxContainer" parent="TextureRect/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
+[node name="CenterContainer" type="CenterContainer" parent="TextureRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="AnswerSlots" type="HBoxContainer" parent="TextureRect/MarginContainer/VBoxContainer/CenterContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+alignment = 1
 script = ExtResource("4_1upsh")
 
-[node name="LetterSelection" type="HBoxContainer" parent="TextureRect/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
+[node name="Spacer" type="Control" parent="TextureRect/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
+
+[node name="LetterSelectionCenterContainer" type="CenterContainer" parent="TextureRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LetterSelection" type="GridContainer" parent="TextureRect/MarginContainer/VBoxContainer/LetterSelectionCenterContainer"]
+layout_mode = 2
+columns = 12
 
 [node name="ButtonBar" type="HBoxContainer" parent="TextureRect/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)

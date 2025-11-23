@@ -29,17 +29,7 @@ func remove_question_scene():
 	var target = get_node_or_null("res://scenes/main/question.tscn")
 	if target:
 		target.queue_free()
-
-func get_level_resources(selected_level: int):
-	print("selected level:", selected_level)
-	if Globals.chapter_resource.result.has("levels"):
 		
-		for game in Globals.chapter_resource.result["levels"]:
-			if int(game.level) == float(selected_level):
-				print(game)
-				Globals.selected_level = game
-				print("This is the Selected Level",Globals.selected_level)
-
 #function for toggling the levels menu
 func _on_level_button_toggled(toggled_on: bool) -> void:
 	this.visible = true

@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://8hscsame6au3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8d3nf"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0.270222, 0.270222, 0.270222, 0.6)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
+[node name="LetterBox" type="PanelContainer"]
+custom_minimum_size = Vector2(25, 25)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1255.0
+offset_bottom = -695.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8d3nf")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "A"
+horizontal_alignment = 1
+vertical_alignment = 1

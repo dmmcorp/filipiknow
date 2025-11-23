@@ -166,7 +166,7 @@ func _on_chapter_pressed(btn, num: int) -> void:
 	await self.progress_fetched
 
 	#print("pressed")
-	get_chapter_resources()
+	await get_chapter_resources()
 	btn.disabled = false
 	
 func refetch_progress() -> void:
@@ -217,21 +217,3 @@ func get_chapter_resources():
 			print("Can't find teacher data.")
 	else:
 		return
-
-#func _on_get_chapter_resources_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
-	#var response_text = body.get_string_from_utf8()
-	#var json = JSON.parse_string(response_text)
-	#if not json:
-		#print("Failed to parse JSON!")
-		#return
-	#if json and json.get("success", false):
-		#Globals.chapter_resource = json
-		#var story_scene = load("res://scenes/main/story.tscn")
-		#var chapter_title = Globals.chapter_resource.result.novel_metadata.chapter_title
-		#var chapter_number = Globals.chapter_resource.result.novel_metadata.chapter
-		#SceneTransition.set_chapter_info(chapter_number, chapter_title)
-		#Globals.access_grid_buttons()
-		#SceneTransition.transition_chapter("res://scenes/main/chapter.tscn")
-	#else:
-		#print(json)
-		#

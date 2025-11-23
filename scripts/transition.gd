@@ -10,6 +10,8 @@ extends Control
 @onready var loading_bar = $CanvasLayer/AssessmentTransition/LoadingBar
 @onready var assessment_transition_texture = $CanvasLayer/AssessmentTransition
 
+var visual_progress := 0.0
+var finished_flag := false
 
 func _ready() -> void:
 	Globals.connect("load_progress", Callable(self, "_on_load_progress"))
@@ -160,11 +162,60 @@ func assessment_transitioon(animation:String = "In"):
 		await animation_player.animation_finished
 		assessment_transition_texture.visible = false
 
-func _on_load_progress(progress: float, loaded: int, total: int):
-	loading_bar.value = progress * 100.0
-	progress_label.text = "%d%%  (%d / %d)" % [progress * 100, loaded, total]
-	# Force UI to update immediately
+func _on_load_progress(loaded_increment := 1):
+	# Add a small increment to progress each call
+	if finished_flag:
+		return
+	
+	# Increase visual progress by a fraction per call
+	visual_progress += 0.01 * loaded_increment
+	if visual_progress > 0.7:	# cap at 70% before finished
+		visual_progress = 0.7
+
+	# Update UI
+	loading_bar.value = visual_progress * 100.0
+	progress_label.text = "%d%%" % int(loading_bar.value)
+
 	await get_tree().process_frame
-func _on_load_finished():
-	print("Loading completed!")
-	assessment_transitioon("Out")
+	
+func mark_loading_finished():
+	if finished_flag:
+		return
+	finished_flag = true
+
+	while visual_progress < 1.0:
+		visual_progress += 0.02	# adjust speed
+		if visual_progress > 1.0:
+			visual_progress = 1.0
+
+		loading_bar.value = visual_progress * 100.0
+		progress_label.text = "%d%%  (Done)" % int(loading_bar.value)
+		await get_tree().create_timer(0.02).timeout
+		
+func _on_load_finished(status):
+
+		# Path to your Assessment scene
+	var assessment_scene_path = "res://scenes/main/assessment.tscn"
+	var assessment_scene = load(assessment_scene_path)
+	if not assessment_scene:
+		push_error("❌ Failed to load assessment scene at path: " + assessment_scene_path)
+		return
+	if status == "finished":
+		mark_loading_finished()
+		print("Loading completed!")
+		var assessment_instance = assessment_scene.instantiate()
+		# Optionally, pass your selected assessments to the new scene
+		if Globals.assessments is Array:
+			#load the images first before seeting up the assessments
+			get_tree().current_scene.add_child(assessment_instance)
+			await get_tree().process_frame
+			
+			if assessment_instance.has_method("setup_assessments"):
+				assessment_instance.setup_assessments(Globals.assessments)
+			else:
+				push_warning("⚠️ setup_assessments() not found in assessment scene.")
+		
+		assessment_transitioon("Out")
+		SceneTransition.transition_dissolve(assessment_scene_path, false)
+		visual_progress = 0.0
+		finished_flag = false
