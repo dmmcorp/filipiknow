@@ -15,7 +15,6 @@ var finished_flag := false
 
 func _ready() -> void:
 	Globals.connect("load_progress", Callable(self, "_on_load_progress"))
-	Globals.connect("load_finished", Callable(self, "_on_load_finished"))
 	add_child(image_loader)
 
 func change_scene(target: String, no_http_request: bool = true, type: String = 'dissolve')-> void:
@@ -36,6 +35,12 @@ func transition_dissolve(target: String, no_http_request = true) -> void:
 		animation_player.play_backwards("dissolve")
 		await animation_player.animation_finished
 
+func dissolve() -> void:
+	animation_player.play('dissolve')
+	await animation_player.animation_finished
+func reverse_dissolve() -> void:
+	animation_player.play_backwards('dissolve')
+	await animation_player.animation_finished
 func transition_move_left(target: String, no_http_request = true) -> void:
 	animation_player.play('move_left')
 	await animation_player.animation_finished
@@ -154,68 +159,89 @@ func set_chapter_info(number: int, title: String):
 	
 func assessment_transitioon(animation:String = "In"):
 	if animation == "In":
+		visual_progress = 0.0
+		loading_bar.value = 0
+		progress_label.text = "0%"
 		assessment_transition_texture.visible = true
 		animation_player.play("AssessmentTransition")
 		await animation_player.animation_finished
+		if finished_flag:
+			complete_loading()
+	
 	else:
 		animation_player.play_backwards("AssessmentTransition")
 		await animation_player.animation_finished
 		assessment_transition_texture.visible = false
 
-func _on_load_progress(loaded_increment := 1):
+func _on_load_progress( status: String, loaded_increment := 1):
 	# Add a small increment to progress each call
+	print(finished_flag)
 	if finished_flag:
 		return
+	if status == "loading":
+		# Increase visual progress by a fraction per call
+		visual_progress += 0.01 * loaded_increment
+		if visual_progress > 0.7:	# cap at 70% before finished
+			visual_progress = 0.7
+
+		# Update UI
+		loading_bar.value = visual_progress * 100.0
+		progress_label.text = "%d%%" % int(loading_bar.value)
 	
-	# Increase visual progress by a fraction per call
-	visual_progress += 0.01 * loaded_increment
-	if visual_progress > 0.7:	# cap at 70% before finished
-		visual_progress = 0.7
+	if status == "finished":
+		if finished_flag:
+			return
 
-	# Update UI
-	loading_bar.value = visual_progress * 100.0
-	progress_label.text = "%d%%" % int(loading_bar.value)
+		finished_flag = true
+		complete_loading()
 
-	await get_tree().process_frame
-	
-func mark_loading_finished():
-	if finished_flag:
-		return
-	finished_flag = true
+func complete_loading():
+	var steps = 4
+	var step_value = (1.0 - visual_progress) / steps
+	var delay = 1
 
-	while visual_progress < 1.0:
-		visual_progress += 0.02	# adjust speed
+	for i in range(steps):
+		visual_progress += step_value
 		if visual_progress > 1.0:
 			visual_progress = 1.0
 
 		loading_bar.value = visual_progress * 100.0
-		print(loading_bar.value)
-		progress_label.text = "%d%%  (Done)" % int(loading_bar.value)
-		await get_tree().create_timer(0.02).timeout
-		
-func _on_load_finished(status):
+		progress_label.text = "%d%%" % int(loading_bar.value)
+		await get_tree().create_timer(delay).timeout
+	_on_load_finished()
+	await get_tree().process_frame
+
+func _on_load_finished():
 		# Path to your Assessment scene
-	var assessment_scene_path = "res://scenes/main/assessment.tscn"
-	var assessment_scene = load(assessment_scene_path)
-	if not assessment_scene:
-		push_error("❌ Failed to load assessment scene at path: " + assessment_scene_path)
-		return
-	if status == "finished":
-		mark_loading_finished()
-		print("Loading completed!")
-		var assessment_instance = assessment_scene.instantiate()
-		# Optionally, pass your selected assessments to the new scene
-		if Globals.assessments is Array:
-			#load the images first before seeting up the assessments
-			get_tree().current_scene.add_child(assessment_instance)
-			await get_tree().process_frame
+	#var assessment_scene_path = "res://scenes/main/assessment.tscn"
+	#var assessment_scene = load(assessment_scene_path)
+	Globals.story_scene.visible = false
+
+	if finished_flag:
+		var level_overview_path = "res://scenes/ui/assessment/LevelOverview.tscn"
+		var level_overview_scene = load(level_overview_path)
+		if not level_overview_scene:
+			push_error("❌ Failed to load assessment scene at path: " + level_overview_scene)
+			return
 			
-			if assessment_instance.has_method("setup_assessments"):
-				assessment_instance.setup_assessments(Globals.assessments)
-			else:
-				push_warning("⚠️ setup_assessments() not found in assessment scene.")
-		
+		var assessment_instance = level_overview_scene.instantiate()
+		get_tree().root.add_child(assessment_instance)
+	
+	# Optionally, pass your selected assessments to the new scene
+	#if Globals.assessments is Array:
+		##load the images first before seeting up the assessments
+		#get_tree().current_scene.add_child(assessment_instance)
+		#await get_tree().process_frame
+		#if assessment_instance.has_method("setup_assessments"):
+			#assessment_instance.setup_assessments(Globals.assessments)
+		#else:
+			#push_warning("⚠️ setup_assessments() not found in assessment scene.")
+		print("loading transition out")
 		assessment_transitioon("Out")
-		SceneTransition.transition_dissolve(assessment_scene_path, false)
-		visual_progress = 0.0
-		finished_flag = false
+	else:
+		print("loading transition out")
+		assessment_transitioon("Out")
+		#assessment_transitioon("Out")
+		#SceneTransition.transition_dissolve(assessment_scene_path, false)
+		#visual_progress = 0.0
+		#finished_flag = false

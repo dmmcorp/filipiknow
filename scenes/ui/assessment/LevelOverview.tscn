@@ -1,0 +1,216 @@
+[gd_scene load_steps=14 format=3 uid="uid://dcnawvqdf6jq6"]
+
+[ext_resource type="Script" uid="uid://bayeed3e2mx3g" path="res://scripts/assessment/level_overview.gd" id="1_6cmbc"]
+[ext_resource type="Texture2D" uid="uid://qdpj3s24b553" path="res://assets/story_bg/chapter1-default-bg.png" id="2_0a2lj"]
+[ext_resource type="Texture2D" uid="uid://bm68hstmiuykl" path="res://assets/images/chapter-container.png" id="3_5dpjs"]
+[ext_resource type="Theme" uid="uid://cb3r3oyw7hxa0" path="res://theme/label_theme.tres" id="4_0bw4n"]
+[ext_resource type="FontFile" uid="uid://b44m80u2kmjq8" path="res://assets/fonts/EFCO Brookshire Regular.ttf" id="5_qp7xk"]
+[ext_resource type="FontFile" uid="uid://c2jpmdqqkk7aq" path="res://assets/fonts/Fredoka-SemiBold.ttf" id="6_6cmbc"]
+[ext_resource type="Texture2D" uid="uid://xb64ppa4s1f5" path="res://assets/images/magpatuloy_button.png" id="7_otfin"]
+[ext_resource type="Texture2D" uid="uid://cboevju324t5e" path="res://assets/images/buttons.png" id="8_hdkmt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2l3uu"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 4
+border_color = Color(0.176471, 0.192157, 0.184314, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vtsas"]
+atlas = ExtResource("8_hdkmt")
+region = Rect2(512, 448, 208, 200)
+margin = Rect2(0, 0, 10, 10)
+
+[sub_resource type="Animation" id="Animation_yrebh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CenterContainer/TextureRect:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 450)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterContainer/TextureRect/MarginContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CenterContainer/TextureRect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_0nsp3"]
+resource_name = "pop_up"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CenterContainer/TextureRect:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.533333, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 450), Vector2(600, 550)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterContainer/TextureRect/MarginContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.766667, 0.933333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CenterContainer/TextureRect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.666667, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cbj0v"]
+_data = {
+&"RESET": SubResource("Animation_yrebh"),
+&"pop_up": SubResource("Animation_0nsp3")
+}
+
+[node name="LevelOverview" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6cmbc")
+
+[node name="BackgroundImage" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_0a2lj")
+expand_mode = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 450)
+layout_mode = 2
+texture = ExtResource("3_5dpjs")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/TextureRect"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 70
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 70
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/TextureRect/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="ChapterNumber" type="Label" parent="CenterContainer/TextureRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = ExtResource("4_0bw4n")
+theme_override_colors/font_color = Color(0.176471, 0.192157, 0.184314, 1)
+theme_override_fonts/font = ExtResource("5_qp7xk")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_2l3uu")
+text = "Kabanata 64:"
+horizontal_alignment = 1
+
+[node name="ChapterTitle" type="Label" parent="CenterContainer/TextureRect/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_0bw4n")
+theme_override_colors/font_color = Color(0.176471, 0.192157, 0.184314, 1)
+theme_override_fonts/font = ExtResource("6_6cmbc")
+theme_override_font_sizes/font_size = 25
+text = "Ang antas na ito ay may 10 pagsusulit. Kailangan mo itong tapusin nang sunod-sunod.
+May takdang oras ang bawat hamon. Good luck!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="ContinueButton" type="TextureButton" parent="CenterContainer/TextureRect/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(250, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("7_otfin")
+texture_pressed = ExtResource("7_otfin")
+texture_hover = ExtResource("7_otfin")
+texture_disabled = ExtResource("7_otfin")
+texture_focused = ExtResource("7_otfin")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="CloseButton" type="TextureButton" parent="CenterContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -88.0
+offset_bottom = 87.0
+grow_horizontal = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource("AtlasTexture_vtsas")
+texture_pressed = SubResource("AtlasTexture_vtsas")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_cbj0v")
+}
+
+[connection signal="button_down" from="CenterContainer/TextureRect/CloseButton" to="." method="_on_close_button_button_down"]

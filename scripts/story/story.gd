@@ -21,6 +21,7 @@ var line_bg_image
 var chapter_bg_image
 
 func _ready() -> void:
+	Globals.story_scene = $"."
 	current_speaker_name = dialog_ui.current_speaker_name
 	set_bg() # ✅ load first background
 	auto_place_character()

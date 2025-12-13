@@ -13,6 +13,7 @@ var user_firstname := ""
 var user_lastname := ""
 
 #variables for story scene
+var story_scene
 var selected_chapter_level
 var input_enabled = true
 var progress_data
@@ -138,14 +139,13 @@ func _on_level_button_button_down(index: int) -> void:
 		levels_node.levels_container.visible = false
 		if level == 10:
 			_load_assessment_scene()
-			emit_signal("load_finished", "finished")
 		else:
 			levels_node.instantiate_question_scene()
 	Globals.input_enabled = false
 
 func _load_assessment_scene():
 	SceneTransition.assessment_transitioon("In")
-	print("✅ Assessment scene instantiated and transitioning!")
+
 
 func get_level_resources(selected_level: int):
 	if Globals.chapter_resource.result.has("levels"):
@@ -189,7 +189,7 @@ func load_texture_from_url(url: String) -> Variant:
 
 func load_assessment_textures():
 	print("Loading assessment resources…")
-	emit_signal("load_finished", "loading")
+	var total_image = 0
 	await get_level_resources(10)
 	for assessment in Globals.assessments:
 		# Four Pics One Word
@@ -198,27 +198,35 @@ func load_assessment_textures():
 			for url in assessment.fourPicsOneWord.images:
 				var tex = await load_texture_from_url(url)
 				new_images.append(tex)
-				emit_signal("load_progress")
-				print("+1")
+				emit_signal("load_progress", "loading")
+				total_image += 1
 				await get_tree().process_frame
 			assessment.fourPicsOneWord.images = new_images
 			
 		# Multiple Choice
 		if assessment.has("multipleChoice"):
 			assessment.multipleChoice.image = await load_texture_from_url(assessment.multipleChoice.image)
-			emit_signal("load_progress")
+			emit_signal("load_progress", "loading")
+			total_image += 1
+			await get_tree().process_frame
 		# Jigsaw Puzzle
 		if assessment.has("jigsawPuzzle"):
 			assessment.jigsawPuzzle.image = await load_texture_from_url(assessment.jigsawPuzzle.image)
-			emit_signal("load_progress")
+			emit_signal("load_progress", "loading")
+			total_image += 1
+			await get_tree().process_frame
 		# Who Said It
 		if assessment.has("whoSaidIt"):
 			for i in range(assessment.whoSaidIt.options.size()):
 				var opt = assessment.whoSaidIt.options[i]
 				if opt.image:
 					assessment.whoSaidIt.options[i].image = await load_texture_from_url(opt.image)
-					emit_signal("load_progress")
+					emit_signal("load_progress", "loading")
+					total_image += 1
+					await get_tree().process_frame
 		# Identification
 		# (No image to load here unless you have optional images)
-	
+	#adjust to make the loading step smaller or bigger
+	emit_signal("load_progress", "finished")
 	print("✅ All assessment images loaded and replaced with textures")
+	# all assessments images are loaded
