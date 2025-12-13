@@ -1,9 +1,64 @@
-[gd_scene load_steps=5 format=3 uid="uid://b44xtogx4u53x"]
+[gd_scene load_steps=21 format=3 uid="uid://b44xtogx4u53x"]
 
 [ext_resource type="Texture2D" uid="uid://b6ywd6ncuwjv" path="res://assets/images/popup-container.png" id="1_akgyk"]
 [ext_resource type="Script" uid="uid://dw7xl5ryp5fko" path="res://scripts/assessment/four_pics_one_word.gd" id="1_yfl72"]
-[ext_resource type="Texture2D" uid="uid://kax4jojf14ec" path="res://assets/images/codex-bg.png" id="3_lhq7m"]
-[ext_resource type="Script" uid="uid://j8hj04scbivv" path="res://scripts/assessment/answer_slots.gd" id="4_1upsh"]
+[ext_resource type="Texture2D" uid="uid://bb6ijqgxpfjhv" path="res://assets/images/close-button.png" id="3_lhq7m"]
+[ext_resource type="PackedScene" uid="uid://hhwouw6xawj1" path="res://scenes/ui/question/letter_box.tscn" id="4_8amm3"]
+[ext_resource type="Texture2D" uid="uid://c2m4wmg4160lo" path="res://assets/images/hint-icon.png" id="4_8tnfy"]
+[ext_resource type="PackedScene" uid="uid://8hscsame6au3" path="res://scenes/ui/question/letter_box_white.tscn" id="5_8amm3"]
+[ext_resource type="Texture2D" uid="uid://ceegblcrev48u" path="res://assets/images/shuffle-icon.png" id="5_dse33"]
+[ext_resource type="Theme" uid="uid://ctg5ru4kl6ydx" path="res://theme/button_theme.tres" id="8_nj3qh"]
+[ext_resource type="Texture2D" uid="uid://b5xo2fmc4biht" path="res://assets/images/submit-btn.png" id="9_ri5cx"]
+[ext_resource type="PackedScene" uid="uid://dvgebfp4opfc1" path="res://scenes/ui/assessment/SubmitBtn.tscn" id="10_ri5cx"]
+
+[sub_resource type="GDScript" id="GDScript_1upsh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dse33"]
+bg_color = Color(0.886262, 0.886261, 0.886262, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.886275, 0.721569, 0.0313726, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ygb5q"]
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8tnfy"]
+atlas = ExtResource("4_8tnfy")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dse33"]
+atlas = ExtResource("4_8tnfy")
+region = Rect2(-35, -46, 236, 277)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nj3qh"]
+atlas = ExtResource("5_dse33")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ri5cx"]
+atlas = ExtResource("5_dse33")
+region = Rect2(-49.5, -42, 270.5, 248)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tago0"]
+atlas = ExtResource("9_ri5cx")
+region = Rect2(-24, -32, 648, 288)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1upsh"]
+bg_color = Color(0.152941, 0.152941, 0.152941, 0.72549)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8amm3"]
+atlas = ExtResource("3_lhq7m")
+region = Rect2(168, 23, 340, 332)
 
 [node name="FourPicsOneWord" type="Control"]
 layout_mode = 3
@@ -21,10 +76,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -230.0
-offset_top = -230.0
-offset_right = 230.0
-offset_bottom = 230.0
+offset_left = -347.0
+offset_top = -254.0
+offset_right = 347.0
+offset_bottom = 319.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_akgyk")
@@ -52,39 +107,38 @@ size_flags_horizontal = 4
 columns = 2
 
 [node name="TextureRect" type="TextureRect" parent="TextureRect/MarginContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
-texture = ExtResource("3_lhq7m")
 expand_mode = 1
 
 [node name="TextureRect2" type="TextureRect" parent="TextureRect/MarginContainer/VBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
-texture = ExtResource("3_lhq7m")
 expand_mode = 1
 
 [node name="TextureRect3" type="TextureRect" parent="TextureRect/MarginContainer/VBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
-texture = ExtResource("3_lhq7m")
 expand_mode = 1
 
 [node name="TextureRect4" type="TextureRect" parent="TextureRect/MarginContainer/VBoxContainer/GridContainer"]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
-texture = ExtResource("3_lhq7m")
 expand_mode = 1
-
-[node name="ClueLabel" type="Label" parent="TextureRect/MarginContainer/VBoxContainer"]
-layout_mode = 2
 
 [node name="CenterContainer" type="CenterContainer" parent="TextureRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 
-[node name="AnswerSlots" type="HBoxContainer" parent="TextureRect/MarginContainer/VBoxContainer/CenterContainer"]
-custom_minimum_size = Vector2(0, 30)
+[node name="AnswerSlots" type="GridContainer" parent="TextureRect/MarginContainer/VBoxContainer/CenterContainer"]
 layout_mode = 2
-alignment = 1
-script = ExtResource("4_1upsh")
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 8
+script = SubResource("GDScript_1upsh")
+
+[node name="LetterBox" parent="TextureRect/MarginContainer/VBoxContainer/CenterContainer/AnswerSlots" instance=ExtResource("4_8amm3")]
+layout_mode = 2
 
 [node name="Spacer" type="Control" parent="TextureRect/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 20)
@@ -93,16 +147,175 @@ layout_mode = 2
 [node name="LetterSelectionCenterContainer" type="CenterContainer" parent="TextureRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="PanelContainer" type="PanelContainer" parent="TextureRect/MarginContainer/VBoxContainer/LetterSelectionCenterContainer"]
+custom_minimum_size = Vector2(480, 140)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dse33")
+
 [node name="LetterSelection" type="GridContainer" parent="TextureRect/MarginContainer/VBoxContainer/LetterSelectionCenterContainer"]
 layout_mode = 2
-columns = 12
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 8
 
-[node name="ButtonBar" type="HBoxContainer" parent="TextureRect/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
+[node name="LetterBox" parent="TextureRect/MarginContainer/VBoxContainer/LetterSelectionCenterContainer/LetterSelection" instance=ExtResource("5_8amm3")]
 layout_mode = 2
 
-[node name="ClueButton" type="TextureButton" parent="TextureRect/MarginContainer/VBoxContainer/ButtonBar"]
+[node name="LetterBox2" parent="TextureRect/MarginContainer/VBoxContainer/LetterSelectionCenterContainer/LetterSelection" instance=ExtResource("5_8amm3")]
 layout_mode = 2
 
-[node name="ShuffleButton" type="TextureButton" parent="TextureRect/MarginContainer/VBoxContainer/ButtonBar"]
+[node name="LetterBox3" parent="TextureRect/MarginContainer/VBoxContainer/LetterSelectionCenterContainer/LetterSelection" instance=ExtResource("5_8amm3")]
 layout_mode = 2
+
+[node name="LetterBox4" parent="TextureRect/MarginContainer/VBoxContainer/LetterSelectionCenterContainer/LetterSelection" instance=ExtResource("5_8amm3")]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -99.0
+offset_top = -200.0
+offset_right = -49.0
+offset_bottom = -83.0
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 2
+
+[node name="ClueButtonContainer" type="PanelContainer" parent="TextureRect/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ygb5q")
+
+[node name="ClueButton" type="TextureButton" parent="TextureRect/VBoxContainer/ClueButtonContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_8tnfy")
+texture_pressed = SubResource("AtlasTexture_dse33")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Spacer" type="Control" parent="TextureRect/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ShuffleButtonContainer" type="PanelContainer" parent="TextureRect/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_ygb5q")
+
+[node name="ShuffleButton" type="TextureButton" parent="TextureRect/VBoxContainer/ShuffleButtonContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_nj3qh")
+texture_pressed = SubResource("AtlasTexture_ri5cx")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="SubmitButton" type="TextureButton" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -85.0
+offset_top = -51.0
+offset_right = 81.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("8_nj3qh")
+theme_type_variation = &"auth"
+texture_normal = ExtResource("9_ri5cx")
+texture_pressed = SubResource("AtlasTexture_tago0")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="TextureRect/SubmitButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.545098, 0.270588, 0.0745098, 1)
+theme_override_font_sizes/font_size = 25
+text = "Isumete"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ClueContainer" type="Control" parent="TextureRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -309.0
+offset_top = -134.5
+offset_right = 310.0
+offset_bottom = 74.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="TextureRect/ClueContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1upsh")
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect/ClueContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="Label" type="RichTextLabel" parent="TextureRect/ClueContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 25
+text = "Clue"
+
+[node name="CloseButton" type="TextureButton" parent="TextureRect/ClueContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -37.5
+offset_top = -25.5
+offset_right = 12.5
+offset_bottom = 35.5
+grow_horizontal = 0
+texture_normal = SubResource("AtlasTexture_8amm3")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="SubmitBtn" parent="." instance=ExtResource("10_ri5cx")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = -39.0
+offset_right = 80.0
+offset_bottom = 11.0
+grow_vertical = 0
+
+[connection signal="button_down" from="TextureRect/VBoxContainer/ClueButtonContainer/ClueButton" to="." method="_on_clue_button_down"]
+[connection signal="button_down" from="TextureRect/VBoxContainer/ShuffleButtonContainer/ShuffleButton" to="." method="_on_shuffle_btn_button_down"]
+[connection signal="button_down" from="TextureRect/SubmitButton" to="." method="_on_submit_button_button_down"]
+[connection signal="button_down" from="TextureRect/ClueContainer/CloseButton" to="." method="_on_close_button_button_down"]

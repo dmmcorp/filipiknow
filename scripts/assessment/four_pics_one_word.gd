@@ -1,8 +1,8 @@
 extends Control
 
 @onready var four_pics_grid = $TextureRect/MarginContainer/VBoxContainer/GridContainer
-
-@onready var clue_label = $TextureRect/MarginContainer/VBoxContainer/ClueLabel
+@onready var clue_label = $TextureRect/ClueContainer/PanelContainer/MarginContainer/Label
+@onready var clue_container = $TextureRect/ClueContainer
 @onready var answer_slots = $TextureRect/MarginContainer/VBoxContainer/CenterContainer/AnswerSlots
 @onready var letter_selection = $TextureRect/MarginContainer/VBoxContainer/LetterSelectionCenterContainer/LetterSelection
 @onready var clue_button = $TextureRect/MarginContainer/VBoxContainer/ButtonBar/ClueButton
@@ -11,40 +11,54 @@ extends Control
 @onready var letter_box = preload("res://scenes/ui/question/letter_box.tscn")
 @onready var letter_box_white = preload("res://scenes/ui/question/letter_box_white.tscn")
 
-var correct_answer := "Codex"
+var correct_answer := ""
 var clue := ""
 var answer_boxes := []
-var letter_buttons := []
+var letter_buttons: Array = []
 var current_answer := []
+var four_pics_images :Array= []
+var fourPicsOneWord
+var max_score
+var time_limit
+
+signal submit_assessment(player_answer:String, correct_answer: String, max_score:float, max_time)
 
 func _ready() -> void:
 	_show_images()
 	_build_answer_slots()
 	_build_letter_selection()
+	_set_clue()
 
+#it is called on Assessments.gd
 func setup(data: Dictionary):
-	var fourPicsOneWord = data.fourPicsOneWord
-	var images = fourPicsOneWord.images
+	fourPicsOneWord = data.fourPicsOneWord
+	four_pics_images = fourPicsOneWord.images
 	correct_answer = fourPicsOneWord.answer.to_upper().strip_edges()
+	max_score = data.points
 	clue = fourPicsOneWord.clue
+	time_limit = data.time_limit
+	answer_boxes = correct_answer.split("")
 	current_answer = []
 	print(fourPicsOneWord)
 	
 	
 
 func _show_images():
+	if fourPicsOneWord.has("images"):
 		for i in range(4):
 			var tex_rect: TextureRect
+			# If the TextureRect already exists in the grid
 			if i < four_pics_grid.get_child_count():
-				tex_rect = four_pics_grid.get_child(i)
+				tex_rect = four_pics_grid.get_child(i) as TextureRect
 			else:
+				# Create a new TextureRect and add it to the grid
 				tex_rect = TextureRect.new()
 				four_pics_grid.add_child(tex_rect)
+			# Assign the texture
+			tex_rect.texture = four_pics_images[i] as Texture2D
 			tex_rect.expand = true
 			tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT
-			#tex_rect.texture = load(data.images[i]) if i < data.images.size() else null
-#
-
+	
 # ----------------------------------------------------------
 #  ANSWER SLOTS
 # ----------------------------------------------------------
@@ -65,18 +79,19 @@ func _build_answer_slots():
 			if event is InputEventMouseButton and event.pressed:
 				_on_slot_clicked(idx))
 
+
 func _on_slot_clicked(slot_index: int) -> void:
 	var slot = answer_slots.get_child(slot_index)
 	var lbl: Label = slot.get_node("Label")
+
 	if lbl.text == "":
-		return
+		return   # nothing to remove
 
 	var removed_letter = lbl.text
 	lbl.text = ""
 	current_answer[slot_index] = ""
+
 	_return_letter_to_bank(removed_letter)
-
-
 # ----------------------------------------------------------
 #  LETTER SELECTION
 # ----------------------------------------------------------
@@ -97,18 +112,21 @@ func _build_letter_selection():
 		)
 		letter_selection.add_child(letter_btn)
 
-func _return_letter_to_bank(letter: String):
-	var btn = letter_box_white.instantiate()
-	var lbl: Label = btn.get_node("Label")
-	lbl.text = letter
-	btn.custom_minimum_size = Vector2(40,50)
-	btn.size_flags_horizontal = Control.SIZE_FILL
-	btn.size_flags_vertical = Control.SIZE_FILL
-	btn.gui_input.connect(func(event, b=btn):
-		if event is InputEventMouseButton and event.pressed:
-			_on_letter_selected(b))
-	letter_selection.add_child(btn)
 
+func _return_letter_to_bank(letter: String):
+	_create_letter_button(letter)
+
+func _create_letter_button(letter: String):
+	var letter_btn = letter_box_white.instantiate()
+	var lbl = letter_btn.get_node("Label")
+	lbl.text = letter
+
+	# Connect click
+	letter_btn.gui_input.connect(func(event):
+		if event is InputEventMouseButton and event.pressed:
+			_on_letter_selected(letter_btn)
+	)
+	letter_selection.add_child(letter_btn)
 
 func _on_letter_selected(letter_btn):
 	var letter = letter_btn.get_node("Label").text
@@ -122,18 +140,8 @@ func _on_letter_selected(letter_btn):
 			current_answer[i] = letter
 			letter_btn.queue_free()
 			break
-	#_check_answer()
 
 
-func _check_answer():
-	var formed := ""
-	for c in current_answer:
-		formed += c
-
-	if formed == correct_answer:
-		print("✅ Correct!")
-	elif not formed.contains(""):
-		print("❌ Incorrect!")
 
 func _generate_letters(answer: String) -> Array:
 	var letters = []
@@ -146,27 +154,6 @@ func _generate_letters(answer: String) -> Array:
 		letters.append(random_char)
 	letters.shuffle()
 	return letters
-
-func _on_letter_pressed(btn: Button):
-	# Find first empty slot
-	for lbl in answer_boxes:
-		if lbl.text == "_":
-			lbl.text = btn.text
-			btn.disabled = true
-			break
-
-	# Check if answer complete
-	var formed_answer = ""
-	for lbl in answer_boxes:
-		formed_answer += lbl.text
-	formed_answer = formed_answer.strip_edges().to_upper()
-
-	if formed_answer == correct_answer.replace(" ", ""):
-		print("✅ Correct answer!")
-		_show_result(true)
-	elif not formed_answer.contains("_"):
-		print("❌ Wrong answer!")
-		_show_result(false)
 
 
 func _show_result(is_correct: bool):
@@ -197,3 +184,68 @@ func _on_shuffle_button_pressed():
 	for btn in letter_buttons:
 		letters.append(btn.text)
 	letters.shuffle()
+
+func _on_shuffle_btn_button_down() -> void:
+	# Collect letters that are still in the letter_selection (not yet used in answer slots)
+	var remaining_letters: Array = []
+
+	for btn in letter_selection.get_children():
+		if btn is Control:
+			var lbl: Label = btn.get_node("Label")
+			var letter = lbl.text
+			remaining_letters.append(letter)
+
+	# Shuffle the remaining letters
+	remaining_letters.shuffle()
+
+	# Clear the letter selection container
+	for child in letter_selection.get_children():
+		child.queue_free()
+
+	# Rebuild buttons from shuffled letters
+	for letter in remaining_letters:
+		var letter_btn = letter_box_white.instantiate()
+		var lbl = letter_btn.get_node("Label")
+		lbl.text = letter
+
+		letter_btn.gui_input.connect(func(event):
+			if event is InputEventMouseButton and event.pressed:
+				_on_letter_selected(letter_btn)
+		)
+
+		letter_selection.add_child(letter_btn)
+
+
+# ----------------------------------------------------------
+#  Clue functions
+# ----------------------------------------------------------
+func _set_clue():
+	clue_label.text = clue
+
+func _on_clue_button_down() -> void:
+	clue_container.visible = true
+
+
+func _on_close_button_button_down() -> void:
+	clue_container.visible = false
+
+
+# ----------------------------------------------------------
+#  Submit answer
+# ----------------------------------------------------------
+func _check_answer(remaining_time):
+
+	var formed := ""
+	for c in current_answer:
+		formed += c
+
+	if formed == correct_answer:
+		print("✅ Correct!")
+	elif not formed.contains(""):
+		print("❌ Incorrect!")
+
+func _on_submit_button_button_down() -> void:
+	var formed := ""
+	for c in current_answer:
+		formed += c
+	emit_signal("submit_assessment", formed, correct_answer, max_score, time_limit)

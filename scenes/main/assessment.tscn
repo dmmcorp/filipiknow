@@ -59,10 +59,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -531.0
+offset_left = -532.0
 offset_top = 34.0
 offset_right = 531.0
-offset_bottom = 106.0
+offset_bottom = 93.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_eipy5")
 script = ExtResource("2_iekdg")
@@ -75,11 +75,10 @@ theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 10
 
 [node name="HBoxContainer" type="HBoxContainer" parent="AssessmentNumbers/MarginContainer"]
-custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
 [node name="AssessmentNumberOne" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(40, 20)
 layout_mode = 2
 theme = SubResource("Theme_c5s7t")
 
@@ -91,7 +90,7 @@ layout_mode = 2
 theme = ExtResource("1_t86xb")
 theme_type_variation = &"black"
 theme_override_fonts/font = ExtResource("2_eipy5")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "1"
 
 [node name="Line1" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
@@ -102,7 +101,7 @@ size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
 
 [node name="AssessmentNumberOne2" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(40, 20)
 layout_mode = 2
 theme = SubResource("Theme_c5s7t")
 
@@ -114,7 +113,7 @@ layout_mode = 2
 theme = ExtResource("1_t86xb")
 theme_type_variation = &"black"
 theme_override_fonts/font = ExtResource("2_eipy5")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "2"
 
 [node name="Line2" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
@@ -125,7 +124,7 @@ size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
 
 [node name="AssessmentNumberOne3" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(40, 20)
 layout_mode = 2
 theme = SubResource("Theme_c5s7t")
 
@@ -137,7 +136,7 @@ layout_mode = 2
 theme = ExtResource("1_t86xb")
 theme_type_variation = &"black"
 theme_override_fonts/font = ExtResource("2_eipy5")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "3"
 
 [node name="Line3" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
@@ -148,7 +147,7 @@ size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
 
 [node name="AssessmentNumberOne4" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(40, 20)
 layout_mode = 2
 theme = SubResource("Theme_c5s7t")
 
@@ -160,7 +159,7 @@ layout_mode = 2
 theme = ExtResource("1_t86xb")
 theme_type_variation = &"black"
 theme_override_fonts/font = ExtResource("2_eipy5")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "4"
 
 [node name="Line4" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
@@ -171,7 +170,7 @@ size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
 
 [node name="AssessmentNumberOne5" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(40, 20)
 layout_mode = 2
 theme = SubResource("Theme_c5s7t")
 
@@ -183,7 +182,7 @@ layout_mode = 2
 theme = ExtResource("1_t86xb")
 theme_type_variation = &"black"
 theme_override_fonts/font = ExtResource("2_eipy5")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "5"
 
 [node name="Line5" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
@@ -194,7 +193,7 @@ size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
 
 [node name="AssessmentNumberOne6" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(40, 20)
 layout_mode = 2
 theme = SubResource("Theme_c5s7t")
 
@@ -206,7 +205,7 @@ layout_mode = 2
 theme = ExtResource("1_t86xb")
 theme_type_variation = &"black"
 theme_override_fonts/font = ExtResource("2_eipy5")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "6"
 
 [node name="Line6" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
@@ -217,7 +216,7 @@ size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
 
 [node name="AssessmentNumberOne7" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(40, 20)
 layout_mode = 2
 theme = SubResource("Theme_c5s7t")
 
@@ -229,7 +228,7 @@ layout_mode = 2
 theme = ExtResource("1_t86xb")
 theme_type_variation = &"black"
 theme_override_fonts/font = ExtResource("2_eipy5")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "7"
 
 [node name="Line7" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
@@ -240,7 +239,7 @@ size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
 
 [node name="AssessmentNumberOne8" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(40, 20)
 layout_mode = 2
 theme = SubResource("Theme_c5s7t")
 
@@ -252,7 +251,7 @@ layout_mode = 2
 theme = ExtResource("1_t86xb")
 theme_type_variation = &"black"
 theme_override_fonts/font = ExtResource("2_eipy5")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "8"
 
 [node name="Line8" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
@@ -263,7 +262,7 @@ size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
 
 [node name="AssessmentNumberOne9" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(40, 20)
 layout_mode = 2
 theme = SubResource("Theme_c5s7t")
 
@@ -275,7 +274,7 @@ layout_mode = 2
 theme = ExtResource("1_t86xb")
 theme_type_variation = &"black"
 theme_override_fonts/font = ExtResource("2_eipy5")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "9"
 
 [node name="Line9" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
@@ -286,7 +285,7 @@ size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_t86xb")
 
 [node name="AssessmentNumberOne10" type="PanelContainer" parent="AssessmentNumbers/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(40, 20)
 layout_mode = 2
 theme = SubResource("Theme_c5s7t")
 
@@ -298,11 +297,12 @@ layout_mode = 2
 theme = ExtResource("1_t86xb")
 theme_type_variation = &"black"
 theme_override_fonts/font = ExtResource("2_eipy5")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "10"
 
 [node name="Timer" parent="." instance=ExtResource("3_eipy5")]
 layout_mode = 1
+offset_right = 130.0
 
 [node name="AssessmentContainer" type="Control" parent="."]
 layout_mode = 1

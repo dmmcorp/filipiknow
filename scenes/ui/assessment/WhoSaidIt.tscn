@@ -1,0 +1,162 @@
+[gd_scene load_steps=9 format=3 uid="uid://cg6midel5vkin"]
+
+[ext_resource type="Texture2D" uid="uid://b6ywd6ncuwjv" path="res://assets/images/popup-container.png" id="1_1hm70"]
+[ext_resource type="Script" uid="uid://cbqsn2hlpg5k6" path="res://scripts/assessment/who_said_it.gd" id="1_td533"]
+[ext_resource type="FontFile" uid="uid://b24fmqblkxkns" path="res://assets/fonts/Fredoka_SemiExpanded-Bold.ttf" id="2_ksgny"]
+[ext_resource type="PackedScene" uid="uid://ddyj4l1deij5f" path="res://scenes/ui/assessment/who_said_it/option.tscn" id="3_ksgny"]
+[ext_resource type="Theme" uid="uid://ctg5ru4kl6ydx" path="res://theme/button_theme.tres" id="4_h6ds5"]
+[ext_resource type="Texture2D" uid="uid://b5xo2fmc4biht" path="res://assets/images/submit-btn.png" id="5_yyyhm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_td533"]
+bg_color = Color(0.823529, 0.709804, 0.521569, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fveh4"]
+atlas = ExtResource("5_yyyhm")
+region = Rect2(-24, -32, 648, 288)
+
+[node name="WhoSaidIt" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_td533")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -347.0
+offset_top = -254.0
+offset_right = 347.0
+offset_bottom = 319.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_1hm70")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/MarginContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="QuestionContainer" type="MarginContainer" parent="TextureRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="QuestionLabel" type="Label" parent="TextureRect/MarginContainer/VBoxContainer/QuestionContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.235294, 0.129412, 0.0823529, 1)
+theme_override_fonts/font = ExtResource("2_ksgny")
+theme_override_font_sizes/font_size = 25
+text = "Sino sa mga nasa litrato ang nag sabi sa linyang ito: "
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="QuoteContainer" type="MarginContainer" parent="TextureRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="PanelContainer" type="PanelContainer" parent="TextureRect/MarginContainer/VBoxContainer/QuoteContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_td533")
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect/MarginContainer/VBoxContainer/QuoteContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="QuoteLabel" type="Label" parent="TextureRect/MarginContainer/VBoxContainer/QuoteContainer/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.545098, 0.270588, 0.0745098, 1)
+theme_override_fonts/font = ExtResource("2_ksgny")
+theme_override_font_sizes/font_size = 20
+text = "“Ang isang indiyo ay kailanma'y hindi maaring lumampas sa fraile!”"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="OptionsContainer" type="CenterContainer" parent="TextureRect/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 270)
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="TextureRect/MarginContainer/VBoxContainer/OptionsContainer"]
+custom_minimum_size = Vector2(300, 250)
+layout_mode = 2
+theme_override_constants/h_separation = 80
+theme_override_constants/v_separation = 5
+columns = 2
+
+[node name="Option" parent="TextureRect/MarginContainer/VBoxContainer/OptionsContainer/GridContainer" instance=ExtResource("3_ksgny")]
+layout_mode = 2
+
+[node name="Option2" parent="TextureRect/MarginContainer/VBoxContainer/OptionsContainer/GridContainer" instance=ExtResource("3_ksgny")]
+layout_mode = 2
+
+[node name="Option3" parent="TextureRect/MarginContainer/VBoxContainer/OptionsContainer/GridContainer" instance=ExtResource("3_ksgny")]
+layout_mode = 2
+
+[node name="Option4" parent="TextureRect/MarginContainer/VBoxContainer/OptionsContainer/GridContainer" instance=ExtResource("3_ksgny")]
+layout_mode = 2
+
+[node name="SubmitButton" type="TextureButton" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -85.0
+offset_top = -51.0
+offset_right = 81.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("4_h6ds5")
+theme_type_variation = &"auth"
+texture_normal = ExtResource("5_yyyhm")
+texture_pressed = SubResource("AtlasTexture_fveh4")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="TextureRect/SubmitButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.545098, 0.270588, 0.0745098, 1)
+theme_override_font_sizes/font_size = 25
+text = "Isumete"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="button_down" from="TextureRect/SubmitButton" to="." method="_on_submit_button_button_down"]

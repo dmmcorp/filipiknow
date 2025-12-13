@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://d4cr864a2iq0k"]
+[gd_scene load_steps=6 format=3 uid="uid://d4cr864a2iq0k"]
 
 [ext_resource type="Texture2D" uid="uid://brt3sef4dkmm1" path="res://assets/images/timer.png" id="1_5xftn"]
 [ext_resource type="Script" uid="uid://cj5dq87u3c7gs" path="res://scripts/assessment/timer.gd" id="1_vba0s"]
-[ext_resource type="Texture2D" uid="uid://bpyj5cvxfmtkp" path="res://assets/images/progress.png" id="2_36otc"]
+[ext_resource type="Texture2D" uid="uid://rj18ej0hdbsq" path="res://assets/images/progress_vertical.png" id="2_vba0s"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36otc"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -11,48 +11,45 @@ border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2mma"]
+atlas = ExtResource("2_vba0s")
+region = Rect2(5, 4, 48, 919)
 
 [node name="Timer" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = 9
 anchor_bottom = 1.0
-grow_horizontal = 2
+offset_right = 128.0
 grow_vertical = 2
 script = ExtResource("1_vba0s")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-custom_minimum_size = Vector2(0, 40)
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = 11
+anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -106.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 20
+offset_left = -94.0
+offset_top = 127.0
+offset_right = -35.0
+offset_bottom = -57.0
+grow_horizontal = 0
+grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 20
-
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(50, 40)
-layout_mode = 2
-texture = ExtResource("1_5xftn")
-expand_mode = 1
+alignment = 1
 
 [node name="TimerProgressUI" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_36otc")
 
 [node name="Timer" type="Timer" parent="MarginContainer/HBoxContainer/TimerProgressUI"]
@@ -61,13 +58,22 @@ autostart = true
 [node name="TextureProgressBar" type="TextureProgressBar" parent="MarginContainer/HBoxContainer/TimerProgressUI"]
 layout_mode = 2
 value = 100.0
+rounded = true
+fill_mode = 3
 nine_patch_stretch = true
-texture_progress = ExtResource("2_36otc")
+texture_progress = SubResource("AtlasTexture_d2mma")
+tint_progress = Color(1, 1, 0.945098, 1)
 
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer/TimerProgressUI"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 25
 text = "20s"
 horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("1_5xftn")
+expand_mode = 1
 
 [connection signal="timeout" from="MarginContainer/HBoxContainer/TimerProgressUI/Timer" to="MarginContainer/HBoxContainer/TimerProgressUI" method="_on_timer_timeout"]

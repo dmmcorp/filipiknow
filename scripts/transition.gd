@@ -189,11 +189,11 @@ func mark_loading_finished():
 			visual_progress = 1.0
 
 		loading_bar.value = visual_progress * 100.0
+		print(loading_bar.value)
 		progress_label.text = "%d%%  (Done)" % int(loading_bar.value)
 		await get_tree().create_timer(0.02).timeout
 		
 func _on_load_finished(status):
-
 		# Path to your Assessment scene
 	var assessment_scene_path = "res://scenes/main/assessment.tscn"
 	var assessment_scene = load(assessment_scene_path)

@@ -25,7 +25,8 @@ var progress
 var level_grid_container: GridContainer
 var levels_node  # <- reference to the Levels.gd node
 var touch_button: TouchScreenButton
-
+var assessment_answer
+var assessment_submit_btn
 #signals for loading the assessment transition
 signal load_progress(progress: float, loaded: int, total: int)
 signal load_finished(status: String)
@@ -137,6 +138,7 @@ func _on_level_button_button_down(index: int) -> void:
 		levels_node.levels_container.visible = false
 		if level == 10:
 			_load_assessment_scene()
+			emit_signal("load_finished", "finished")
 		else:
 			levels_node.instantiate_question_scene()
 	Globals.input_enabled = false
@@ -158,36 +160,33 @@ func get_level_resources(selected_level: int):
 	print("This is the stored assessments:",Globals.assessments)
 
 #Returns the ImageTexture or the url itself if something went wrong.
-func load_texture_from_url(url) -> Variant:
-	var req = HTTPRequest.new()
-	print(url)
+func load_texture_from_url(url: String) -> Variant:
+	var req := HTTPRequest.new()
 	add_child(req)
-	var finished = false
-	var result_texture: Texture2D = null
 
 	var http_err := req.request(url)
 	if http_err != OK:
 		push_error("Failed to start HTTP request: %s" % http_err)
 		return url
-		var result = await req.request_completed
-	
+
 	var result = await req.request_completed
 	var response_code: int = result[1]
 	var response_body: PackedByteArray = result[3]
 
 	if response_code == 200:
-		var img = Image.new()
+		var img := Image.new()
 		var err := img.load_png_from_buffer(response_body)
+
 		if err != OK:
 			push_warning("⚠️ Failed to load image from buffer: %s" % err)
 			return url
-		var tex = ImageTexture.new()
-		tex.create_from_image(img)
+
+		var tex := ImageTexture.create_from_image(img)
 		return tex
-	else:
-		push_warning("⚠️ Image HTTP error: %s" % response_code)
+
+	push_warning("⚠️ Image HTTP error: %s" % response_code)
 	return url
-	
+
 func load_assessment_textures():
 	print("Loading assessment resources…")
 	emit_signal("load_finished", "loading")
@@ -221,5 +220,5 @@ func load_assessment_textures():
 					emit_signal("load_progress")
 		# Identification
 		# (No image to load here unless you have optional images)
-	emit_signal("load_finished", "finished")
+	
 	print("✅ All assessment images loaded and replaced with textures")
