@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b44xtogx4u53x"]
+[gd_scene load_steps=20 format=3 uid="uid://b44xtogx4u53x"]
 
 [ext_resource type="Texture2D" uid="uid://b6ywd6ncuwjv" path="res://assets/images/popup-container.png" id="1_akgyk"]
 [ext_resource type="Script" uid="uid://dw7xl5ryp5fko" path="res://scripts/assessment/four_pics_one_word.gd" id="1_yfl72"]
@@ -9,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://ceegblcrev48u" path="res://assets/images/shuffle-icon.png" id="5_dse33"]
 [ext_resource type="Theme" uid="uid://ctg5ru4kl6ydx" path="res://theme/button_theme.tres" id="8_nj3qh"]
 [ext_resource type="Texture2D" uid="uid://b5xo2fmc4biht" path="res://assets/images/submit-btn.png" id="9_ri5cx"]
-[ext_resource type="PackedScene" uid="uid://dvgebfp4opfc1" path="res://scenes/ui/assessment/SubmitBtn.tscn" id="10_ri5cx"]
 
 [sub_resource type="GDScript" id="GDScript_1upsh"]
 
@@ -302,18 +301,6 @@ grow_horizontal = 0
 texture_normal = SubResource("AtlasTexture_8amm3")
 ignore_texture_size = true
 stretch_mode = 0
-
-[node name="SubmitBtn" parent="." instance=ExtResource("10_ri5cx")]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-offset_left = -80.0
-offset_top = -39.0
-offset_right = 80.0
-offset_bottom = 11.0
-grow_vertical = 0
 
 [connection signal="button_down" from="TextureRect/VBoxContainer/ClueButtonContainer/ClueButton" to="." method="_on_clue_button_down"]
 [connection signal="button_down" from="TextureRect/VBoxContainer/ShuffleButtonContainer/ShuffleButton" to="." method="_on_shuffle_btn_button_down"]
